@@ -4,7 +4,8 @@
     "module": "esnext",
     "declaration": true,
     "outDir": "./lib",
-    "strict": true
+    "strict": true,
+    "moduleResolution": "Node"
   },
   "include": [
     "src"
