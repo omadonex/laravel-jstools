@@ -13,10 +13,12 @@ export {
 };
 
 // ---Contracts
+import {FormContract} from "./entities/Form/contracts/FormContract";
 import {FormValidateServiceContract} from "./services/FormValidateService/contracts/FormValidateServiceContract";
 import {TranslateServiceContract} from "./services/TranslateService/contracts/TranslateServiceContract";
 import {ValidateServiceContract} from "./services/ValidateService/contracts/ValidateServiceContract";
 export {
+    FormContract,
     FormValidateServiceContract,
     TranslateServiceContract,
     ValidateServiceContract,

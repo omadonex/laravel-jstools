@@ -29,12 +29,10 @@ export default class AppLocator {
         return this.serviceContainer.make(name);
     }
 
-    form(form: any, formType: FormTypeEnum = FormTypeEnum.jquery): FormContract | undefined {
+    form(form: any, formType: FormTypeEnum = FormTypeEnum.jquery): FormContract {
         switch (formType) {
             case FormTypeEnum.jquery: return new JQueryForm(form, new JQueryFormValidateService, this.make(JSToolsAbstractMap.TranslateServiceContract));
         }
-
-        return undefined;
     }
 
     private generateMaps(): void {
