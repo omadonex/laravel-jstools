@@ -1,3 +1,5 @@
 export const JSToolsAbstractMap = {
-    TranslateServiceContract: 'TranslateServiceContract'
+    FormValidateServiceContract: 'TranslateServiceContract',
+    TranslateServiceContract: 'TranslateServiceContract',
+    ValidateServiceContract: 'ValidateServiceContract',
 }

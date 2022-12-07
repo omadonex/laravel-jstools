@@ -1,6 +1,11 @@
 import ServiceContainer from "../di/ServiceContainer";
 import AppServiceProvider from "./providers/AppServiceProvider";
 import {ServiceProviderContract} from "../di/contracts/ServiceProviderContract";
+import {FormContract} from "../entities/Form/contracts/FormContract";
+import {FormTypeEnum} from "../entities/Form/FormTypeEnum";
+import JQueryForm from "../entities/Form/JQueryForm";
+import {JSToolsAbstractMap} from "./JSToolsAbstractMap";
+import JQueryFormValidateService from "../services/FormValidateService/JQueryFormValidateService";
 
 export default class AppLocator {
     private globalData: any;
@@ -22,6 +27,14 @@ export default class AppLocator {
 
     make(name: string): any {
         return this.serviceContainer.make(name);
+    }
+
+    form(form: any, formType: FormTypeEnum = FormTypeEnum.jquery): FormContract | undefined {
+        switch (formType) {
+            case FormTypeEnum.jquery: return new JQueryForm(form, new JQueryFormValidateService, this.make(JSToolsAbstractMap.TranslateServiceContract));
+        }
+
+        return undefined;
     }
 
     private generateMaps(): void {

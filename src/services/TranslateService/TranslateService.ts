@@ -1,8 +1,9 @@
-import { getProp } from '../scripts/helpers';
+import { getProp } from '../../scripts/helpers';
 import {TranslateServiceContract} from "./contracts/TranslateServiceContract";
 import {TranslateServiceInitDataInterface} from "./interfaces/TranslateServiceInitDataInterface";
+import Service from "../Service";
 
-export default class TranslateService implements TranslateServiceContract {
+export default class TranslateService extends Service implements TranslateServiceContract {
     private langDefault: string;
     private langCurrent: string;
     private translationList: any;
@@ -14,6 +15,7 @@ export default class TranslateService implements TranslateServiceContract {
     };
 
     constructor(data: TranslateServiceInitDataInterface) {
+        super();
         this.langDefault = data.langDefault;
         this.langCurrent = data.langCurrent;
         this.translationList = data.translationList;

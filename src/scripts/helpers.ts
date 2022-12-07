@@ -1,4 +1,12 @@
 /**
+ * Делает первую букву заглавной
+ * @param str
+ */
+function fUpCase(str: string): string {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+}
+
+/**
  * Получение свойства объекта в стиле "Dot notation"
  * @param obj
  * @param prop
@@ -16,4 +24,16 @@ function getProp(obj: any, prop: string): any {
     return obj[prop];
 }
 
-export { getProp };
+/**
+ * Проверка строки на число
+ * @param value
+ */
+function isNumeric(value: any): boolean {
+    if (typeof value !== 'string') {
+        return false;
+    }
+
+    return !isNaN(Number(value));
+}
+
+export { fUpCase, getProp, isNumeric };
