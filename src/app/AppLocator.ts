@@ -30,9 +30,9 @@ export default class AppLocator {
         return this.serviceContainer.make(name);
     }
 
-    form(form: any, formType: FormTypeEnum = FormTypeEnum.jquery): FormContract {
+    form(form: any, defaultSubmit: boolean, formType: FormTypeEnum = FormTypeEnum.jquery): FormContract {
         switch (formType) {
-            case FormTypeEnum.jquery: return new JQueryForm(form, new JQueryFormValidateService, this.make(JSToolsAbstractMap.TranslateServiceContract));
+            case FormTypeEnum.jquery: return new JQueryForm(form, defaultSubmit, new JQueryFormValidateService, this.make(JSToolsAbstractMap.TranslateServiceContract));
         }
 
         throw JST_UndefinedFormTypeException("Undefined form type! Check FormTypeEnum for available types!");
