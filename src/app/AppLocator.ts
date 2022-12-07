@@ -6,6 +6,7 @@ import {FormTypeEnum} from "../entities/Form/FormTypeEnum";
 import JQueryForm from "../entities/Form/JQueryForm";
 import {JSToolsAbstractMap} from "./JSToolsAbstractMap";
 import JQueryFormValidateService from "../services/FormValidateService/JQueryFormValidateService";
+import JST_UndefinedFormTypeException from "../exceptions/JST_UndefinedFormTypeException";
 
 export default class AppLocator {
     private globalData: any;
@@ -33,6 +34,8 @@ export default class AppLocator {
         switch (formType) {
             case FormTypeEnum.jquery: return new JQueryForm(form, new JQueryFormValidateService, this.make(JSToolsAbstractMap.TranslateServiceContract));
         }
+
+        throw JST_UndefinedFormTypeException("Undefined form type! Check FormTypeEnum for available types!");
     }
 
     private generateMaps(): void {
