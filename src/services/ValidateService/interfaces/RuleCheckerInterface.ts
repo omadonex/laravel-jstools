@@ -1,5 +1,6 @@
-import ValidateError from "../ValidateError";
+import {ValidateError} from "../ValidateError";
+import {AnyObjInterface} from "../../../interfaces/AnyObjInterface";
 
 export interface RuleCheckerInterface {
-    (value: string, paramList?: any): ValidateError | true;
+    (data: AnyObjInterface, field: string, paramList?: any): ValidateError | true;
 }

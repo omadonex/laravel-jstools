@@ -1,5 +1,7 @@
-import ValidateError from "../ValidateError";
+import {ValidateError} from "../ValidateError";
 
 export interface ValidateErrorListInterface {
-    [key: string]: ValidateError;
+    [field: string]: {
+        [rule: string]: ValidateError,
+    };
 }

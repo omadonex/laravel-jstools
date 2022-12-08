@@ -1,9 +1,9 @@
-import JST_AbstractNotBindToConcreteException from "../exceptions/JST_AbstractNotBindToConcreteException";
+import {JST_AbstractNotBindToConcreteException} from "../exceptions/JST_AbstractNotBindToConcreteException";
 import {ClassInfoInterface} from "./interfaces/ClassInfoInterface";
-import Service from "../services/Service";
+import {Service} from "../services/Service";
 import {ServiceListInterface} from "../services/ServiceListInterface";
 
-export default class ServiceContainer {
+export class ServiceContainer {
     private classMap: any;
     private aliasMap: any;
     private data: any;

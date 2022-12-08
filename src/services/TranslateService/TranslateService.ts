@@ -1,9 +1,9 @@
 import { getProp } from '../../scripts/helpers';
 import {TranslateServiceContract} from "./contracts/TranslateServiceContract";
 import {TranslateServiceInitDataInterface} from "./interfaces/TranslateServiceInitDataInterface";
-import Service from "../Service";
+import {Service} from "../Service";
 
-export default class TranslateService extends Service implements TranslateServiceContract {
+export class TranslateService extends Service implements TranslateServiceContract {
     private langDefault: string;
     private langCurrent: string;
     private translationList: any;

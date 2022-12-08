@@ -1,6 +1,6 @@
 import {ServiceProviderContract} from "./contracts/ServiceProviderContract";
 
-export default abstract class ServiceProvider implements ServiceProviderContract {
+export abstract class ServiceProvider implements ServiceProviderContract {
     private classMap: any = {};
     private aliasMap: any = {};
 

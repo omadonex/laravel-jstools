@@ -1,9 +1,8 @@
 import {JSToolsAbstractMap} from "../JSToolsAbstractMap";
-import ServiceProvider from "../../di/ServiceProvider";
-import TranslateService from "../../services/TranslateService/TranslateService";
-import ValidateService from "../../services/ValidateService/ValidateService";
+import {ServiceProvider} from "../../di/ServiceProvider";
+import {TranslateService} from "../../services/TranslateService/TranslateService";
 
-export default class AppServiceProvider extends ServiceProvider {
+export class AppServiceProvider extends ServiceProvider {
     public register(): void {
         this.singleton(JSToolsAbstractMap.TranslateServiceContract, (): any => {
             return new TranslateService({
@@ -14,11 +13,5 @@ export default class AppServiceProvider extends ServiceProvider {
         });
 
         this.alias(JSToolsAbstractMap.TranslateServiceContract, 't');
-
-        this.singleton(JSToolsAbstractMap.ValidateServiceContract, (): any => {
-            return new ValidateService;
-        });
-
-        this.alias(JSToolsAbstractMap.TranslateServiceContract, 'v');
     }
 }

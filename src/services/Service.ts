@@ -1,6 +1,6 @@
 import {ServiceListInterface} from "./ServiceListInterface";
 
-export default abstract class Service {
+export abstract class Service {
     protected serviceList: ServiceListInterface = {};
     protected serviceDependsList: string[] = [];
 

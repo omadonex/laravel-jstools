@@ -1,12 +1,15 @@
 import {TranslateServiceContract} from "../TranslateService/contracts/TranslateServiceContract";
 
-export default class ValidateError {
+export class ValidateError {
+  private field: string;
   private rule: string;
   private replaceList: any;
 
-  constructor(rule: string, replaceList: any = []) {
+  constructor(field: string, rule: string, replaceList: any = []) {
+    this.field = field;
     this.rule = rule;
     this.replaceList = replaceList;
+    this.addReplace('attribute', this.field);
   }
 
   addReplace(name: string, value: string): void {

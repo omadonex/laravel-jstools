@@ -1,12 +1,10 @@
 import {FormContract} from "./contracts/FormContract";
 import {FormValidateServiceContract} from "../../services/FormValidateService/contracts/FormValidateServiceContract";
 import {TranslateServiceContract} from "../../services/TranslateService/contracts/TranslateServiceContract";
-import {
-    FormValidateErrorListInterface
-} from "../../services/FormValidateService/interfaces/FormValidateErrorListInterface";
 import {StringObjInterface} from "../../interfaces/StringObjInterface";
+import {ValidateErrorListInterface} from "../../services/ValidateService/interfaces/ValidateErrorListInterface";
 
-export default abstract class Form implements FormContract {
+export abstract class Form implements FormContract {
     protected validateService: FormValidateServiceContract;
     protected translateService: TranslateServiceContract;
     protected form: any;
@@ -21,7 +19,7 @@ export default abstract class Form implements FormContract {
     }
 
     protected abstract clearErrors(): void;
-    protected abstract showErrors(errorList: FormValidateErrorListInterface): void;
+    protected abstract showErrors(errorList: ValidateErrorListInterface): void;
     protected abstract getMethod(): string;
     protected abstract getAction(): string;
     protected abstract getToken(): string;
@@ -51,7 +49,7 @@ export default abstract class Form implements FormContract {
         }
     }
 
-    public validate(): FormValidateErrorListInterface | true {
+    public validate(): ValidateErrorListInterface | true {
         return this.validateService.validateForm(this.form, this.ruleList);
     }
 

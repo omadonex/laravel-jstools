@@ -1,10 +1,8 @@
-import {
-    FormValidateErrorListInterface
-} from "../../../services/FormValidateService/interfaces/FormValidateErrorListInterface";
 import {StringObjInterface} from "../../../interfaces/StringObjInterface";
+import {ValidateErrorListInterface} from "../../../services/ValidateService/interfaces/ValidateErrorListInterface";
 
 export interface FormContract {
-    validate(): FormValidateErrorListInterface | true;
+    validate(): ValidateErrorListInterface | true;
     submit(): void;
     clear(): void;
     setRuleList(ruleList: StringObjInterface): void;

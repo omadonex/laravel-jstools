@@ -2,9 +2,9 @@ export const Test = (str: string) => `Test ${str}`;
 
 // ---Misc---
 import {JSToolsAbstractMap} from "./app/JSToolsAbstractMap";
-import AppLocator from "./app/AppLocator";
-import ServiceProvider from "./di/ServiceProvider";
-import Service from "./services/Service";
+import {AppLocator} from "./app/AppLocator";
+import {ServiceProvider} from "./di/ServiceProvider";
+import {Service} from "./services/Service";
 export {
     JSToolsAbstractMap,
     AppLocator,
@@ -25,7 +25,7 @@ export {
 };
 
 // ---Entities---
-import Form from "./entities/Form/Form";
+import {Form} from "./entities/Form/Form";
 export {
     Form,
 };

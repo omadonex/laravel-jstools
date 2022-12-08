@@ -1,3 +1,3 @@
-export default function JST_UndefinedFormTypeException(message: string = ''): Error {
+export function JST_UndefinedFormTypeException(message: string = ''): Error {
   return new Error(message);
 }

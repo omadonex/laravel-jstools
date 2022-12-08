@@ -1,14 +1,14 @@
-import ServiceContainer from "../di/ServiceContainer";
-import AppServiceProvider from "./providers/AppServiceProvider";
+import {ServiceContainer} from "../di/ServiceContainer";
+import {AppServiceProvider} from "./providers/AppServiceProvider";
 import {ServiceProviderContract} from "../di/contracts/ServiceProviderContract";
 import {FormContract} from "../entities/Form/contracts/FormContract";
 import {FormTypeEnum} from "../entities/Form/FormTypeEnum";
-import JQueryForm from "../entities/Form/JQueryForm";
+import {JQueryForm} from "../entities/Form/JQueryForm";
 import {JSToolsAbstractMap} from "./JSToolsAbstractMap";
-import JQueryFormValidateService from "../services/FormValidateService/JQueryFormValidateService";
-import JST_UndefinedFormTypeException from "../exceptions/JST_UndefinedFormTypeException";
+import {JQueryFormValidateService} from "../services/FormValidateService/JQueryFormValidateService";
+import {JST_UndefinedFormTypeException} from "../exceptions/JST_UndefinedFormTypeException";
 
-export default class AppLocator {
+export class AppLocator {
     private globalData: any;
     private serviceContainer: ServiceContainer;
     private providerList: ServiceProviderContract[] = [];
