@@ -70,6 +70,6 @@ export default class JQueryForm extends Form {
     }
 
     protected disableFieldsInput(): void {
-        this.$inputList.attr('disabled', 'disabled');
+        this.$inputList.attr('readonly', true);
     }
 }

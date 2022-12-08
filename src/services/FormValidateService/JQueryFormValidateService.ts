@@ -11,16 +11,16 @@ import {isEmpty} from "../../scripts/helpers";
 export default class JQueryFormValidateService extends ValidateService implements FormValidateServiceContract {
     validateForm(form: any, ruleList: StringObjInterface = {}): FormValidateErrorListInterface | true {
         let errorList: FormValidateErrorListInterface = {};
-        form.find('input[data-jst-validate]').each((index: number, element: any) => {
+        form.find('input[data-jst-field]').each((index: number, element: any) => {
             let $input = $(element);
             let field: string = $input.data('jstField');
-            let fieldErrorList: ValidateErrorListInterface = this.validateField($input);
-            if (Object.keys(fieldErrorList).length > 0) {
-                errorList[field] = this.validateField($input, ruleList);
+            let fieldErrorList: ValidateErrorListInterface = this.validateField($input, ruleList);
+            if (!isEmpty(fieldErrorList)) {
+                errorList[field] = fieldErrorList;
             }
         });
 
-        return Object.keys(errorList).length === 0 ? true : errorList;
+        return isEmpty(errorList) ? true : errorList;
     }
 
     validateField(input: any, ruleList: StringObjInterface = {}): ValidateErrorListInterface {
