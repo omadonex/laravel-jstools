@@ -29,6 +29,7 @@ export default class ValidateService extends Service implements ValidateServiceC
 
     private getRuleChecker(rule: string): RuleCheckerInterface {
         switch (rule) {
+            case 'max': return this.checkMax;
             case 'min': return this.checkMin;
             case 'required': return this.checkRequired;
         }
