@@ -4,12 +4,14 @@ import {TranslateServiceContract} from "../../services/TranslateService/contract
 import {
     FormValidateErrorListInterface
 } from "../../services/FormValidateService/interfaces/FormValidateErrorListInterface";
+import {StringObjInterface} from "../../interfaces/StringObjInterface";
 
 export default abstract class Form implements FormContract {
     protected validateService: FormValidateServiceContract;
     protected translateService: TranslateServiceContract;
     protected form: any;
     protected formSubmit: boolean;
+    protected ruleList: StringObjInterface = {};
 
     constructor(form: any, formSubmit: boolean, validateService: FormValidateServiceContract, translateService: TranslateServiceContract) {
         this.validateService = validateService;
@@ -50,10 +52,14 @@ export default abstract class Form implements FormContract {
     }
 
     public validate(): FormValidateErrorListInterface | true {
-        return this.validateService.validateForm(this.form);
+        return this.validateService.validateForm(this.form, this.ruleList);
     }
 
     private doSubmit(): void {
 
+    }
+
+    public setRuleList(ruleList: StringObjInterface): void {
+        this.ruleList = ruleList;
     }
 }

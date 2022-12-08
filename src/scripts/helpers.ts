@@ -36,4 +36,8 @@ function isNumeric(value: any): boolean {
     return !isNaN(Number(value));
 }
 
-export { fUpCase, getProp, isNumeric };
+function isEmpty(value: any): boolean {
+    return Object.keys(value).length === 0;
+}
+
+export { fUpCase, getProp, isNumeric, isEmpty };

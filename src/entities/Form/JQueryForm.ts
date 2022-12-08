@@ -62,7 +62,7 @@ export default class JQueryForm extends Form {
     }
 
     protected disableSubmitBtn(): void {
-        this.$submit.attr('disabled','disabled');
+        this.$submit.attr('disabled', 'disabled');
     }
 
     protected showSpinner(): void {
@@ -70,5 +70,6 @@ export default class JQueryForm extends Form {
     }
 
     protected disableFieldsInput(): void {
+        this.$inputList.attr('disabled', 'disabled');
     }
 }
