@@ -1,27 +1,32 @@
 import {FormContract} from "./contracts/FormContract";
 import {FormValidateServiceContract} from "../../services/FormValidateService/contracts/FormValidateServiceContract";
-import {ValidateErrorListInterface} from "../../services/ValidateService/interfaces/ValidateErrorListInterface";
 import {TranslateServiceContract} from "../../services/TranslateService/contracts/TranslateServiceContract";
+import {
+    FormValidateErrorListInterface
+} from "../../services/FormValidateService/interfaces/FormValidateErrorListInterface";
 
 export default abstract class Form implements FormContract {
     protected validateService: FormValidateServiceContract;
     protected translateService: TranslateServiceContract;
     protected form: any;
-    protected defaultSubmit: boolean;
+    protected formSubmit: boolean;
 
-    constructor(form: any, defaultSubmit: boolean, validateService: FormValidateServiceContract, translateService: TranslateServiceContract) {
+    constructor(form: any, formSubmit: boolean, validateService: FormValidateServiceContract, translateService: TranslateServiceContract) {
         this.validateService = validateService;
         this.translateService = translateService;
         this.form = form;
-        this.defaultSubmit = defaultSubmit;
+        this.formSubmit = formSubmit;
     }
 
     protected abstract clearErrors(): void;
-    protected abstract showErrors(errorList: ValidateErrorListInterface): void;
+    protected abstract showErrors(errorList: FormValidateErrorListInterface): void;
     protected abstract getMethod(): string;
     protected abstract getAction(): string;
     protected abstract getToken(): string;
-    protected abstract callDefaultSubmit(): void;
+    protected abstract callFormSubmit(): void;
+    protected abstract disableSubmitBtn(): void;
+    protected abstract disableFieldsInput(): void;
+    protected abstract showSpinner(): void;
 
     public clear(): void {
         this.clearErrors();
@@ -33,15 +38,18 @@ export default abstract class Form implements FormContract {
         if (errorList !== true) {
             this.showErrors(errorList);
         } else {
-            if (this.defaultSubmit) {
-                this.callDefaultSubmit();
+            if (this.formSubmit) {
+                this.showSpinner();
+                this.disableSubmitBtn();
+                this.disableFieldsInput();
+                this.callFormSubmit();
             } else {
                 this.doSubmit();
             }
         }
     }
 
-    public validate(): ValidateErrorListInterface | true {
+    public validate(): FormValidateErrorListInterface | true {
         return this.validateService.validateForm(this.form);
     }
 

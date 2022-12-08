@@ -1,7 +1,9 @@
-import {ValidateErrorListInterface} from "../../../services/ValidateService/interfaces/ValidateErrorListInterface";
+import {
+    FormValidateErrorListInterface
+} from "../../../services/FormValidateService/interfaces/FormValidateErrorListInterface";
 
 export interface FormContract {
-    validate(): ValidateErrorListInterface | true;
+    validate(): FormValidateErrorListInterface | true;
     submit(): void;
     clear(): void;
 }
