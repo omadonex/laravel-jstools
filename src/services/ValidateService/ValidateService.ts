@@ -40,6 +40,11 @@ export default class ValidateService extends Service implements ValidateServiceC
         return true;
     }
 
+    private checkMax(value: string, paramList?: any): ValidateError | true {
+        let type = isNumeric(value) ? 'numeric' : 'string'; //TODO omadonex: file, array
+        return (value && value.length <= paramList) || new ValidateError(`max.${type}`, { max: paramList });
+    }
+
     private checkMin(value: string, paramList?: any): ValidateError | true {
         let type = isNumeric(value) ? 'numeric' : 'string'; //TODO omadonex: file, array
         return (value && value.length >= paramList) || new ValidateError(`min.${type}`, { min: paramList });

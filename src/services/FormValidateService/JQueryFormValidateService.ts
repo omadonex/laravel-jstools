@@ -24,7 +24,8 @@ export default class JQueryFormValidateService extends ValidateService implement
     }
 
     validateField(input: any, ruleList: StringObjInterface = {}): ValidateErrorListInterface {
-        let ruleStr: string = isEmpty(ruleList) ? input.data('jstValidate') : ruleList[input.data('jstField')];
+        let ruleStr = isEmpty(ruleList) ? input.data('jstValidate') : ruleList[input.data('jstField')];
+        ruleStr = typeof ruleStr === 'string' ? ruleStr : '';
         let errorList: ValidateErrorListInterface = this.validate(input.val(), ruleStr);
         for (let rule in errorList) {
             let error: ValidateError = errorList[rule];
