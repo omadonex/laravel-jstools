@@ -18,6 +18,8 @@ export class JQueryForm extends Form {
         this.$inputList = this.$form.find('input[data-jst-field]');
         this.$spinner = this.$form.find('span[data-jst-spinner]');
         this.$submit = this.$form.find('button[data-jst-submit]');
+        this.setSubmitButton(this.$submit);
+        this.enableSubmitOnEnter();
     }
 
     protected showErrors(errorList: ValidateErrorListInterface): void {
@@ -69,5 +71,19 @@ export class JQueryForm extends Form {
 
     protected disableFieldsInput(): void {
         this.$inputList.attr('readonly', true);
+    }
+
+    public setSubmitButton(button: any): void {
+        button.on('click', () => {
+            this.submit();
+        });
+    }
+
+    public enableSubmitOnEnter(): void {
+        this.$form.on('keydown', (e: any) => {
+            if (e.code === 'Enter') {
+                this.submit();
+            }
+        });
     }
 }

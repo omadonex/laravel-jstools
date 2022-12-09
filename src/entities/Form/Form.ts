@@ -28,6 +28,9 @@ export abstract class Form implements FormContract {
     protected abstract disableFieldsInput(): void;
     protected abstract showSpinner(): void;
 
+    public abstract setSubmitButton(button: any): void;
+    public abstract enableSubmitOnEnter(): void;
+
     public clear(): void {
         this.clearErrors();
     }

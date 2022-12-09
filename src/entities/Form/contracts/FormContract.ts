@@ -6,4 +6,6 @@ export interface FormContract {
     submit(): void;
     clear(): void;
     setRuleList(ruleList: StringObjInterface): void;
+    setSubmitButton(button: any): void;
+    enableSubmitOnEnter(): void;
 }
