@@ -14,25 +14,44 @@ export {
 
 // ---Contracts
 import {FormContract} from "./entities/Form/contracts/FormContract";
+import {ModalContract} from "./entities/Modal/contracts/ModalContract";
 import {FormValidateServiceContract} from "./services/FormValidateService/contracts/FormValidateServiceContract";
+import {NotyServiceContract} from "./services/NotyService/contracts/NotyServiceContract";
 import {TranslateServiceContract} from "./services/TranslateService/contracts/TranslateServiceContract";
 import {ValidateServiceContract} from "./services/ValidateService/contracts/ValidateServiceContract";
 export {
     FormContract,
+    ModalContract,
     FormValidateServiceContract,
+    NotyServiceContract,
     TranslateServiceContract,
     ValidateServiceContract,
 };
 
 // ---Entities---
 import {Form} from "./entities/Form/Form";
+import {Modal} from "./entities/Modal/Modal";
 export {
     Form,
+    Modal,
 };
 
 // ---Types---
 import {FormTypeEnum} from "./entities/Form/FormTypeEnum";
+import {ModalTypeEnum} from "./entities/Modal/ModalTypeEnum";
+import {ModalUsageEnum} from "./entities/Modal/ModalUsageEnum";
+import {NotyTypeEnum} from "./services/NotyService/NotyTypeEnum";
 export {
     FormTypeEnum,
+    ModalTypeEnum,
+    ModalUsageEnum,
 };
+
+// ---Interfaces---
+import {ModalDataInterface} from "./entities/Modal/interfaces/ModalDataInterface";
+import {ModalSubmitDataInterface} from "./entities/Modal/interfaces/ModalSubmitDataInterface";
+export {
+    ModalDataInterface,
+    ModalSubmitDataInterface,
+}
 

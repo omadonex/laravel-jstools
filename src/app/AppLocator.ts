@@ -7,6 +7,12 @@ import {JQueryForm} from "../entities/Form/JQueryForm";
 import {JSToolsAbstractMap} from "./JSToolsAbstractMap";
 import {JQueryFormValidateService} from "../services/FormValidateService/JQueryFormValidateService";
 import {JST_UndefinedFormTypeException} from "../exceptions/JST_UndefinedFormTypeException";
+import {ModalTypeEnum} from "../entities/Modal/ModalTypeEnum";
+import {ModalContract} from "../entities/Modal/contracts/ModalContract";
+import {JST_UndefinedModalTypeException} from "../exceptions/JST_UndefinedModalTypeException";
+import {BS52Modal} from "../entities/Modal/BS52Modal";
+import {ModalDataInterface} from "../entities/Modal/interfaces/ModalDataInterface";
+import {ModalUsageEnum} from "../entities/Modal/ModalUsageEnum";
 
 export class AppLocator {
     private globalData: any;
@@ -36,6 +42,14 @@ export class AppLocator {
         }
 
         throw JST_UndefinedFormTypeException("Undefined form type! Check FormTypeEnum for available types!");
+    }
+
+    modal(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, modalType: ModalTypeEnum, tools: any): ModalContract {
+        switch (modalType) {
+            case ModalTypeEnum.bs_5_2: return new BS52Modal(modalId, modalData, modalUsage, tools, this.make(JSToolsAbstractMap.NotyServiceContract));
+        }
+
+        throw JST_UndefinedModalTypeException("Undefined modal type! Check ModalTypeEnum for available types!");
     }
 
     private generateMaps(): void {
