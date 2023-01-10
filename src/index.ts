@@ -15,6 +15,7 @@ export {
 // ---Contracts
 import {FormContract} from "./entities/Form/contracts/FormContract";
 import {ModalContract} from "./entities/Modal/contracts/ModalContract";
+import {AxiosServiceContract} from "./services/AxiosService/contracts/AxiosServiceContract";
 import {FormValidateServiceContract} from "./services/FormValidateService/contracts/FormValidateServiceContract";
 import {NotyServiceContract} from "./services/NotyService/contracts/NotyServiceContract";
 import {TranslateServiceContract} from "./services/TranslateService/contracts/TranslateServiceContract";
@@ -22,6 +23,7 @@ import {ValidateServiceContract} from "./services/ValidateService/contracts/Vali
 export {
     FormContract,
     ModalContract,
+    AxiosServiceContract,
     FormValidateServiceContract,
     NotyServiceContract,
     TranslateServiceContract,
@@ -37,14 +39,13 @@ export {
 };
 
 // ---Types---
-import {FormTypeEnum} from "./entities/Form/FormTypeEnum";
-import {ModalTypeEnum} from "./entities/Modal/ModalTypeEnum";
+import {EntityTypeEnum} from "./entities/EntityTypeEnum";
 import {ModalUsageEnum} from "./entities/Modal/ModalUsageEnum";
 import {NotyTypeEnum} from "./services/NotyService/NotyTypeEnum";
 export {
-    FormTypeEnum,
-    ModalTypeEnum,
+    EntityTypeEnum,
     ModalUsageEnum,
+    NotyTypeEnum,
 };
 
 // ---Interfaces---

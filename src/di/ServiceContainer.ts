@@ -1,7 +1,9 @@
 import {JST_AbstractNotBindToConcreteException} from "../exceptions/JST_AbstractNotBindToConcreteException";
 import {ClassInfoInterface} from "./interfaces/ClassInfoInterface";
 import {Service} from "../services/Service";
-import {ServiceListInterface} from "../services/ServiceListInterface";
+import {EntityTypeEnum} from "../entities/EntityTypeEnum";
+import {ServiceListInterface} from "../interfaces/ServiceListInterface";
+import {Entity} from "../entities/Entity";
 
 export class ServiceContainer {
     private classMap: any;
@@ -19,16 +21,16 @@ export class ServiceContainer {
         this.aliasMap = aliasMap;
     }
 
-    private createInstance(className: string): any {
+    private createInstance(className: string, params: any): any {
         if (className in this.classMap) {
             let classInfo: ClassInfoInterface = this.classMap[className];
-            let instance = classInfo.closure();
+            let instance = classInfo.closure(params);
 
-            if (instance instanceof Service) {
+            if (instance instanceof Service || instance instanceof Entity) {
                 let dependsList: string[] = instance.getServiceDependsList();
                 let serviceList: ServiceListInterface = {};
                 dependsList.forEach((item, i, arr) => {
-                    serviceList[item] = this.createInstance(item);
+                    serviceList[item] = this.createInstance(item, params);
                 });
 
                 instance.setServiceList(serviceList);
@@ -40,25 +42,29 @@ export class ServiceContainer {
         throw JST_AbstractNotBindToConcreteException(`Can't create instance of "${className}"! Abstract is not bind!`);
     }
 
-    private getInstance(className: string): any {
+    private getInstance(className: string, params: any): any {
         let classInfo = this.classMap[className];
 
         if (classInfo && classInfo.singleton) {
             if (!(className in this.data)) {
-                this.data[className] = this.createInstance(className);
+                this.data[className] = this.createInstance(className, params);
             }
 
             return this.data[className];
         }
 
-        return this.createInstance(className);
+        return this.createInstance(className, params);
     }
 
     public make(name: string): any {
         if (name in this.aliasMap) {
-            return this.getInstance(this.aliasMap[name]);
+            return this.getInstance(this.aliasMap[name], {});
         }
 
-        return this.getInstance(name);
+        return this.getInstance(name, {});
+    }
+
+    public makeEntity(name: string, entityType: EntityTypeEnum, params: any): any {
+        return this.getInstance(name, Object.assign(params, { entityType: entityType }));
     }
 }

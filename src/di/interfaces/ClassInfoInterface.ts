@@ -1,4 +1,4 @@
 export interface ClassInfoInterface {
-    closure: () => any,
+    closure: (params: any) => any,
     singleton?: boolean,
 }

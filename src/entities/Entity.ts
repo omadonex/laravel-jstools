@@ -1,7 +1,7 @@
 import {ServiceListContract} from "../contracts/ServiceListContract";
 import {ServiceListInterface} from "../interfaces/ServiceListInterface";
 
-export abstract class Service implements ServiceListContract {
+export abstract class Entity implements ServiceListContract {
     protected serviceList: ServiceListInterface = {};
     protected serviceDependsList: string[] = [];
 

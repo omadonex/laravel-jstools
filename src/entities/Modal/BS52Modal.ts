@@ -2,7 +2,6 @@ import {ModalContract} from "./contracts/ModalContract";
 import {Modal} from "./Modal";
 import {ModalDataInterface} from "./interfaces/ModalDataInterface";
 import {ModalUsageEnum} from "./ModalUsageEnum";
-import {NotyServiceContract} from "../../services/NotyService/contracts/NotyServiceContract";
 
 export class BS52Modal extends Modal implements ModalContract {
 
@@ -12,8 +11,8 @@ export class BS52Modal extends Modal implements ModalContract {
     private submitSpinnerEl: HTMLElement | null;
     private overlayEl: HTMLElement | null
 
-    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, tools: any, notyService: NotyServiceContract) {
-        super(modalId, modalData, modalUsage, notyService);
+    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, tools: any) {
+        super(modalId, modalData, modalUsage);
         this.modal = new tools.bootstrap.Modal(`#${this.modalId}`);
         this.submitEl = document.getElementById(`${this.prefix}btn_submit`) as HTMLElement;
         this.submitEl.onclick = () => { this.submit() };

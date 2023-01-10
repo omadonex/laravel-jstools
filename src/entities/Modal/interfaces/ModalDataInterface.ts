@@ -1,4 +1,5 @@
 import {ModalSubmitDataInterface} from "./ModalSubmitDataInterface";
+import {FormContract} from "../../Form/contracts/FormContract";
 
 export interface ModalDataInterface {
     title?: string,

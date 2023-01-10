@@ -8,10 +8,11 @@ import {AnyObjInterface} from "../../interfaces/AnyObjInterface";
 import {isEmpty} from "../../scripts/helpers";
 
 export class JQueryFormValidateService extends ValidateService implements FormValidateServiceContract {
-    validateForm(form: any, ruleList: RuleListInterface = {}): ValidateErrorListInterface | true {
+    validateForm(formId: string, ruleList: RuleListInterface = {}): ValidateErrorListInterface | true {
+        let $form = $(`#${formId}`);
         let data: AnyObjInterface = {};
         let ruleListForm: RuleListInterface = {};
-        form.find('input[data-jst-field]').each((index: number, element: any) => {
+        $form.find('input[data-jst-field]').each((index: number, element: any) => {
             let $input = $(element);
             let field: string = $input.data('jstField');
             data[field] = $input.val();

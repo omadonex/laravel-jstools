@@ -1,23 +1,26 @@
 import {ModalContract} from "./contracts/ModalContract";
 import {ModalDataInterface} from "./interfaces/ModalDataInterface";
 import {ModalUsageEnum} from "./ModalUsageEnum";
-import axios from "axios";
-import {NotyServiceContract} from "../../services/NotyService/contracts/NotyServiceContract";
-import {NotyTypeEnum} from "../../services/NotyService/NotyTypeEnum";
+import {FormContract} from "../Form/contracts/FormContract";
+import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
 
 export abstract class Modal implements ModalContract {
+    protected serviceDependsList: string[] = [
+        JSToolsAbstractMap.AxiosServiceContract,
+        JSToolsAbstractMap.NotyServiceContract,
+    ];
     protected modalId: string;
     protected prefix: string;
     protected modalData: ModalDataInterface;
     protected modalUsage: ModalUsageEnum;
-    protected notyService: NotyServiceContract;
+    protected form: FormContract | null;
 
-    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, notyService: NotyServiceContract) {
+    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum) {
         this.modalId = modalId;
         this.prefix = `${this.modalId}__`;
         this.modalData = modalData;
         this.modalUsage = modalUsage;
-        this.notyService = notyService;
+        this.form = null;
     }
 
     private load(): void {
@@ -31,6 +34,7 @@ export abstract class Modal implements ModalContract {
                 this.modalSubmitShow();
                 break;
             case ModalUsageEnum.form:
+                this.form?.clear();
                 this.modalSubmitShow();
                 break;
         }
@@ -67,38 +71,47 @@ export abstract class Modal implements ModalContract {
                 if (typeof this.modalData.submitData !== 'undefined') {
                     this.modalSubmitSpinnerShow();
                     this.showOverlay();
-                    axios(this.modalData.submitData)
-                        .then((response) => {
-                            if (response.data.status === true) {
-                                this.hide();
-                                if (response.data.noty) {
-                                    this.notyService.show({
-                                        type: NotyTypeEnum.success,
-                                        text: response.data.noty,
-                                    });
-                                }
-                            } else {
-                                this.hideOverlay();
-                                this.modalSubmitSpinnerHide();
-                                if (response.data.noty) {
-                                    this.notyService.show({
-                                        type: NotyTypeEnum.error,
-                                        text: response.data.noty,
-                                    });
-                                }
-                                console.log(response.data);
-                            }
-                        }, (error) => {
-                            this.hideOverlay();
-                            this.modalSubmitSpinnerHide();
-                            console.log(error);
-                        });
+                    // axios(this.modalData.submitData)
+                    //     .then((response) => {
+                    //         if (response.data.status === true) {
+                    //             this.hide();
+                    //             if (response.data.noty) {
+                    //                 this.notyService.show({
+                    //                     type: NotyTypeEnum.success,
+                    //                     text: response.data.noty,
+                    //                 });
+                    //             }
+                    //         } else {
+                    //             this.hideOverlay();
+                    //             this.modalSubmitSpinnerHide();
+                    //             if (response.data.noty) {
+                    //                 this.notyService.show({
+                    //                     type: NotyTypeEnum.error,
+                    //                     text: response.data.noty,
+                    //                 });
+                    //             }
+                    //             console.log(response.data);
+                    //         }
+                    //     }, (error) => {
+                    //         this.hideOverlay();
+                    //         this.modalSubmitSpinnerHide();
+                    //         console.log(error);
+                    //     });
                 }
 
                 break;
             case ModalUsageEnum.form:
+                this.form?.submit();
+
                 break;
         }
+    }
+
+    public setForm(form: FormContract | null) {
+        if (form !== null) {
+            form.attachToModal(this);
+        }
+        this.form = form;
     }
 
     protected abstract modalShow(): void;

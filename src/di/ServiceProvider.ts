@@ -12,7 +12,7 @@ export abstract class ServiceProvider implements ServiceProviderContract {
         this.appData = appData;
     }
 
-    public bind(abstract: string, concrete: () => any): void {
+    public bind(abstract: string, concrete: (params: any) => any): void {
         this.classMap[abstract] = {
             closure: concrete,
         };
@@ -22,7 +22,7 @@ export abstract class ServiceProvider implements ServiceProviderContract {
         this.aliasMap[alias] = abstract;
     }
 
-    public singleton(abstract: string, concrete: () => any): void {
+    public singleton(abstract: string, concrete: (params: any) => any): void {
         this.classMap[abstract] = {
             closure: concrete,
             singleton: true,
