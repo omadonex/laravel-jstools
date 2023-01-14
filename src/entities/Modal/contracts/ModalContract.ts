@@ -5,5 +5,9 @@ export interface ModalContract {
     hide(): void;
     showOverlay(): void;
     hideOverlay(): void;
+    showSubmitSpinner(): void;
+    hideSubmitSpinner(): void;
+    enableButtons(): void;
+    disableButtons(): void;
     setForm(form: FormContract | null): void;
 }

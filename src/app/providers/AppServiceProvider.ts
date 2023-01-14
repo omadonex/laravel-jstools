@@ -32,19 +32,19 @@ export class AppServiceProvider extends ServiceProvider {
         this.bind(JSToolsAbstractMap.FormContract, (params: any): FormContract => {
             switch (params.entityType) {
                 case EntityTypeEnum.bs_5_2:
-                    return new JQueryForm(params.formId, params.formSubmit);
+                    return new JQueryForm(params.formId, params.formSubmit, params.showNoty);
             }
 
-            return new JQueryForm(params.formId, params.formSubmit);
+            return new JQueryForm(params.formId, params.formSubmit, params.showNoty);
         });
 
         this.bind(JSToolsAbstractMap.ModalContract, (params: any): ModalContract => {
             switch (params.entityType) {
                 case EntityTypeEnum.bs_5_2:
-                    return new BS52Modal(params.modalId, params.modalData, params.modalUsage, params.tools);
+                    return new BS52Modal(params.modalId, params.modalData, params.modalUsage, params.showNoty, params.tools);
             }
 
-            return new BS52Modal(params.modalId, params.modalData, params.modalUsage, params.tools);
+            return new BS52Modal(params.modalId, params.modalData, params.modalUsage, params.showNoty, params.tools);
         });
     }
 }

@@ -4,12 +4,14 @@ export class ValidateError {
   private field: string;
   private rule: string;
   private replaceList: any;
+  private text: string;
 
-  constructor(field: string, rule: string, replaceList: any = []) {
+  constructor(field: string, rule: string, replaceList: any = [], text: string = '') {
     this.field = field;
     this.rule = rule;
     this.replaceList = replaceList;
     this.addReplace('attribute', this.field);
+    this.text = text;
   }
 
   addReplace(name: string, value: string): void {
@@ -17,6 +19,6 @@ export class ValidateError {
   }
 
   toText(translateService: TranslateServiceContract) {
-    return translateService.t__validate(this.rule, this.replaceList);
+    return this.text !== '' ? this.text : translateService.t__validate(this.rule, this.replaceList);
   }
 }

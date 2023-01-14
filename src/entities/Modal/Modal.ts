@@ -3,29 +3,37 @@ import {ModalDataInterface} from "./interfaces/ModalDataInterface";
 import {ModalUsageEnum} from "./ModalUsageEnum";
 import {FormContract} from "../Form/contracts/FormContract";
 import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
+import {AxiosServiceContract} from "../../services/AxiosService/contracts/AxiosServiceContract";
+import {CallbackListInterface} from "../../services/AxiosService/interfaces/CallbackListInterface";
+import {Entity} from "../Entity";
+import {ContextTypeEnum} from "../../types/ContextTypeEnum";
 
-export abstract class Modal implements ModalContract {
+export abstract class Modal extends Entity implements ModalContract {
     protected serviceDependsList: string[] = [
         JSToolsAbstractMap.AxiosServiceContract,
         JSToolsAbstractMap.NotyServiceContract,
     ];
     protected modalId: string;
-    protected prefix: string;
     protected modalData: ModalDataInterface;
     protected modalUsage: ModalUsageEnum;
+    protected showNoty: boolean;
     protected form: FormContract | null;
 
-    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum) {
+    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, showNoty: boolean) {
+        super();
         this.modalId = modalId;
-        this.prefix = `${this.modalId}__`;
         this.modalData = modalData;
         this.modalUsage = modalUsage;
+        this.showNoty = showNoty;
         this.form = null;
     }
 
     private load(): void {
         this.modalOverlayHide();
         this.modalSubmitSpinnerHide();
+        this.modalClearAlerts();
+        this.modalButtonsEnable();
+
         switch (this.modalUsage) {
             case ModalUsageEnum.info:
                 this.modalSubmitHide();
@@ -48,7 +56,24 @@ export abstract class Modal implements ModalContract {
         this.modalOverlayHide();
     }
 
+    public showSubmitSpinner(): void {
+        this.modalSubmitSpinnerShow();
+    }
+
+    public hideSubmitSpinner(): void {
+        this.modalSubmitSpinnerHide();
+    }
+
+    public enableButtons(): void {
+        this.modalButtonsEnable();
+    }
+
+    public disableButtons(): void {
+        this.modalButtonsDisable();
+    }
+
     public show(): void {
+        this.prepareElements();
         this.load();
         this.modalShow();
     }
@@ -62,41 +87,47 @@ export abstract class Modal implements ModalContract {
             case ModalUsageEnum.info:
                 break;
             case ModalUsageEnum.confirm:
-                if (typeof this.modalData.submitCallback !== 'undefined') {
-                    this.hide();
-                    this.modalData.submitCallback();
+                if (typeof this.modalData.submitData !== 'undefined') {
+                    let axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
+                    let callbackList: CallbackListInterface = {
+                        start: () => {
+                            this.modalSubmitSpinnerShow();
+                            this.modalButtonsDisable();
+                            this.modalOverlayShow();
+                            this.modalClearAlerts();
+                        },
+                        finish: () => {
+                            this.modalSubmitSpinnerHide();
+                            this.modalButtonsEnable();
+                            this.modalOverlayHide();
+                        },
+                        success: () => {
+                            this.modalHide();
+                            if (typeof this.modalData.submitCallback !== 'undefined') {
+                                this.modalData.submitCallback();
+                            }
+                        },
+                    }
+
+                    let send = axiosService.send(this.modalData.submitData, callbackList, this.showNoty);
+
+                    send.then((res: any) => {
+                        if (res.result && !res.data.status) {
+                            this.modalShowAlerts(res.data.errors, ContextTypeEnum.danger);
+                            return;
+                        }
+
+                        if (!res.result && typeof res.data.status === 'undefined') {
+                            this.modalShowAlerts([res.data], ContextTypeEnum.warning);
+                        }
+                    });
+
                     return;
                 }
 
-                if (typeof this.modalData.submitData !== 'undefined') {
-                    this.modalSubmitSpinnerShow();
-                    this.showOverlay();
-                    // axios(this.modalData.submitData)
-                    //     .then((response) => {
-                    //         if (response.data.status === true) {
-                    //             this.hide();
-                    //             if (response.data.noty) {
-                    //                 this.notyService.show({
-                    //                     type: NotyTypeEnum.success,
-                    //                     text: response.data.noty,
-                    //                 });
-                    //             }
-                    //         } else {
-                    //             this.hideOverlay();
-                    //             this.modalSubmitSpinnerHide();
-                    //             if (response.data.noty) {
-                    //                 this.notyService.show({
-                    //                     type: NotyTypeEnum.error,
-                    //                     text: response.data.noty,
-                    //                 });
-                    //             }
-                    //             console.log(response.data);
-                    //         }
-                    //     }, (error) => {
-                    //         this.hideOverlay();
-                    //         this.modalSubmitSpinnerHide();
-                    //         console.log(error);
-                    //     });
+                if (typeof this.modalData.submitCallback !== 'undefined') {
+                    this.modalHide();
+                    this.modalData.submitCallback();
                 }
 
                 break;
@@ -114,74 +145,43 @@ export abstract class Modal implements ModalContract {
         this.form = form;
     }
 
+    private prepareElements(): void {
+        if (this.modalData.title) {
+            this.modalSetTitle(this.modalData.title);
+        }
+
+        if (this.modalData.submitText) {
+            this.modalSetSubmitText(this.modalData.submitText);
+        }
+
+        if (this.modalData.cancelText) {
+            this.modalSetCancelText(this.modalData.cancelText);
+        }
+
+        if (this.modalData.bodyCaption) {
+            this.modalSetBodyCaption(this.modalData.bodyCaption);
+        }
+
+        if (this.modalData.bodyText) {
+            this.modalSetBodyText(this.modalData.bodyText);
+        }
+    }
+
     protected abstract modalShow(): void;
     protected abstract modalHide(): void;
+    protected abstract modalShowAlerts(alertList: string[], contextType: ContextTypeEnum): void;
+    protected abstract modalClearAlerts(): void;
     protected abstract modalOverlayShow(): void;
     protected abstract modalOverlayHide(): void
     protected abstract modalSubmitShow(): void;
     protected abstract modalSubmitHide(): void;
     protected abstract modalSubmitSpinnerShow(): void;
     protected abstract modalSubmitSpinnerHide(): void;
-
-    protected abstract setTitle(text: string): void;
-    protected abstract setSubmitText(text: string): void;
-    protected abstract setCancelText(text: string): void;
-    protected abstract setBodyText(text: string): void;
-
-
-
-    private beforeShow(): void {
-        if (this.modalData.title) {
-            this.setTitle(this.modalData.title);
-        }
-
-        if (this.modalData.submitText) {
-            this.setSubmitText(this.modalData.submitText);
-        }
-
-        if (this.modalData.cancelText) {
-            this.setCancelText(this.modalData.cancelText);
-        }
-
-        if (this.modalData.bodyText) {
-            this.setBodyText(this.modalData.bodyText);
-        }
-
-        // this.lockFields(openData.lock || []);
-    }
-
-    // public open(inputDataOrUrl: any, successCallback: any, openData: any, cancelCallback: any) {
-    //     if (!this.isLoaded()) {
-    //         this.load();
-    //     }
-    //
-    //     //this.ml.clear();
-    //     openData = openData || {};
-    //     this.initOpen(openData);
-    //     //const fnName = `${this.id}_openModalCallback`;
-    //
-    //     if (typeof inputDataOrUrl === 'string') {
-    //         this.$modal.modal('show');
-    //         this.showOverlay();
-    //         // $.ajax({
-    //         //     method: 'GET',
-    //         //     url: inputDataOrUrl,
-    //         //     data: {
-    //         //         _token: $('meta[name="csrf-token"]').attr('content'),
-    //         //     },
-    //         //     success: (response) => {
-    //         //         this.hideOverlay();
-    //         //         eval(fnName)(this, response.data, successCallback, openData.submitData, cancelCallback);
-    //         //     },
-    //         //     error: (response) => {
-    //         //         this.hide();
-    //         //         X5Lab.noty.error('Не удалось открыть модальное окно. Непредвиденная ошибка');
-    //         //         console.log(response);
-    //         //     },
-    //         // });
-    //     } else {
-    //         this.openModalCallback(this, inputDataOrUrl, successCallback, openData.submitData, cancelCallback);
-    //         this.$modal.modal('show');
-    //     }
-    // }
+    protected abstract modalButtonsEnable(): void;
+    protected abstract modalButtonsDisable(): void;
+    protected abstract modalSetTitle(text: string): void;
+    protected abstract modalSetSubmitText(text: string): void;
+    protected abstract modalSetCancelText(text: string): void;
+    protected abstract modalSetBodyCaption(text: string): void;
+    protected abstract modalSetBodyText(text: string): void;
 }

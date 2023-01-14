@@ -34,12 +34,12 @@ export class AppLocator {
         return this.serviceContainer.makeEntity(name, entityType, params);
     }
 
-    form(formId: string, formSubmit: boolean, entityType: EntityTypeEnum): FormContract {
-        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId: formId, formSubmit: formSubmit });
+    form(formId: string, formSubmit: boolean, showNoty: boolean, entityType: EntityTypeEnum): FormContract {
+        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId: formId, formSubmit: formSubmit, showNoty: showNoty });
     }
 
-    modal(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, tools: any, entityType: EntityTypeEnum): ModalContract {
-        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId: modalId, modalData: modalData, modalUsage: modalUsage, tools: tools });
+    modal(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, showNoty: boolean, tools: any, entityType: EntityTypeEnum): ModalContract {
+        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId: modalId, modalData: modalData, modalUsage: modalUsage, showNoty: showNoty, tools: tools });
     }
 
     private generateMaps(): void {
