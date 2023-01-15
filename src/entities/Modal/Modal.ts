@@ -109,7 +109,11 @@ export abstract class Modal extends Entity implements ModalContract {
                         },
                     }
 
-                    let send = axiosService.send(this.modalData.submitData, callbackList, this.showNoty);
+                    let send = axiosService.send(Object.assign(this.modalData.submitData, {
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest",
+                        }
+                    }), callbackList, this.showNoty);
 
                     send.then((res: any) => {
                         if (res.result && !res.data.status) {

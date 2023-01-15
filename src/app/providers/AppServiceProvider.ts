@@ -29,13 +29,15 @@ export class AppServiceProvider extends ServiceProvider {
             return new ConsoleNotyService();
         });
 
+        this.alias(JSToolsAbstractMap.NotyServiceContract, 'n');
+
         this.bind(JSToolsAbstractMap.FormContract, (params: any): FormContract => {
             switch (params.entityType) {
                 case EntityTypeEnum.bs_5_2:
-                    return new JQueryForm(params.formId, params.formSubmit, params.showNoty);
+                    return new JQueryForm(params.formId, params.formSubmit, params.withoutSubmitBtn, params.showNoty);
             }
 
-            return new JQueryForm(params.formId, params.formSubmit, params.showNoty);
+            return new JQueryForm(params.formId, params.formSubmit, params.withoutSubmitBtn, params.showNoty);
         });
 
         this.bind(JSToolsAbstractMap.ModalContract, (params: any): ModalContract => {

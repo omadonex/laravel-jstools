@@ -1,11 +1,11 @@
 import {AxiosServiceContract} from "./contracts/AxiosServiceContract";
 import axios from "axios";
 import {NotyServiceContract} from "../NotyService/contracts/NotyServiceContract";
-import {NotyTypeEnum} from "../NotyService/NotyTypeEnum";
 import {CallbackListInterface} from "./interfaces/CallbackListInterface";
 import {Service} from "../Service";
 import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
 import {FormContract} from "../../entities/Form/contracts/FormContract";
+import {ContextTypeEnum} from "../../types/ContextTypeEnum";
 
 export class AxiosService extends Service implements AxiosServiceContract {
 
@@ -34,15 +34,15 @@ export class AxiosService extends Service implements AxiosServiceContract {
 
                 if (showNoty && data.noty) {
                     notyService.show({
-                        type: NotyTypeEnum.success,
-                        text: data.noty,
+                        context: ContextTypeEnum.success,
+                        message: data.noty,
                     });
                 }
             } else {
                 if (showNoty && data.noty) {
                     notyService.show({
-                        type: NotyTypeEnum.error,
-                        text: data.noty,
+                        context: ContextTypeEnum.danger,
+                        message: data.noty,
                     });
                 }
             }

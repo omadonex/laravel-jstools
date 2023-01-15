@@ -21,13 +21,15 @@ export abstract class Form extends Entity implements FormContract {
     protected formId: string;
     protected formSubmit: boolean;
     protected showNoty: boolean;
+    protected withoutSubmitBtn: boolean;
     protected ruleList: StringObjInterface = {};
     protected isSending: boolean;
 
-    constructor(formId: string, formSubmit: boolean, showNoty: boolean, validateService: FormValidateServiceContract) {
+    constructor(formId: string, formSubmit: boolean, withoutSubmitBtn: boolean, showNoty: boolean, validateService: FormValidateServiceContract) {
         super();
         this.formId = formId;
         this.formSubmit = formSubmit;
+        this.withoutSubmitBtn = withoutSubmitBtn;
         this.showNoty = showNoty;
         this.isSending = false;
         this.validateService = validateService;
@@ -42,6 +44,8 @@ export abstract class Form extends Entity implements FormContract {
     protected abstract getAction(): string;
     protected abstract getToken(): string;
     protected abstract callFormSubmit(): void;
+    protected abstract showSubmitBtn(): void;
+    protected abstract hideSubmitBtn(): void;
     protected abstract disableSubmitBtn(): void;
     protected abstract enableSubmitBtn(): void;
     protected abstract disableFieldsInput(): void;
@@ -63,6 +67,30 @@ export abstract class Form extends Entity implements FormContract {
         this.modal = modal;
     }
 
+    private preSubmitActions(): void {
+        if (this.modal === null) {
+            this.showSpinner();
+            this.disableSubmitBtn();
+            this.disableFieldsInput();
+        } else {
+            this.modal.showSubmitSpinner();
+            this.modal.disableButtons();
+            this.modal.showOverlay();
+        }
+    }
+
+    private afterSubmitActions(): void {
+        if (this.modal === null) {
+            this.hideSpinner();
+            this.enableSubmitBtn();
+            this.enableFieldsInput();
+        } else {
+            this.modal.hideSubmitSpinner();
+            this.modal.enableButtons();
+            this.modal.hideOverlay();
+        }
+    }
+
     public submit(): void {
         this.clearErrors();
         this.clearAlerts();
@@ -71,9 +99,7 @@ export abstract class Form extends Entity implements FormContract {
             this.showErrors(errorList);
         } else {
             if (this.formSubmit) {
-                this.showSpinner();
-                this.disableSubmitBtn();
-                this.disableFieldsInput();
+                this.preSubmitActions();
                 this.callFormSubmit();
             } else {
                 this.doSubmit();
@@ -90,27 +116,11 @@ export abstract class Form extends Entity implements FormContract {
         let callbackList: CallbackListInterface = {
             start: () => {
                 this.isSending = true;
-                if (this.modal === null) {
-                    this.showSpinner();
-                    this.disableSubmitBtn();
-                    this.disableFieldsInput();
-                } else {
-                    this.modal.showSubmitSpinner();
-                    this.modal.disableButtons();
-                    this.modal.showOverlay();
-                }
+                this.preSubmitActions();
             },
             finish: () => {
                 this.isSending = false;
-                if (this.modal === null) {
-                    this.hideSpinner();
-                    this.enableSubmitBtn();
-                    this.enableFieldsInput();
-                } else {
-                    this.modal.hideSubmitSpinner();
-                    this.modal.enableButtons();
-                    this.modal.hideOverlay();
-                }
+                this.afterSubmitActions();
             },
             success: () => {
                 if (this.modal === null) {
@@ -137,6 +147,9 @@ export abstract class Form extends Entity implements FormContract {
             url: this.getAction(),
             method: this.getMethod(),
             data: this.serialize(),
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
         }, callbackList, this.showNoty);
 
         send.then((res: any) => {

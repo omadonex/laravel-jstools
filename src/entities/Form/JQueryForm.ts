@@ -1,5 +1,20 @@
 import * as $ from "jquery";
 
+// $.fn.extend({
+//     serializeArray: function () {
+//         var brokenSerialization = originalSerializeArray.apply(this);
+//         var checkboxValues = $(this).find('input[type=checkbox]').map(function () {
+//             return { 'name': this.name, 'value': this.checked };
+//         }).get();
+//         var checkboxKeys = $.map(checkboxValues, function (element) { return element.name; });
+//         var withoutCheckboxes = $.grep(brokenSerialization, function (element) {
+//             return $.inArray(element.name, checkboxKeys) == -1;
+//         });
+//
+//         return $.merge(withoutCheckboxes, checkboxValues);
+//     }
+// });
+
 import {Form} from "./Form";
 import {ValidateError} from "../../services/ValidateService/ValidateError";
 import {TranslateServiceContract} from "../../services/TranslateService/contracts/TranslateServiceContract";
@@ -17,14 +32,20 @@ export class JQueryForm extends Form {
     private $submit: any;
     private $alert: any;
 
-    constructor(formId: string, formSubmit: boolean, showNoty: boolean) {
-        super(formId, formSubmit, showNoty, new JQueryFormValidateService());
+    constructor(formId: string, formSubmit: boolean, withoutSubmitBtn: boolean, showNoty: boolean) {
+        super(formId, formSubmit, withoutSubmitBtn, showNoty, new JQueryFormValidateService());
         this.$form = $(`#${this.formId}`);
         this.$inputList = this.$form.find('input[data-jst-field]');
         this.$spinner = this.$form.find('span[data-jst-spinner]');
         this.$submit = this.$form.find('button[data-jst-submit]');
         this.$alert = this.$form.find('div[data-jst-alert]');
-        this.setSubmitButton(this.$submit);
+
+        if (withoutSubmitBtn) {
+            this.$submit.hide();
+        } else {
+            this.setSubmitButton(this.$submit);
+        }
+
         this.enableSubmitOnEnter();
     }
 
@@ -97,7 +118,22 @@ export class JQueryForm extends Form {
     }
 
     protected callFormSubmit(): void {
-        this.$form.submit();
+        let form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
+        form.addEventListener('formdata', (e) => {
+          const formData = e.formData;
+          let data = this.serialize();
+          for (let field in data) {
+              formData.set(field, data[field]);
+          }
+        });
+        form.submit();
+    }
+
+    protected showSubmitBtn(): void {
+
+    }
+
+    protected hideSubmitBtn(): void {
     }
 
     protected disableSubmitBtn(): void {
@@ -141,11 +177,30 @@ export class JQueryForm extends Form {
         });
     }
 
+    // public serialize(): AnyObjInterface {
+    //     let data: AnyObjInterface = {};
+    //     this.$form.serializeArray().forEach((item: JQuerySerializeItemInterface) => {
+    //         data[item.name] = item.value;
+    //     });
+    //
+    //     return data;
+    // }
+
     public serialize(): AnyObjInterface {
         let data: AnyObjInterface = {};
-        this.$form.serializeArray().forEach((item: JQuerySerializeItemInterface) => {
-            data[item.name] = item.value;
-        });
+        console.log(this.$inputList);
+        this.$inputList.each((index: number, input: any) => {
+            let $input = $(input);
+            let name: string = $input.attr('name') as string;
+            switch ($input.attr('type')) {
+                case 'text':
+                    data[name] = $input.val();
+                    break;
+                case 'checkbox':
+                    data[name] = $input.prop('checked') ? 'on' : 'off';
+                    break;
+            }
+        })
 
         return data;
     }

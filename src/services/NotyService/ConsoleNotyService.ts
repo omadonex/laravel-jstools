@@ -5,7 +5,7 @@ import {NotyDataInterface} from "./interfaces/NotyDataInterface";
 export class ConsoleNotyService extends Service implements NotyServiceContract {
 
     public show(data: NotyDataInterface): void {
-        console.log(data.text);
+        console.log(data.message);
     }
 
     public hide(): void {

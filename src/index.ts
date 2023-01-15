@@ -42,12 +42,10 @@ export {
 import {ContextTypeEnum} from "./types/ContextTypeEnum";
 import {EntityTypeEnum} from "./entities/EntityTypeEnum";
 import {ModalUsageEnum} from "./entities/Modal/ModalUsageEnum";
-import {NotyTypeEnum} from "./services/NotyService/NotyTypeEnum";
 export {
     ContextTypeEnum,
     EntityTypeEnum,
     ModalUsageEnum,
-    NotyTypeEnum,
 };
 
 // ---Interfaces---

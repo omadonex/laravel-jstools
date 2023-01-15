@@ -1,7 +1,7 @@
-import {NotyTypeEnum} from "../NotyTypeEnum";
+import {ContextTypeEnum} from "../../../types/ContextTypeEnum";
 
 export interface NotyDataInterface {
-    type: NotyTypeEnum,
-    text: string,
+    context: ContextTypeEnum,
+    message: string,
     delay?: number,
 }
