@@ -20,8 +20,8 @@ export class BS52Modal extends Modal implements ModalContract {
     private overlayEl: HTMLElement | null = null;
     private alertEl: HTMLElement | null = null;
 
-    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, showNoty: boolean, tools: any) {
-        super(modalId, modalData, modalUsage, showNoty);
+    constructor(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean, tools: any) {
+        super(modalId, modalUsage, modalData, showNoty);
         this.modalEl = document.getElementById(`${this.modalId}`);
         if (this.modalEl) {
             this.modal = new tools.bootstrap.Modal(`#${this.modalId}`);

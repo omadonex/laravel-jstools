@@ -10,4 +10,5 @@ export interface ModalContract {
     enableButtons(): void;
     disableButtons(): void;
     setForm(form: FormContract | null): void;
+    callSubmitCallback(): void;
 }

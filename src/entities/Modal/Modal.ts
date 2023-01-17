@@ -19,7 +19,7 @@ export abstract class Modal extends Entity implements ModalContract {
     protected showNoty: boolean;
     protected form: FormContract | null;
 
-    constructor(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, showNoty: boolean) {
+    constructor(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean) {
         super();
         this.modalId = modalId;
         this.modalData = modalData;
@@ -103,9 +103,7 @@ export abstract class Modal extends Entity implements ModalContract {
                         },
                         success: () => {
                             this.modalHide();
-                            if (typeof this.modalData.submitCallback !== 'undefined') {
-                                this.modalData.submitCallback();
-                            }
+                            this.callSubmitCallback();
                         },
                     }
 
@@ -129,16 +127,20 @@ export abstract class Modal extends Entity implements ModalContract {
                     return;
                 }
 
-                if (typeof this.modalData.submitCallback !== 'undefined') {
-                    this.modalHide();
-                    this.modalData.submitCallback();
-                }
+                this.modalHide();
+                this.callSubmitCallback();
 
                 break;
             case ModalUsageEnum.form:
                 this.form?.submit();
 
                 break;
+        }
+    }
+
+    public callSubmitCallback(): void {
+        if (typeof this.modalData.submitCallback !== 'undefined') {
+            this.modalData.submitCallback();
         }
     }
 

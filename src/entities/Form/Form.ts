@@ -10,6 +10,7 @@ import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
 import {CallbackListInterface} from "../../services/AxiosService/interfaces/CallbackListInterface";
 import {ValidateError} from "../../services/ValidateService/ValidateError";
 import {ContextTypeEnum} from "../../types/ContextTypeEnum";
+import {FormDataInterface} from "./interfaces/FormDataInterface";
 
 export abstract class Form extends Entity implements FormContract {
     protected serviceDependsList: string[] = [
@@ -19,20 +20,35 @@ export abstract class Form extends Entity implements FormContract {
     private modal: ModalContract | null = null;
     protected validateService: FormValidateServiceContract;
     protected formId: string;
-    protected formSubmit: boolean;
+    protected formData: FormDataInterface;
     protected showNoty: boolean;
-    protected withoutSubmitBtn: boolean;
     protected ruleList: StringObjInterface = {};
     protected isSending: boolean;
+    protected defaultValues: AnyObjInterface = {};
 
-    constructor(formId: string, formSubmit: boolean, withoutSubmitBtn: boolean, showNoty: boolean, validateService: FormValidateServiceContract) {
+    constructor(formId: string, formData: FormDataInterface, showNoty: boolean, validateService: FormValidateServiceContract) {
         super();
         this.formId = formId;
-        this.formSubmit = formSubmit;
-        this.withoutSubmitBtn = withoutSubmitBtn;
+        this.formData = formData;
         this.showNoty = showNoty;
         this.isSending = false;
         this.validateService = validateService;
+    }
+
+    protected isAjax(): boolean {
+        return this.formData.ajax || false;
+    }
+
+    protected isNoSubmitBtn(): boolean {
+        return this.formData.noBtn || false;
+    }
+
+    protected isSubmitOnEnter(): boolean {
+        return this.formData.submitOnEnter || false;
+    }
+
+    protected saveDefaultValues(): void {
+        this.defaultValues = this.serialize();
     }
 
     protected abstract showErrors(errorList: ValidateErrorListInterface): void;
@@ -98,7 +114,7 @@ export abstract class Form extends Entity implements FormContract {
         if (errorList !== true) {
             this.showErrors(errorList);
         } else {
-            if (this.formSubmit) {
+            if (!this.isAjax()) {
                 this.preSubmitActions();
                 this.callFormSubmit();
             } else {
@@ -125,8 +141,10 @@ export abstract class Form extends Entity implements FormContract {
             success: () => {
                 if (this.modal === null) {
                     this.clear();
+                    this.callSubmitCallback();
                 } else {
                     this.modal.hide();
+                    this.modal.callSubmitCallback();
                 }
             },
             error: (errors: any) => {
@@ -166,5 +184,11 @@ export abstract class Form extends Entity implements FormContract {
 
     public setRuleList(ruleList: StringObjInterface): void {
         this.ruleList = ruleList;
+    }
+
+    public callSubmitCallback(): void {
+        if (typeof this.formData.submitCallback !== 'undefined') {
+            this.formData.submitCallback();
+        }
     }
 }

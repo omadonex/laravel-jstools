@@ -9,6 +9,7 @@ import {ModalUsageEnum} from "../entities/Modal/ModalUsageEnum";
 import {EntityTypeEnum} from "../entities/EntityTypeEnum";
 import {NotyDataInterface} from "../services/NotyService/interfaces/NotyDataInterface";
 import {NotyServiceContract} from "../services/NotyService/contracts/NotyServiceContract";
+import {FormDataInterface} from "../entities/Form/interfaces/FormDataInterface";
 
 export class AppLocator {
     private globalData: any;
@@ -36,12 +37,12 @@ export class AppLocator {
         return this.serviceContainer.makeEntity(name, entityType, params);
     }
 
-    public form(formId: string, formSubmit: boolean, withoutSubmitBtn: boolean, showNoty: boolean, entityType: EntityTypeEnum): FormContract {
-        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId: formId, formSubmit: formSubmit, withoutSubmitBtn: withoutSubmitBtn, showNoty: showNoty });
+    public form(formId: string, formData: FormDataInterface, showNoty: boolean, entityType: EntityTypeEnum): FormContract {
+        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId: formId, formData: formData, showNoty: showNoty });
     }
 
-    public modal(modalId: string, modalData: ModalDataInterface, modalUsage: ModalUsageEnum, showNoty: boolean, tools: any, entityType: EntityTypeEnum): ModalContract {
-        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId: modalId, modalData: modalData, modalUsage: modalUsage, showNoty: showNoty, tools: tools });
+    public modal(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean, tools: any, entityType: EntityTypeEnum): ModalContract {
+        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId: modalId, modalUsage: modalUsage, modalData: modalData, showNoty: showNoty, tools: tools });
     }
 
     public noty(data: NotyDataInterface): void {

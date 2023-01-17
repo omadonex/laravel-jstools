@@ -1,29 +1,13 @@
 import * as $ from "jquery";
-
-// $.fn.extend({
-//     serializeArray: function () {
-//         var brokenSerialization = originalSerializeArray.apply(this);
-//         var checkboxValues = $(this).find('input[type=checkbox]').map(function () {
-//             return { 'name': this.name, 'value': this.checked };
-//         }).get();
-//         var checkboxKeys = $.map(checkboxValues, function (element) { return element.name; });
-//         var withoutCheckboxes = $.grep(brokenSerialization, function (element) {
-//             return $.inArray(element.name, checkboxKeys) == -1;
-//         });
-//
-//         return $.merge(withoutCheckboxes, checkboxValues);
-//     }
-// });
-
 import {Form} from "./Form";
 import {ValidateError} from "../../services/ValidateService/ValidateError";
 import {TranslateServiceContract} from "../../services/TranslateService/contracts/TranslateServiceContract";
 import {ValidateErrorListInterface} from "../../services/ValidateService/interfaces/ValidateErrorListInterface";
-import {JQuerySerializeItemInterface} from "./interfaces/JQuerySerializeItemInterface";
 import {AnyObjInterface} from "../../interfaces/AnyObjInterface";
 import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
 import {JQueryFormValidateService} from "../../services/FormValidateService/JQueryFormValidateService";
 import {ContextTypeEnum} from "../../types/ContextTypeEnum";
+import {FormDataInterface} from "./interfaces/FormDataInterface";
 
 export class JQueryForm extends Form {
     private $form: any;
@@ -32,21 +16,25 @@ export class JQueryForm extends Form {
     private $submit: any;
     private $alert: any;
 
-    constructor(formId: string, formSubmit: boolean, withoutSubmitBtn: boolean, showNoty: boolean) {
-        super(formId, formSubmit, withoutSubmitBtn, showNoty, new JQueryFormValidateService());
+    constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
+        super(formId, formData, showNoty, new JQueryFormValidateService());
         this.$form = $(`#${this.formId}`);
         this.$inputList = this.$form.find('input[data-jst-field]');
         this.$spinner = this.$form.find('span[data-jst-spinner]');
         this.$submit = this.$form.find('button[data-jst-submit]');
         this.$alert = this.$form.find('div[data-jst-alert]');
 
-        if (withoutSubmitBtn) {
-            this.$submit.hide();
+        if (this.isNoSubmitBtn()) {
+            this.hideSubmitBtn();
         } else {
             this.setSubmitButton(this.$submit);
         }
 
-        this.enableSubmitOnEnter();
+        if (this.isSubmitOnEnter()) {
+            this.enableSubmitOnEnter();
+        }
+
+        this.saveDefaultValues();
     }
 
     protected showErrors(errorList: ValidateErrorListInterface): void {
@@ -76,7 +64,7 @@ export class JQueryForm extends Form {
     protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {
         if (this.$alert) {
             let classList: string[] = [];
-            Object.keys(ContextTypeEnum).forEach((key, index) => {
+            Object.keys(ContextTypeEnum).forEach((key) => {
                 classList.push(`alert-${key}`);
             });
 
@@ -86,7 +74,7 @@ export class JQueryForm extends Form {
                html += `<li>${alert}</li>`;
             });
             html += '</ul>';
-            console.log(html);
+
             this.$alert.html(html);
             this.$alert.removeClass(classList).addClass(`alert-${contextType}`);
             this.$alert.removeClass('d-none');
@@ -101,8 +89,17 @@ export class JQueryForm extends Form {
     }
 
     protected clearInputs(): void {
-        //TODO omadonex: правильная очистка стартовых значений
-        this.$inputList.val('');
+        for (let name in this.defaultValues) {
+            let $input = this.$form.find(`input[data-jst-field="${name}"]`);
+            switch ($input.attr('type')) {
+                case 'text':
+                    $input.val(this.defaultValues[name]);
+                    break;
+                case 'checkbox':
+                    $input.prop('checked', this.defaultValues[name] === 'on');
+                    break;
+            }
+        }
     }
 
     protected getMethod(): string {
@@ -130,10 +127,11 @@ export class JQueryForm extends Form {
     }
 
     protected showSubmitBtn(): void {
-
+        this.$submit.show();
     }
 
     protected hideSubmitBtn(): void {
+        this.$submit.hide();
     }
 
     protected disableSubmitBtn(): void {
@@ -169,7 +167,7 @@ export class JQueryForm extends Form {
     public enableSubmitOnEnter(): void {
         this.$form.on('keydown', (e: any) => {
             if (e.code === 'Enter') {
-                if (!this.formSubmit) {
+                if (this.isAjax()) {
                     e.preventDefault();
                 }
                 this.submit();
@@ -177,18 +175,8 @@ export class JQueryForm extends Form {
         });
     }
 
-    // public serialize(): AnyObjInterface {
-    //     let data: AnyObjInterface = {};
-    //     this.$form.serializeArray().forEach((item: JQuerySerializeItemInterface) => {
-    //         data[item.name] = item.value;
-    //     });
-    //
-    //     return data;
-    // }
-
     public serialize(): AnyObjInterface {
         let data: AnyObjInterface = {};
-        console.log(this.$inputList);
         this.$inputList.each((index: number, input: any) => {
             let $input = $(input);
             let name: string = $input.attr('name') as string;
@@ -200,7 +188,7 @@ export class JQueryForm extends Form {
                     data[name] = $input.prop('checked') ? 'on' : 'off';
                     break;
             }
-        })
+        });
 
         return data;
     }
