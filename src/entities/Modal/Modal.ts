@@ -7,6 +7,7 @@ import {AxiosServiceContract} from "../../services/AxiosService/contracts/AxiosS
 import {CallbackListInterface} from "../../services/AxiosService/interfaces/CallbackListInterface";
 import {Entity} from "../Entity";
 import {ContextTypeEnum} from "../../types/ContextTypeEnum";
+import {RequestDataInterface} from "../../interfaces/RequestDataInterface";
 
 export abstract class Modal extends Entity implements ModalContract {
     protected serviceDependsList: string[] = [
@@ -28,7 +29,11 @@ export abstract class Modal extends Entity implements ModalContract {
         this.form = null;
     }
 
-    private load(): void {
+    protected hasPreload(): boolean {
+        return !!this.modalData.preloadData;
+    }
+
+    private reset(): void {
         this.modalOverlayHide();
         this.modalSubmitSpinnerHide();
         this.modalClearAlerts();
@@ -74,8 +79,50 @@ export abstract class Modal extends Entity implements ModalContract {
 
     public show(): void {
         this.prepareElements();
-        this.load();
+        this.reset();
         this.modalShow();
+        if (this.hasPreload()) {
+            if (typeof this.modalData.preloadData !== 'undefined') {
+                this.send(this.modalData.preloadData, false, {
+                    start: () => {
+                        this.modalSubmitSpinnerShow();
+                        this.modalButtonsDisable();
+                        this.modalOverlayShow();
+                        this.modalClearAlerts();
+                    },
+                    finish: () => {
+                        this.modalSubmitSpinnerHide();
+                        this.modalButtonsEnable();
+                        this.modalOverlayHide();
+                    },
+                    success: (data: any) => {
+                        this.form?.setInitData(data);
+                    },
+                });
+            }
+        } else if (typeof this.modalData.initDataCallback !== 'undefined') {
+            this.form?.setInitData(this.modalData.initDataCallback());
+        }
+    }
+
+    private send(data: RequestDataInterface, showNoty: boolean, callbackList: CallbackListInterface): void {
+        let axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
+        let send = axiosService.send(Object.assign(data, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            }
+        }), callbackList, showNoty);
+
+        send.then((res: any) => {
+            if (res.result && !res.data.status) {
+                this.modalShowAlerts(res.data.errors, ContextTypeEnum.danger);
+                return;
+            }
+
+            if (!res.result && typeof res.data.status === 'undefined') {
+                this.modalShowAlerts([res.data], ContextTypeEnum.warning);
+            }
+        });
     }
 
     public hide(): void {
@@ -88,8 +135,7 @@ export abstract class Modal extends Entity implements ModalContract {
                 break;
             case ModalUsageEnum.confirm:
                 if (typeof this.modalData.submitData !== 'undefined') {
-                    let axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
-                    let callbackList: CallbackListInterface = {
+                    this.send(this.modalData.submitData, this.showNoty, {
                         start: () => {
                             this.modalSubmitSpinnerShow();
                             this.modalButtonsDisable();
@@ -101,28 +147,11 @@ export abstract class Modal extends Entity implements ModalContract {
                             this.modalButtonsEnable();
                             this.modalOverlayHide();
                         },
-                        success: () => {
+                        success: (data: any) => {
                             this.modalHide();
                             this.callSubmitCallback();
                         },
-                    }
-
-                    let send = axiosService.send(Object.assign(this.modalData.submitData, {
-                        headers: {
-                            "X-Requested-With": "XMLHttpRequest",
-                        }
-                    }), callbackList, this.showNoty);
-
-                    send.then((res: any) => {
-                        if (res.result && !res.data.status) {
-                            this.modalShowAlerts(res.data.errors, ContextTypeEnum.danger);
-                            return;
-                        }
-
-                        if (!res.result && typeof res.data.status === 'undefined') {
-                            this.modalShowAlerts([res.data], ContextTypeEnum.warning);
-                        }
-                    });
+                    })
 
                     return;
                 }

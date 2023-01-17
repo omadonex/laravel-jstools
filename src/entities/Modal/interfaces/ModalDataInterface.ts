@@ -1,4 +1,4 @@
-import {ModalSubmitDataInterface} from "./ModalSubmitDataInterface";
+import {RequestDataInterface} from "../../../interfaces/RequestDataInterface";
 
 export interface ModalDataInterface {
     title?: string,
@@ -8,5 +8,7 @@ export interface ModalDataInterface {
     bodyText?: string,
     openDataUrl?: string,
     submitCallback?: () => any,
-    submitData?: ModalSubmitDataInterface,
+    submitData?: RequestDataInterface,
+    preloadData?: RequestDataInterface,
+    initDataCallback?: () => any,
 }

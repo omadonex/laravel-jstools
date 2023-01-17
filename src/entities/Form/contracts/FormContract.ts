@@ -12,4 +12,5 @@ export interface FormContract {
     enableSubmitOnEnter(): void;
     serialize(): AnyObjInterface;
     attachToModal(modal: ModalContract): void;
+    setInitData(data: AnyObjInterface): void;
 }

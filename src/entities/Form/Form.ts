@@ -12,6 +12,11 @@ import {ValidateError} from "../../services/ValidateService/ValidateError";
 import {ContextTypeEnum} from "../../types/ContextTypeEnum";
 import {FormDataInterface} from "./interfaces/FormDataInterface";
 
+/*TODO omadonex:
+  1. Из общих кейсов. Web форма внутри модалки после сабмита и получения ошибок валидации отрабатывает некорректно
+     Необходимо переоткрыть форму с алертом
+*/
+
 export abstract class Form extends Entity implements FormContract {
     protected serviceDependsList: string[] = [
         JSToolsAbstractMap.TranslateServiceContract,
@@ -72,6 +77,7 @@ export abstract class Form extends Entity implements FormContract {
 
     public abstract setSubmitButton(button: any): void;
     public abstract enableSubmitOnEnter(): void;
+    public abstract setInitData(data: AnyObjInterface): void;
 
     public clear(): void {
         this.clearErrors();
@@ -138,7 +144,7 @@ export abstract class Form extends Entity implements FormContract {
                 this.isSending = false;
                 this.afterSubmitActions();
             },
-            success: () => {
+            success: (data: any) => {
                 if (this.modal === null) {
                     this.clear();
                     this.callSubmitCallback();

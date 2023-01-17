@@ -51,12 +51,12 @@ export {
 // ---Interfaces---
 import {FormDataInterface} from "./entities/Form/interfaces/FormDataInterface";
 import {ModalDataInterface} from "./entities/Modal/interfaces/ModalDataInterface";
-import {ModalSubmitDataInterface} from "./entities/Modal/interfaces/ModalSubmitDataInterface";
 import {NotyDataInterface} from "./services/NotyService/interfaces/NotyDataInterface";
+import {RequestDataInterface} from "./interfaces/RequestDataInterface";
 export {
     FormDataInterface,
     ModalDataInterface,
-    ModalSubmitDataInterface,
     NotyDataInterface,
+    RequestDataInterface,
 }
 

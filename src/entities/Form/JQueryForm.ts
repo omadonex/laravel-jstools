@@ -88,18 +88,26 @@ export class JQueryForm extends Form {
         }
     }
 
-    protected clearInputs(): void {
-        for (let name in this.defaultValues) {
+    private setInputsValues(data: AnyObjInterface): void {
+        for (let name in data) {
             let $input = this.$form.find(`input[data-jst-field="${name}"]`);
             switch ($input.attr('type')) {
                 case 'text':
-                    $input.val(this.defaultValues[name]);
+                    $input.val(data[name]);
                     break;
                 case 'checkbox':
-                    $input.prop('checked', this.defaultValues[name] === 'on');
+                    $input.prop('checked', data[name] === 'on');
                     break;
             }
         }
+    }
+
+    protected clearInputs(): void {
+        this.setInputsValues(this.defaultValues);
+    }
+
+    public setInitData(data: AnyObjInterface): void {
+        this.setInputsValues(data);
     }
 
     protected getMethod(): string {

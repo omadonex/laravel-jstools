@@ -29,7 +29,7 @@ export class AxiosService extends Service implements AxiosServiceContract {
 
             if (data.status === true) {
                 if (typeof callbackList.success === 'function') {
-                    callbackList.success();
+                    callbackList.success(data.result);
                 }
 
                 if (showNoty && data.noty) {
