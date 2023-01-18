@@ -47,7 +47,7 @@ export abstract class Modal extends Entity implements ModalContract {
                 this.modalSubmitShow();
                 break;
             case ModalUsageEnum.form:
-                this.form?.clear();
+                //this.form?.clear();
                 this.modalSubmitShow();
                 break;
         }
@@ -127,6 +127,10 @@ export abstract class Modal extends Entity implements ModalContract {
 
     public hide(): void {
         this.modalHide();
+    }
+
+    protected onHiddenCallback(): void {
+        this.form?.clear();
     }
 
     public submit(): void {

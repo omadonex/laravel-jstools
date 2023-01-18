@@ -3,5 +3,4 @@ export interface FormDataInterface {
     noBtn?: boolean,
     submitCallback?: () => any,
     submitOnEnter?: boolean,
-    showNoty?: boolean,
 }

@@ -13,4 +13,9 @@ export interface FormContract {
     serialize(): AnyObjInterface;
     attachToModal(modal: ModalContract): void;
     setInitData(data: AnyObjInterface): void;
+    setMethod(method: string): void;
+    setAction(action: string): void;
+    getMethod(): string;
+    getAction(): string;
+    getToken(): string;
 }

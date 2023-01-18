@@ -40,6 +40,10 @@ export class BS52Modal extends Modal implements ModalContract {
             this.cancelTextEl = this.modalEl.querySelector(`#${this.modalId}__btn_cancel_text`);
             this.overlayEl = this.modalEl.querySelector(`#${this.modalId}__overlay`);
             this.alertEl = this.modalEl.querySelector(`#${this.modalId}__alert`);
+
+            this.modalEl.addEventListener('hidden.bs.modal', event => {
+                this.onHiddenCallback();
+            });
         }
     }
 

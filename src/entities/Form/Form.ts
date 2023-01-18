@@ -30,6 +30,8 @@ export abstract class Form extends Entity implements FormContract {
     protected ruleList: StringObjInterface = {};
     protected isSending: boolean;
     protected defaultValues: AnyObjInterface = {};
+    protected defaultAction: string = '';
+    protected defaultMethod: string = '';
 
     constructor(formId: string, formData: FormDataInterface, showNoty: boolean, validateService: FormValidateServiceContract) {
         super();
@@ -49,11 +51,13 @@ export abstract class Form extends Entity implements FormContract {
     }
 
     protected isSubmitOnEnter(): boolean {
-        return this.formData.submitOnEnter || false;
+        return this.formData.submitOnEnter || true;
     }
 
     protected saveDefaultValues(): void {
         this.defaultValues = this.serialize();
+        this.defaultAction = this.getAction();
+        this.defaultMethod = this.getMethod();
     }
 
     protected abstract showErrors(errorList: ValidateErrorListInterface): void;
@@ -61,9 +65,6 @@ export abstract class Form extends Entity implements FormContract {
     protected abstract showAlerts(alertList: string[], contextType: ContextTypeEnum): void;
     protected abstract clearAlerts(): void;
     protected abstract clearInputs(): void;
-    protected abstract getMethod(): string;
-    protected abstract getAction(): string;
-    protected abstract getToken(): string;
     protected abstract callFormSubmit(): void;
     protected abstract showSubmitBtn(): void;
     protected abstract hideSubmitBtn(): void;
@@ -78,11 +79,18 @@ export abstract class Form extends Entity implements FormContract {
     public abstract setSubmitButton(button: any): void;
     public abstract enableSubmitOnEnter(): void;
     public abstract setInitData(data: AnyObjInterface): void;
+    public abstract setAction(action: string): void;
+    public abstract setMethod(method: string): void;
+    public abstract getMethod(): string;
+    public abstract getAction(): string;
+    public abstract getToken(): string;
 
     public clear(): void {
         this.clearErrors();
         this.clearInputs();
         this.clearAlerts();
+        this.setMethod(this.defaultMethod);
+        this.setAction(this.defaultAction);
     }
 
     public attachToModal(modal: ModalContract) {
@@ -146,12 +154,12 @@ export abstract class Form extends Entity implements FormContract {
             },
             success: (data: any) => {
                 if (this.modal === null) {
-                    this.clear();
                     this.callSubmitCallback();
                 } else {
                     this.modal.hide();
                     this.modal.callSubmitCallback();
                 }
+                this.clear();
             },
             error: (errors: any) => {
                 let errorList: ValidateErrorListInterface = {};

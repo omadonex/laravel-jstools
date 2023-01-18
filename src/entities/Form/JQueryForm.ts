@@ -110,15 +110,23 @@ export class JQueryForm extends Form {
         this.setInputsValues(data);
     }
 
-    protected getMethod(): string {
+    public setMethod(method: string): void {
+        this.$form.attr('method', method);
+    }
+
+    public setAction(action: string): void {
+        this.$form.attr('action', action);
+    }
+
+    public getMethod(): string {
         return this.$form.attr('method');
     }
 
-    protected getAction(): string {
+    public getAction(): string {
         return this.$form.attr('action');
     }
 
-    protected getToken(): string {
+    public getToken(): string {
         return this.$form.find('input[name=_token]')[0].val();
     }
 
