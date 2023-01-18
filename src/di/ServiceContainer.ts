@@ -23,12 +23,12 @@ export class ServiceContainer {
 
     private createInstance(className: string, params: any): any {
         if (className in this.classMap) {
-            let classInfo: ClassInfoInterface = this.classMap[className];
-            let instance = classInfo.closure(params);
+            const classInfo: ClassInfoInterface = this.classMap[className];
+            const instance = classInfo.closure(params);
 
             if (instance instanceof Service || instance instanceof Entity) {
-                let dependsList: string[] = instance.getServiceDependsList();
-                let serviceList: ServiceListInterface = {};
+                const dependsList: string[] = instance.getServiceDependsList();
+                const serviceList: ServiceListInterface = {};
                 dependsList.forEach((item, i, arr) => {
                     serviceList[item] = this.createInstance(item, params);
                 });
@@ -43,7 +43,7 @@ export class ServiceContainer {
     }
 
     private getInstance(className: string, params: any): any {
-        let classInfo = this.classMap[className];
+        const classInfo = this.classMap[className];
 
         if (classInfo && classInfo.singleton) {
             if (!(className in this.data)) {
@@ -65,6 +65,6 @@ export class ServiceContainer {
     }
 
     public makeEntity(name: string, entityType: EntityTypeEnum, params: any): any {
-        return this.getInstance(name, Object.assign(params, { entityType: entityType }));
+        return this.getInstance(name, Object.assign(params, { entityType }));
     }
 }

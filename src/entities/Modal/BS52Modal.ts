@@ -69,7 +69,7 @@ export class BS52Modal extends Modal implements ModalContract {
 
     protected modalShowAlerts(alertList: string[], contextType: ContextTypeEnum): void {
         if (this.alertEl) {
-            let classList: string[] = [];
+            const classList: string[] = [];
             Object.keys(ContextTypeEnum).forEach((key, index) => {
                 classList.push(`alert-${key}`);
             });
@@ -124,9 +124,11 @@ export class BS52Modal extends Modal implements ModalContract {
     }
 
     protected modalButtonsEnable(): void {
+        // need
     }
 
     protected modalButtonsDisable(): void {
+        // need
     }
 
     protected modalSetTitle(text: string): void {

@@ -14,7 +14,7 @@ export class AxiosService extends Service implements AxiosServiceContract {
     ];
 
     public async send(config: any, callbackList: CallbackListInterface, showNoty: boolean = true, form?: FormContract) {
-        let notyService: NotyServiceContract = this.getService(JSToolsAbstractMap.NotyServiceContract);
+        const notyService: NotyServiceContract = this.getService(JSToolsAbstractMap.NotyServiceContract);
 
         if (typeof callbackList.start === 'function') {
             callbackList.start();
@@ -47,7 +47,7 @@ export class AxiosService extends Service implements AxiosServiceContract {
                 }
             }
 
-            return { result: true, data: data };
+            return { result: true, data };
         } catch (error: any) {
             if (typeof callbackList.finish === 'function') {
                 callbackList.finish();

@@ -9,12 +9,12 @@ import {isEmpty} from "../../scripts/helpers";
 
 export class JQueryFormValidateService extends ValidateService implements FormValidateServiceContract {
     validateForm(formId: string, ruleList: RuleListInterface = {}): ValidateErrorListInterface | true {
-        let $form = $(`#${formId}`);
-        let data: AnyObjInterface = {};
-        let ruleListForm: RuleListInterface = {};
+        const $form = $(`#${formId}`);
+        const data: AnyObjInterface = {};
+        const ruleListForm: RuleListInterface = {};
         $form.find('input[data-jst-field]').each((index: number, element: any) => {
-            let $input = $(element);
-            let field: string = $input.data('jstField');
+            const $input = $(element);
+            const field: string = $input.data('jstField');
             data[field] = $input.val();
 
             if ($input.data('jstValidate')) {

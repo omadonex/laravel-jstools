@@ -22,10 +22,10 @@ export class TranslateService extends Service implements TranslateServiceContrac
     }
 
     public t(key: string, replaceList?: any, lang?: string): string {
-        let locale = lang === undefined ? this.langCurrent : lang;
+        const locale = lang === undefined ? this.langCurrent : lang;
         let text = getProp(this.translationList, `${locale}.${key}`);
 
-        for (let prop in replaceList || {}) {
+        for (const prop of Object.keys(replaceList || {})) {
             text = text.replace(`:${prop}`, replaceList[prop]);
         }
 
@@ -33,8 +33,9 @@ export class TranslateService extends Service implements TranslateServiceContrac
     }
 
     public t__validate(rule: string, replaceList: any, lang?: string): string {
-        if ('attribute' in replaceList) {
-            replaceList['attribute'] = this.t(`${this.namespaceList.rules}.attributes.${replaceList['attribute']}`, {}, lang);
+        const attr = 'attribute';
+        if (attr in replaceList) {
+            replaceList[attr] = this.t(`${this.namespaceList.rules}.attributes.${replaceList[attr]}`, {}, lang);
         }
         return this.t(`${this.namespaceList.rules}.${rule}`, replaceList, lang);
     }

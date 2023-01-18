@@ -10,14 +10,14 @@ import {RuleListInterface} from "./interfaces/RuleListInterface";
 export class ValidateService extends Service implements ValidateServiceContract {
 
     public validate(data: AnyObjInterface, ruleList: RuleListInterface): ValidateErrorListInterface | true {
-        let errorList: ValidateErrorListInterface = {};
-        for (let field in ruleList) {
+        const errorList: ValidateErrorListInterface = {};
+        for (const field of Object.keys(ruleList)) {
             ruleList[field].split('|').forEach((item, i, arr) => {
-                let ruleData = item.split(':');
-                let rule = ruleData[0];
-                let paramList = ruleData[1];
+                const ruleData = item.split(':');
+                const rule = ruleData[0];
+                const paramList = ruleData[1];
 
-                let validationResult = this.check(data, field, rule, paramList);
+                const validationResult = this.check(data, field, rule, paramList);
                 if (validationResult !== true) {
                     if (!errorList.hasOwnProperty(field)) {
                         errorList[field] = {};
@@ -51,34 +51,34 @@ export class ValidateService extends Service implements ValidateServiceContract 
     }
 
     private checkConfirmed(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-        let value: any = data[field];
-        let value_confirmation: any = data[`${field}_confirmation`];
+        const value: any = data[field];
+        const valueConfirmation: any = data[`${field}_confirmation`];
 
-        return (value && value === value_confirmation) || new ValidateError(field, 'confirmed');
+        return (value && value === valueConfirmation) || new ValidateError(field, 'confirmed');
     }
 
     private checkEmail(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-        let value: any = data[field];
+        const value: any = data[field];
 
         return (value && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) || new ValidateError(field, 'email');
     }
 
     private checkMax(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-        let value: any = data[field];
-        let type = isNumeric(value) ? 'numeric' : 'string'; //TODO omadonex: file, array
+        const value: any = data[field];
+        const type = isNumeric(value) ? 'numeric' : 'string'; // TODO omadonex: file, array
 
         return (value && value.length <= paramList) || new ValidateError(field, `max.${type}`, { max: paramList });
     }
 
     private checkMin(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-        let value: any = data[field];
-        let type = isNumeric(value) ? 'numeric' : 'string'; //TODO omadonex: file, array
+        const value: any = data[field];
+        const type = isNumeric(value) ? 'numeric' : 'string'; // TODO omadonex: file, array
 
         return (value && value.length >= paramList) || new ValidateError(field, `min.${type}`, { min: paramList });
     }
 
     private checkRequired(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-        let value: any = data[field];
+        const value: any = data[field];
 
         return !!value || new ValidateError(field, 'required');
     }

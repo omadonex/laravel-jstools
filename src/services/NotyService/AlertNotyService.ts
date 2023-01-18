@@ -7,8 +7,4 @@ export class AlertNotyService extends Service implements NotyServiceContract {
     public show(data: NotyDataInterface): void {
         alert(data.message);
     }
-
-    public hide(): void {
-
-    }
 }

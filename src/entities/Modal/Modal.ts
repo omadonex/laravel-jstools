@@ -47,7 +47,6 @@ export abstract class Modal extends Entity implements ModalContract {
                 this.modalSubmitShow();
                 break;
             case ModalUsageEnum.form:
-                //this.form?.clear();
                 this.modalSubmitShow();
                 break;
         }
@@ -106,8 +105,8 @@ export abstract class Modal extends Entity implements ModalContract {
     }
 
     private send(data: RequestDataInterface, showNoty: boolean, callbackList: CallbackListInterface): void {
-        let axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
-        let send = axiosService.send(Object.assign(data, {
+        const axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
+        const send = axiosService.send(Object.assign(data, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
             }

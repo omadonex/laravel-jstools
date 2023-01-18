@@ -124,7 +124,7 @@ export abstract class Form extends Entity implements FormContract {
     public submit(): void {
         this.clearErrors();
         this.clearAlerts();
-        let errorList = this.validate();
+        const errorList = this.validate();
         if (errorList !== true) {
             this.showErrors(errorList);
         } else {
@@ -142,8 +142,8 @@ export abstract class Form extends Entity implements FormContract {
     }
 
     private doSubmit(): void {
-        let axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
-        let callbackList: CallbackListInterface = {
+        const axiosService: AxiosServiceContract = this.getService(JSToolsAbstractMap.AxiosServiceContract);
+        const callbackList: CallbackListInterface = {
             start: () => {
                 this.isSending = true;
                 this.preSubmitActions();
@@ -162,9 +162,9 @@ export abstract class Form extends Entity implements FormContract {
                 this.clear();
             },
             error: (errors: any) => {
-                let errorList: ValidateErrorListInterface = {};
-                let alertList: string[] = [];
-                for (let field in errors) {
+                const errorList: ValidateErrorListInterface = {};
+                const alertList: string[] = [];
+                for (const field of Object.keys(errors)) {
                     errorList[field] = {
                         rule: new ValidateError(field, 'rule', [], errors[field][0]),
                     };
@@ -175,7 +175,7 @@ export abstract class Form extends Entity implements FormContract {
             },
         }
 
-        let send = axiosService.send({
+        const send = axiosService.send({
             url: this.getAction(),
             method: this.getMethod(),
             data: this.serialize(),

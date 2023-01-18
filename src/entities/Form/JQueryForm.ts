@@ -38,16 +38,16 @@ export class JQueryForm extends Form {
     }
 
     protected showErrors(errorList: ValidateErrorListInterface): void {
-        let translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
+        const translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
         this.clearErrors();
 
         this.$inputList.each((index: number, element: any) => {
-            let $input = $(element);
-            let field = $input.data('jstField');
+            const $input = $(element);
+            const field = $input.data('jstField');
             if (!$input.data('jstNoValidate')) {
                 if (field in errorList) {
-                    let $divError = this.$form.find(`.invalid-feedback[data-jst-field="${field}"]`);
-                    let error: ValidateError = Object.values(errorList[field])[0];
+                    const $divError = this.$form.find(`.invalid-feedback[data-jst-field="${field}"]`);
+                    const error: ValidateError = Object.values(errorList[field])[0];
                     $divError.text(error.toText(translateService));
                     $input.addClass('is-invalid');
                 } else {
@@ -63,7 +63,7 @@ export class JQueryForm extends Form {
 
     protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {
         if (this.$alert) {
-            let classList: string[] = [];
+            const classList: string[] = [];
             Object.keys(ContextTypeEnum).forEach((key) => {
                 classList.push(`alert-${key}`);
             });
@@ -89,8 +89,8 @@ export class JQueryForm extends Form {
     }
 
     private setInputsValues(data: AnyObjInterface): void {
-        for (let name in data) {
-            let $input = this.$form.find(`input[data-jst-field="${name}"]`);
+        for (const name of Object.keys(data)) {
+            const $input = this.$form.find(`input[data-jst-field="${name}"]`);
             switch ($input.attr('type')) {
                 case 'text':
                     $input.val(data[name]);
@@ -131,11 +131,11 @@ export class JQueryForm extends Form {
     }
 
     protected callFormSubmit(): void {
-        let form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
+        const form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
         form.addEventListener('formdata', (e) => {
           const formData = e.formData;
-          let data = this.serialize();
-          for (let field in data) {
+          const data = this.serialize();
+          for (const field of Object.keys(data)) {
               formData.set(field, data[field]);
           }
         });
@@ -192,10 +192,10 @@ export class JQueryForm extends Form {
     }
 
     public serialize(): AnyObjInterface {
-        let data: AnyObjInterface = {};
+        const data: AnyObjInterface = {};
         this.$inputList.each((index: number, input: any) => {
-            let $input = $(input);
-            let name: string = $input.attr('name') as string;
+            const $input = $(input);
+            const name: string = $input.attr('name') as string;
             switch ($input.attr('type')) {
                 case 'text':
                     data[name] = $input.val();

@@ -38,11 +38,11 @@ export class AppLocator {
     }
 
     public form(formId: string, formData: FormDataInterface, showNoty: boolean, entityType: EntityTypeEnum): FormContract {
-        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId: formId, formData: formData, showNoty: showNoty });
+        return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId, formData, showNoty });
     }
 
     public modal(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean, tools: any, entityType: EntityTypeEnum): ModalContract {
-        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId: modalId, modalUsage: modalUsage, modalData: modalData, showNoty: showNoty, tools: tools });
+        return this.makeEntity(JSToolsAbstractMap.ModalContract, entityType, { modalId, modalUsage, modalData, showNoty, tools });
     }
 
     public noty(data: NotyDataInterface): void {
