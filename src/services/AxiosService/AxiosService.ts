@@ -34,15 +34,15 @@ export class AxiosService extends Service implements AxiosServiceContract {
 
                 if (showNoty && data.noty) {
                     notyService.show({
-                        context: ContextTypeEnum.success,
-                        message: data.noty,
+                        context: data.noty.context || ContextTypeEnum.success,
+                        message: data.noty.message,
                     });
                 }
             } else {
                 if (showNoty && data.noty) {
                     notyService.show({
-                        context: ContextTypeEnum.danger,
-                        message: data.noty,
+                        context: data.noty.context || ContextTypeEnum.danger,
+                        message: data.noty.message,
                     });
                 }
             }
