@@ -1,5 +1,5 @@
-import {CallbackListInterface} from "../interfaces/CallbackListInterface";
+import { CallbackListInterface } from '../interfaces/CallbackListInterface';
 
 export interface AxiosServiceContract {
-    send(data: any, callbackList: CallbackListInterface, showNoty: boolean): any;
+  send(data: any, callbackList: CallbackListInterface, showNoty: boolean): any;
 }

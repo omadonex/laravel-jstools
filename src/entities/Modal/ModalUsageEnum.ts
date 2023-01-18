@@ -1,5 +1,5 @@
 export enum ModalUsageEnum {
-    form,
-    confirm,
-    info,
+  form,
+  confirm,
+  info,
 }

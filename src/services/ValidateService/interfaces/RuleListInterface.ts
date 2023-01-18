@@ -1,3 +1,3 @@
 export interface RuleListInterface {
-    [field: string]: string;
+  [field: string]: string;
 }

@@ -1,19 +1,19 @@
-import {ServiceListContract} from "../contracts/ServiceListContract";
-import {ServiceListInterface} from "../interfaces/ServiceListInterface";
+import { ServiceListContract } from '../contracts/ServiceListContract';
+import { ServiceListInterface } from '../interfaces/ServiceListInterface';
 
 export abstract class Service implements ServiceListContract {
-    protected serviceList: ServiceListInterface = {};
-    protected serviceDependsList: string[] = [];
+  protected serviceList: ServiceListInterface = {};
+  protected serviceDependsList: string[] = [];
 
-    public getServiceDependsList(): string[] {
-        return this.serviceDependsList;
-    }
+  public getServiceDependsList(): string[] {
+    return this.serviceDependsList;
+  }
 
-    public setServiceList(serviceList: ServiceListInterface): void {
-        this.serviceList = serviceList;
-    }
+  public setServiceList(serviceList: ServiceListInterface): void {
+    this.serviceList = serviceList;
+  }
 
-    public getService(serviceName: string): any {
-        return this.serviceList[serviceName];
-    }
+  public getService(serviceName: string): any {
+    return this.serviceList[serviceName];
+  }
 }

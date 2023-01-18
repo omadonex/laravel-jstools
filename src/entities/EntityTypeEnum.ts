@@ -1,3 +1,3 @@
 export enum EntityTypeEnum {
-    bs_5_2,
+  bs_5_2,
 }

@@ -1,5 +1,5 @@
 export interface RequestDataInterface {
-    url: string,
-    method: string,
-    data?: any,
+  url: string;
+  method: string;
+  data?: any;
 }

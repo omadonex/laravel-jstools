@@ -1,8 +1,8 @@
 export interface ServiceProviderContract {
-    setAppData(appData: any): void;
+  setAppData(appData: any): void;
 
-    register(): void;
+  register(): void;
 
-    getClassMap(): any;
-    getAliasMap(): any;
+  getClassMap(): any;
+  getAliasMap(): any;
 }

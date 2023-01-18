@@ -1,5 +1,5 @@
 export interface TranslateServiceInitDataInterface {
-    langDefault: string,
-    langCurrent: string,
-    translationList: any,
+  langDefault: string;
+  langCurrent: string;
+  translationList: any;
 }

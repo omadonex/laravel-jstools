@@ -1,4 +1,4 @@
-import {TranslateServiceContract} from "../TranslateService/contracts/TranslateServiceContract";
+import { TranslateServiceContract } from '../TranslateService/contracts/TranslateServiceContract';
 
 export class ValidateError {
   private field: string;

@@ -1,211 +1,211 @@
-import * as $ from "jquery";
-import {Form} from "./Form";
-import {ValidateError} from "../../services/ValidateService/ValidateError";
-import {TranslateServiceContract} from "../../services/TranslateService/contracts/TranslateServiceContract";
-import {ValidateErrorListInterface} from "../../services/ValidateService/interfaces/ValidateErrorListInterface";
-import {AnyObjInterface} from "../../interfaces/AnyObjInterface";
-import {JSToolsAbstractMap} from "../../app/JSToolsAbstractMap";
-import {JQueryFormValidateService} from "../../services/FormValidateService/JQueryFormValidateService";
-import {ContextTypeEnum} from "../../types/ContextTypeEnum";
-import {FormDataInterface} from "./interfaces/FormDataInterface";
+import * as $ from 'jquery';
+import { Form } from './Form';
+import { ValidateError } from '../../services/ValidateService/ValidateError';
+import { TranslateServiceContract } from '../../services/TranslateService/contracts/TranslateServiceContract';
+import { ValidateErrorListInterface } from '../../services/ValidateService/interfaces/ValidateErrorListInterface';
+import { AnyObjInterface } from '../../interfaces/AnyObjInterface';
+import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
+import { JQueryFormValidateService } from '../../services/FormValidateService/JQueryFormValidateService';
+import { ContextTypeEnum } from '../../types/ContextTypeEnum';
+import { FormDataInterface } from './interfaces/FormDataInterface';
 
 export class JQueryForm extends Form {
-    private $form: any;
-    private $inputList: any;
-    private $spinner: any;
-    private $submit: any;
-    private $alert: any;
+  private $form: any;
+  private $inputList: any;
+  private $spinner: any;
+  private $submit: any;
+  private $alert: any;
 
-    constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
-        super(formId, formData, showNoty, new JQueryFormValidateService());
-        this.$form = $(`#${this.formId}`);
-        this.$inputList = this.$form.find('input[data-jst-field]');
-        this.$spinner = this.$form.find('span[data-jst-spinner]');
-        this.$submit = this.$form.find('button[data-jst-submit]');
-        this.$alert = this.$form.find('div[data-jst-alert]');
+  constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
+    super(formId, formData, showNoty, new JQueryFormValidateService());
+    this.$form = $(`#${this.formId}`);
+    this.$inputList = this.$form.find('input[data-jst-field]');
+    this.$spinner = this.$form.find('span[data-jst-spinner]');
+    this.$submit = this.$form.find('button[data-jst-submit]');
+    this.$alert = this.$form.find('div[data-jst-alert]');
 
-        if (this.isNoSubmitBtn()) {
-            this.hideSubmitBtn();
+    if (this.isNoSubmitBtn()) {
+      this.hideSubmitBtn();
+    } else {
+      this.setSubmitButton(this.$submit);
+    }
+
+    if (this.isSubmitOnEnter()) {
+      this.enableSubmitOnEnter();
+    }
+
+    this.saveDefaultValues();
+  }
+
+  protected showErrors(errorList: ValidateErrorListInterface): void {
+    const translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
+    this.clearErrors();
+
+    this.$inputList.each((index: number, element: any) => {
+      const $input = $(element);
+      const field = $input.data('jstField');
+      if (!$input.data('jstNoValidate')) {
+        if (field in errorList) {
+          const $divError = this.$form.find(`.invalid-feedback[data-jst-field="${field}"]`);
+          const error: ValidateError = Object.values(errorList[field])[0];
+          $divError.text(error.toText(translateService));
+          $input.addClass('is-invalid');
         } else {
-            this.setSubmitButton(this.$submit);
+          $input.addClass('is-valid');
         }
+      }
+    });
+  }
 
-        if (this.isSubmitOnEnter()) {
-            this.enableSubmitOnEnter();
+  protected clearErrors(): void {
+    this.$inputList.removeClass('is-valid is-invalid');
+  }
+
+  protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {
+    if (this.$alert) {
+      const classList: string[] = [];
+      Object.keys(ContextTypeEnum).forEach((key) => {
+        classList.push(`alert-${key}`);
+      });
+
+      let html: string = '';
+      html += '<ul>';
+      alertList.forEach((alert: string) => {
+        html += `<li>${alert}</li>`;
+      });
+      html += '</ul>';
+
+      this.$alert.html(html);
+      this.$alert.removeClass(classList).addClass(`alert-${contextType}`);
+      this.$alert.removeClass('d-none');
+    }
+  }
+
+  protected clearAlerts(): void {
+    if (this.$alert) {
+      this.$alert.innerHTML = '';
+      this.$alert.addClass('d-none');
+    }
+  }
+
+  private setInputsValues(data: AnyObjInterface): void {
+    for (const name of Object.keys(data)) {
+      const $input = this.$form.find(`input[data-jst-field="${name}"]`);
+      switch ($input.attr('type')) {
+        case 'text':
+          $input.val(data[name]);
+          break;
+        case 'checkbox':
+          $input.prop('checked', data[name] === 'on');
+          break;
+      }
+    }
+  }
+
+  protected clearInputs(): void {
+    this.setInputsValues(this.defaultValues);
+  }
+
+  public setInitData(data: AnyObjInterface): void {
+    this.setInputsValues(data);
+  }
+
+  public setMethod(method: string): void {
+    this.$form.attr('method', method);
+  }
+
+  public setAction(action: string): void {
+    this.$form.attr('action', action);
+  }
+
+  public getMethod(): string {
+    return this.$form.attr('method');
+  }
+
+  public getAction(): string {
+    return this.$form.attr('action');
+  }
+
+  public getToken(): string {
+    return this.$form.find('input[name=_token]')[0].val();
+  }
+
+  protected callFormSubmit(): void {
+    const form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
+    form.addEventListener('formdata', (e) => {
+      const formData = e.formData;
+      const data = this.serialize();
+      for (const field of Object.keys(data)) {
+        formData.set(field, data[field]);
+      }
+    });
+    form.submit();
+  }
+
+  protected showSubmitBtn(): void {
+    this.$submit.show();
+  }
+
+  protected hideSubmitBtn(): void {
+    this.$submit.hide();
+  }
+
+  protected disableSubmitBtn(): void {
+    this.$submit.attr('disabled', 'disabled');
+  }
+
+  protected enableSubmitBtn(): void {
+    this.$submit.prop('disabled', false);
+  }
+
+  protected showSpinner(): void {
+    this.$spinner.removeClass('d-none');
+  }
+
+  protected hideSpinner(): void {
+    this.$spinner.addClass('d-none');
+  }
+
+  protected disableFieldsInput(): void {
+    this.$inputList.attr('readonly', true);
+  }
+
+  protected enableFieldsInput(): void {
+    this.$inputList.attr('readonly', false);
+  }
+
+  public setSubmitButton(button: any): void {
+    button.on('click', () => {
+      this.submit();
+    });
+  }
+
+  public enableSubmitOnEnter(): void {
+    this.$form.on('keydown', (e: any) => {
+      if (e.code === 'Enter') {
+        if (this.isAjax()) {
+          e.preventDefault();
         }
+        this.submit();
+      }
+    });
+  }
 
-        this.saveDefaultValues();
-    }
+  public serialize(): AnyObjInterface {
+    const data: AnyObjInterface = {};
+    this.$inputList.each((index: number, input: any) => {
+      const $input = $(input);
+      const name: string = $input.attr('name') as string;
+      switch ($input.attr('type')) {
+        case 'text':
+          data[name] = $input.val();
+          break;
+        case 'checkbox':
+          data[name] = $input.prop('checked') ? 'on' : 'off';
+          break;
+      }
+    });
 
-    protected showErrors(errorList: ValidateErrorListInterface): void {
-        const translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
-        this.clearErrors();
-
-        this.$inputList.each((index: number, element: any) => {
-            const $input = $(element);
-            const field = $input.data('jstField');
-            if (!$input.data('jstNoValidate')) {
-                if (field in errorList) {
-                    const $divError = this.$form.find(`.invalid-feedback[data-jst-field="${field}"]`);
-                    const error: ValidateError = Object.values(errorList[field])[0];
-                    $divError.text(error.toText(translateService));
-                    $input.addClass('is-invalid');
-                } else {
-                    $input.addClass('is-valid');
-                }
-            }
-        });
-    }
-
-    protected clearErrors(): void {
-        this.$inputList.removeClass('is-valid is-invalid');
-    }
-
-    protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {
-        if (this.$alert) {
-            const classList: string[] = [];
-            Object.keys(ContextTypeEnum).forEach((key) => {
-                classList.push(`alert-${key}`);
-            });
-
-            let html: string = '';
-            html += '<ul>';
-            alertList.forEach((alert: string) => {
-               html += `<li>${alert}</li>`;
-            });
-            html += '</ul>';
-
-            this.$alert.html(html);
-            this.$alert.removeClass(classList).addClass(`alert-${contextType}`);
-            this.$alert.removeClass('d-none');
-        }
-    }
-
-    protected clearAlerts(): void {
-        if (this.$alert) {
-            this.$alert.innerHTML = '';
-            this.$alert.addClass('d-none');
-        }
-    }
-
-    private setInputsValues(data: AnyObjInterface): void {
-        for (const name of Object.keys(data)) {
-            const $input = this.$form.find(`input[data-jst-field="${name}"]`);
-            switch ($input.attr('type')) {
-                case 'text':
-                    $input.val(data[name]);
-                    break;
-                case 'checkbox':
-                    $input.prop('checked', data[name] === 'on');
-                    break;
-            }
-        }
-    }
-
-    protected clearInputs(): void {
-        this.setInputsValues(this.defaultValues);
-    }
-
-    public setInitData(data: AnyObjInterface): void {
-        this.setInputsValues(data);
-    }
-
-    public setMethod(method: string): void {
-        this.$form.attr('method', method);
-    }
-
-    public setAction(action: string): void {
-        this.$form.attr('action', action);
-    }
-
-    public getMethod(): string {
-        return this.$form.attr('method');
-    }
-
-    public getAction(): string {
-        return this.$form.attr('action');
-    }
-
-    public getToken(): string {
-        return this.$form.find('input[name=_token]')[0].val();
-    }
-
-    protected callFormSubmit(): void {
-        const form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
-        form.addEventListener('formdata', (e) => {
-          const formData = e.formData;
-          const data = this.serialize();
-          for (const field of Object.keys(data)) {
-              formData.set(field, data[field]);
-          }
-        });
-        form.submit();
-    }
-
-    protected showSubmitBtn(): void {
-        this.$submit.show();
-    }
-
-    protected hideSubmitBtn(): void {
-        this.$submit.hide();
-    }
-
-    protected disableSubmitBtn(): void {
-        this.$submit.attr('disabled', 'disabled');
-    }
-
-    protected enableSubmitBtn(): void {
-        this.$submit.prop('disabled', false);
-    }
-
-    protected showSpinner(): void {
-        this.$spinner.removeClass('d-none');
-    }
-
-    protected hideSpinner(): void {
-        this.$spinner.addClass('d-none');
-    }
-
-    protected disableFieldsInput(): void {
-        this.$inputList.attr('readonly', true);
-    }
-
-    protected enableFieldsInput(): void {
-        this.$inputList.attr('readonly', false);
-    }
-
-    public setSubmitButton(button: any): void {
-        button.on('click', () => {
-            this.submit();
-        });
-    }
-
-    public enableSubmitOnEnter(): void {
-        this.$form.on('keydown', (e: any) => {
-            if (e.code === 'Enter') {
-                if (this.isAjax()) {
-                    e.preventDefault();
-                }
-                this.submit();
-            }
-        });
-    }
-
-    public serialize(): AnyObjInterface {
-        const data: AnyObjInterface = {};
-        this.$inputList.each((index: number, input: any) => {
-            const $input = $(input);
-            const name: string = $input.attr('name') as string;
-            switch ($input.attr('type')) {
-                case 'text':
-                    data[name] = $input.val();
-                    break;
-                case 'checkbox':
-                    data[name] = $input.prop('checked') ? 'on' : 'off';
-                    break;
-            }
-        });
-
-        return data;
-    }
+    return data;
+  }
 }

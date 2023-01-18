@@ -1,6 +1,6 @@
 export interface FormDataInterface {
-    ajax?: boolean,
-    noBtn?: boolean,
-    submitCallback?: () => any,
-    submitOnEnter?: boolean,
+  ajax?: boolean;
+  noBtn?: boolean;
+  submitCallback?: () => any;
+  submitOnEnter?: boolean;
 }
