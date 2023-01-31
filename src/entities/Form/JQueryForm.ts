@@ -19,7 +19,7 @@ export class JQueryForm extends Form {
   constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
     super(formId, formData, showNoty, new JQueryFormValidateService());
     this.$form = $(`#${this.formId}`);
-    this.$inputList = this.$form.find('input[data-jst-field]');
+    this.$inputList = this.$form.find('input[data-jst-field],select[data-jst-field]');
     this.$spinner = this.$form.find('span[data-jst-spinner]');
     this.$submit = this.$form.find('button[data-jst-submit]');
     this.$alert = this.$form.find('div[data-jst-alert]');
@@ -50,6 +50,12 @@ export class JQueryForm extends Form {
           const error: ValidateError = Object.values(errorList[field])[0];
           $divError.text(error.toText(translateService));
           $input.addClass('is-invalid');
+
+          // Dashly Tom-Select
+          const $next = $input.next();
+          if ($next && $next.hasClass('ts-wrapper') && $next.hasClass('form-select')) {
+            $next.addClass('is-invalid');
+          }
         } else {
           $input.addClass('is-valid');
         }

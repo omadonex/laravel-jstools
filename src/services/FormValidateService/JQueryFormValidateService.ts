@@ -12,7 +12,7 @@ export class JQueryFormValidateService extends ValidateService implements FormVa
     const $form = $(`#${formId}`);
     const data: AnyObjInterface = {};
     const ruleListForm: RuleListInterface = {};
-    $form.find('input[data-jst-field]').each((index: number, element: any) => {
+    $form.find('input[data-jst-field],select[data-jst-field]').each((index, element) => {
       const $input = $(element);
       const field: string = $input.data('jstField');
       data[field] = $input.val();
