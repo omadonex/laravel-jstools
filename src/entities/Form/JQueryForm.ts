@@ -11,7 +11,7 @@ import { FormDataInterface } from './interfaces/FormDataInterface';
 
 export class JQueryForm extends Form {
   private $form: any;
-  private $inputList: any;
+  private $fieldList: any;
   private $spinner: any;
   private $submit: any;
   private $alert: any;
@@ -19,7 +19,7 @@ export class JQueryForm extends Form {
   constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
     super(formId, formData, showNoty, new JQueryFormValidateService());
     this.$form = $(`#${this.formId}`);
-    this.$inputList = this.$form.find('input[data-jst-field],select[data-jst-field]');
+    this.$fieldList = this.$form.find('input[data-jst-field],select[data-jst-field]');
     this.$spinner = this.$form.find('span[data-jst-spinner]');
     this.$submit = this.$form.find('button[data-jst-submit]');
     this.$alert = this.$form.find('div[data-jst-alert]');
@@ -41,7 +41,7 @@ export class JQueryForm extends Form {
     const translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
     this.clearErrors();
 
-    this.$inputList.each((index: number, element: any) => {
+    this.$fieldList.each((index: number, element: any) => {
       const $input = $(element);
       const field = $input.data('jstField');
       if (!$input.data('jstNoValidate')) {
@@ -64,7 +64,7 @@ export class JQueryForm extends Form {
   }
 
   protected clearErrors(): void {
-    this.$inputList.removeClass('is-valid is-invalid');
+    this.$fieldList.removeClass('is-valid is-invalid');
   }
 
   protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {
@@ -96,13 +96,23 @@ export class JQueryForm extends Form {
 
   private setInputsValues(data: AnyObjInterface): void {
     for (const name of Object.keys(data)) {
-      const $input = this.$form.find(`input[data-jst-field="${name}"]`);
-      switch ($input.attr('type')) {
-        case 'checkbox':
-          $input.prop('checked', data[name] === 'on');
-          break;
-        default:
-          $input.val(data[name]);
+      const $input = this.$form.find(`input[data-jst-field="${name}"],select[data-jst-field="${name}"]`);
+      if ($input.is('select')) {
+        const el: any = $input[0];
+        if (el.tomselect) {
+          el.tomselect.setValue(data[name]);
+        } else {
+          $input.val(data[name]).change();
+        }
+      } else {
+        switch ($input.attr('type')) {
+          case 'text':
+            $input.val(data[name]);
+            break;
+          case 'checkbox':
+            $input.prop('checked', data[name] === 'on');
+            break;
+        }
       }
     }
   }
@@ -172,11 +182,11 @@ export class JQueryForm extends Form {
   }
 
   protected disableFieldsInput(): void {
-    this.$inputList.attr('readonly', true);
+    this.$fieldList.attr('readonly', true);
   }
 
   protected enableFieldsInput(): void {
-    this.$inputList.attr('readonly', false);
+    this.$fieldList.attr('readonly', false);
   }
 
   public setSubmitButton(button: any): void {
@@ -198,15 +208,20 @@ export class JQueryForm extends Form {
 
   public serialize(): AnyObjInterface {
     const data: AnyObjInterface = {};
-    this.$inputList.each((index: number, input: any) => {
+    this.$fieldList.each((index: number, input: any) => {
       const $input = $(input);
       const name: string = $input.attr('name') as string;
-      switch ($input.attr('type')) {
-        case 'checkbox':
-          data[name] = $input.prop('checked') ? 'on' : 'off';
-          break;
-        default:
-          data[name] = $input.val();
+      if ($input.is('select')) {
+        data[name] = $input.val();
+      } else {
+        switch ($input.attr('type')) {
+          case 'text':
+            data[name] = $input.val();
+            break;
+          case 'checkbox':
+            data[name] = $input.prop('checked') ? 'on' : 'off';
+            break;
+        }
       }
     });
 
