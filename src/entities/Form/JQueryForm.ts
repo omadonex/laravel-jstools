@@ -98,12 +98,11 @@ export class JQueryForm extends Form {
     for (const name of Object.keys(data)) {
       const $input = this.$form.find(`input[data-jst-field="${name}"]`);
       switch ($input.attr('type')) {
-        case 'text':
-          $input.val(data[name]);
-          break;
         case 'checkbox':
           $input.prop('checked', data[name] === 'on');
           break;
+        default:
+          $input.val(data[name]);
       }
     }
   }
@@ -203,12 +202,11 @@ export class JQueryForm extends Form {
       const $input = $(input);
       const name: string = $input.attr('name') as string;
       switch ($input.attr('type')) {
-        case 'text':
-          data[name] = $input.val();
-          break;
         case 'checkbox':
           data[name] = $input.prop('checked') ? 'on' : 'off';
           break;
+        default:
+          data[name] = $input.val();
       }
     });
 
