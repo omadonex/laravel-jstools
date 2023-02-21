@@ -45,7 +45,7 @@ export class ValidateService extends Service implements ValidateServiceContract 
         return this.checkMin;
       case 'required':
         return this.checkRequired;
-      case 'notIn' :
+      case 'notIn':
         return this.checkNotIn;
     }
 
