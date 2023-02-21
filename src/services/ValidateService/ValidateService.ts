@@ -45,6 +45,8 @@ export class ValidateService extends Service implements ValidateServiceContract 
         return this.checkMin;
       case 'required':
         return this.checkRequired;
+      case 'notIn' :
+        return this.checkNotIn;
     }
 
     return this.fakeCheck;
@@ -85,5 +87,12 @@ export class ValidateService extends Service implements ValidateServiceContract 
     const value: any = data[field];
 
     return !!value || new ValidateError(field, 'required');
+  }
+
+  private checkNotIn(data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+    const value: any = data[field];
+    const valueForCheck: any = data[paramList];
+
+    return (value && value !== valueForCheck) || new ValidateError(field, 'not_in');
   }
 }
