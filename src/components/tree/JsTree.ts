@@ -6,7 +6,7 @@ export class JsTree implements ComponentContract {
     private $tree: any;
     private tree: any;
 
-    constructor(treeId: string, options: AnyObjInterface, data?: Array<AnyObjInterface>) {
+    constructor(treeId: string, options: AnyObjInterface, data?: AnyObjInterface[]) {
         this.treeId = treeId;
         this.$tree = $(`#${treeId}`);
         this.$tree.jstree(options);
@@ -37,8 +37,8 @@ export class JsTree implements ComponentContract {
         });
     }
 
-    private prepareData(data: Array<AnyObjInterface>): Array<AnyObjInterface> {
-        const nodeData: Array<AnyObjInterface> = [];
+    private prepareData(data: AnyObjInterface[]): AnyObjInterface[] {
+        const nodeData: AnyObjInterface[] = [];
         data.forEach((item) => {
             const nodeItem: AnyObjInterface = {};
             nodeItem.id = `${this.treeId}_${item.value}`;
@@ -52,7 +52,7 @@ export class JsTree implements ComponentContract {
         return nodeData;
     }
 
-    public setData(data: Array<AnyObjInterface>, value?: number|string): void {
+    public setData(data: AnyObjInterface[], value?: number|string): void {
         if (value) {
             this.$tree.on('refresh.jstree', () => {
                 this.select(value);
