@@ -10,6 +10,7 @@ import { EntityTypeEnum } from '../entities/EntityTypeEnum';
 import { NotyDataInterface } from '../services/NotyService/interfaces/NotyDataInterface';
 import { NotyServiceContract } from '../services/NotyService/contracts/NotyServiceContract';
 import { FormDataInterface } from '../entities/Form/interfaces/FormDataInterface';
+import {AnyObjInterface} from "../interfaces/AnyObjInterface";
 
 export class AppLocator {
   private globalData: any;
@@ -41,9 +42,10 @@ export class AppLocator {
     formId: string,
     formData: FormDataInterface,
     showNoty: boolean,
+    componentsOptions: AnyObjInterface,
     entityType: EntityTypeEnum,
   ): FormContract {
-    return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId, formData, showNoty });
+    return this.makeEntity(JSToolsAbstractMap.FormContract, entityType, { formId, formData, showNoty, componentsOptions });
   }
 
   public modal(

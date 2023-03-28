@@ -42,3 +42,7 @@ import { ModalDataInterface } from './entities/Modal/interfaces/ModalDataInterfa
 import { NotyDataInterface } from './services/NotyService/interfaces/NotyDataInterface';
 import { RequestDataInterface } from './interfaces/RequestDataInterface';
 export { FormDataInterface, ModalDataInterface, NotyDataInterface, RequestDataInterface };
+
+// ---Components---
+import { JsTree } from './components/tree/JsTree';
+export { JsTree };

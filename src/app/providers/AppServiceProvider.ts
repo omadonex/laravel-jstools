@@ -34,10 +34,10 @@ export class AppServiceProvider extends ServiceProvider {
     this.bind(JSToolsAbstractMap.FormContract, (params: any): FormContract => {
       switch (params.entityType) {
         case EntityTypeEnum.bs_5_2:
-          return new JQueryForm(params.formId, params.formData, params.showNoty);
+          return new JQueryForm(params.formId, params.formData, params.showNoty, params.componentsOptions);
       }
 
-      return new JQueryForm(params.formId, params.formData, params.showNoty);
+      return new JQueryForm(params.formId, params.formData, params.showNoty, params.componentsOptions);
     });
 
     this.bind(JSToolsAbstractMap.ModalContract, (params: any): ModalContract => {

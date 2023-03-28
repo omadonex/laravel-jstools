@@ -8,6 +8,7 @@ import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
 import { JQueryFormValidateService } from '../../services/FormValidateService/JQueryFormValidateService';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
+import {JsTree} from "../../components/tree/JsTree";
 
 export class JQueryForm extends Form {
   private $form: any;
@@ -16,13 +17,15 @@ export class JQueryForm extends Form {
   private $submit: any;
   private $alert: any;
 
-  constructor(formId: string, formData: FormDataInterface, showNoty: boolean) {
-    super(formId, formData, showNoty, new JQueryFormValidateService());
+  constructor(formId: string, formData: FormDataInterface, showNoty: boolean, componentsOptions: AnyObjInterface) {
+    super(formId, formData, showNoty, componentsOptions, new JQueryFormValidateService());
     this.$form = $(`#${this.formId}`);
-    this.$fieldList = this.$form.find('input[data-jst-field],select[data-jst-field]');
+    this.$fieldList = this.$form.find('input[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]');
     this.$spinner = this.$form.find('span[data-jst-spinner]');
     this.$submit = this.$form.find('button[data-jst-submit]');
     this.$alert = this.$form.find('div[data-jst-alert]');
+
+    this.initComponents();
 
     if (this.isNoSubmitBtn()) {
       this.hideSubmitBtn();
@@ -37,12 +40,43 @@ export class JQueryForm extends Form {
     this.saveDefaultValues();
   }
 
+  protected initComponents(): void {
+    this.$fieldList.each((index: number, element: any) => {
+      const $field: any = $(element);
+      if ($field.data('jstComponent') === 'jstree') {
+        this.components[$field.attr('id')] = new JsTree($field.attr('id'), this.componentsOptions.jstree);
+      }
+    });
+  }
+
+  protected setComponentValue($input: any, inputData: AnyObjInterface, fieldName: string): void {
+    if ($input.data('jstComponent') === 'jstree') {
+      const jstree: JsTree = this.components[$input.attr('id')];
+      if (inputData[`${fieldName}__tree`]) {
+        jstree.setData(inputData[`${fieldName}__tree`], inputData[fieldName]);
+        return;
+      }
+
+      jstree.select(inputData[fieldName]);
+    }
+  }
+
+  protected getComponentValue($input: any): null|string {
+    if ($input.data('jstComponent') === 'jstree') {
+      const jstree: JsTree = this.components[$input.attr('id')];
+
+      return jstree.getValue();
+    }
+
+    return null;
+  }
+
   protected showErrors(errorList: ValidateErrorListInterface): void {
     const translateService: TranslateServiceContract = this.getService(JSToolsAbstractMap.TranslateServiceContract);
     this.clearErrors();
 
     this.$fieldList.each((index: number, element: any) => {
-      const $input = $(element);
+      const $input: any = $(element);
       const field = $input.data('jstField');
       if (!$input.data('jstNoValidate')) {
         if (field in errorList) {
@@ -96,7 +130,7 @@ export class JQueryForm extends Form {
 
   private setInputsValues(data: AnyObjInterface): void {
     for (const name of Object.keys(data)) {
-      const $input = this.$form.find(`input[data-jst-field="${name}"],select[data-jst-field="${name}"]`);
+      const $input: any = this.$form.find(`input[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`);
       if ($input.is('select')) {
         const el: any = $input[0];
         if (el.tomselect) {
@@ -104,6 +138,8 @@ export class JQueryForm extends Form {
         } else {
           $input.val(data[name]).change();
         }
+      } else if ($input.is('div')) {
+        this.setComponentValue($input, data, name);
       } else {
         switch ($input.attr('type')) {
           case 'text':
@@ -209,10 +245,12 @@ export class JQueryForm extends Form {
   public serialize(): AnyObjInterface {
     const data: AnyObjInterface = {};
     this.$fieldList.each((index: number, input: any) => {
-      const $input = $(input);
-      const name: string = $input.attr('name') as string;
+      const $input: any = $(input);
+      const name: string = $input.data('jstField') as string;
       if ($input.is('select')) {
         data[name] = $input.val();
+      } else if ($input.is('div')) {
+        data[name] = this.getComponentValue($input);
       } else {
         switch ($input.attr('type')) {
           case 'text':

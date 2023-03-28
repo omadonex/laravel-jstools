@@ -1,7 +1,7 @@
 import { ValidateServiceContract } from '../../ValidateService/contracts/ValidateServiceContract';
 import { ValidateErrorListInterface } from '../../ValidateService/interfaces/ValidateErrorListInterface';
-import { RuleListInterface } from '../../ValidateService/interfaces/RuleListInterface';
+import {Form} from "../../../entities/Form/Form";
 
 export interface FormValidateServiceContract extends ValidateServiceContract {
-  validateForm(formId: string, ruleList?: RuleListInterface): ValidateErrorListInterface | true;
+  validateForm(form: Form): ValidateErrorListInterface | true;
 }

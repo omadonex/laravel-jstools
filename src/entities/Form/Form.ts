@@ -11,6 +11,7 @@ import { CallbackListInterface } from '../../services/AxiosService/interfaces/Ca
 import { ValidateError } from '../../services/ValidateService/ValidateError';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
+import {RuleListInterface} from "../../services/ValidateService/interfaces/RuleListInterface";
 
 /*TODO omadonex:
   1. Из общих кейсов. Web форма внутри модалки после сабмита и получения ошибок валидации отрабатывает некорректно
@@ -27,7 +28,9 @@ export abstract class Form extends Entity implements FormContract {
   protected formId: string;
   protected formData: FormDataInterface;
   protected showNoty: boolean;
-  protected ruleList: StringObjInterface = {};
+  protected componentsOptions: AnyObjInterface;
+  protected components: AnyObjInterface;
+  protected ruleList: RuleListInterface = {};
   protected isSending: boolean;
   protected defaultValues: AnyObjInterface = {};
   protected defaultAction: string = '';
@@ -37,12 +40,15 @@ export abstract class Form extends Entity implements FormContract {
     formId: string,
     formData: FormDataInterface,
     showNoty: boolean,
+    componentsOptions: AnyObjInterface,
     validateService: FormValidateServiceContract,
   ) {
     super();
     this.formId = formId;
     this.formData = formData;
     this.showNoty = showNoty;
+    this.componentsOptions = componentsOptions;
+    this.components = {};
     this.isSending = false;
     this.validateService = validateService;
   }
@@ -143,7 +149,7 @@ export abstract class Form extends Entity implements FormContract {
   }
 
   public validate(): ValidateErrorListInterface | true {
-    return this.validateService.validateForm(this.formId, this.ruleList);
+    return this.validateService.validateForm(this);
   }
 
   private doSubmit(): void {
@@ -205,7 +211,7 @@ export abstract class Form extends Entity implements FormContract {
     });
   }
 
-  public setRuleList(ruleList: StringObjInterface): void {
+  public setRuleList(ruleList: RuleListInterface): void {
     this.ruleList = ruleList;
   }
 
@@ -213,5 +219,17 @@ export abstract class Form extends Entity implements FormContract {
     if (typeof this.formData.submitCallback !== 'undefined') {
       this.formData.submitCallback();
     }
+  }
+
+  public getId(): string {
+    return this.formId;
+  }
+
+  public getRuleList(): RuleListInterface {
+    return this.ruleList;
+  }
+
+  public getComponent(type: string): any {
+    return this.components[type];
   }
 }

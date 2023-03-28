@@ -1,13 +1,13 @@
-import { StringObjInterface } from '../../../interfaces/StringObjInterface';
 import { ValidateErrorListInterface } from '../../../services/ValidateService/interfaces/ValidateErrorListInterface';
 import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
 import { ModalContract } from '../../Modal/contracts/ModalContract';
+import {RuleListInterface} from "../../../services/ValidateService/interfaces/RuleListInterface";
 
 export interface FormContract {
   validate(): ValidateErrorListInterface | true;
   submit(): void;
   clear(): void;
-  setRuleList(ruleList: StringObjInterface): void;
+  setRuleList(ruleList: RuleListInterface): void;
   setSubmitButton(button: any): void;
   enableSubmitOnEnter(): void;
   serialize(): AnyObjInterface;
@@ -18,4 +18,7 @@ export interface FormContract {
   getMethod(): string;
   getAction(): string;
   getToken(): string;
+  getId(): string;
+  getRuleList(): RuleListInterface;
+  getComponent(type: string): any;
 }
