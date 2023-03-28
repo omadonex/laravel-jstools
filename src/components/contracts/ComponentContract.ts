@@ -1,3 +1,3 @@
 export interface ComponentContract {
-  getValue(): null|string;
+  getValue(): null | string;
 }

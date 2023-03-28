@@ -8,7 +8,7 @@ import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
 import { JQueryFormValidateService } from '../../services/FormValidateService/JQueryFormValidateService';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
-import {JsTree} from "../../components/tree/JsTree";
+import { JsTree } from '../../components/tree/JsTree';
 
 export class JQueryForm extends Form {
   private $form: any;
@@ -20,7 +20,9 @@ export class JQueryForm extends Form {
   constructor(formId: string, formData: FormDataInterface, showNoty: boolean, componentsOptions: AnyObjInterface) {
     super(formId, formData, showNoty, componentsOptions, new JQueryFormValidateService());
     this.$form = $(`#${this.formId}`);
-    this.$fieldList = this.$form.find('input[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]');
+    this.$fieldList = this.$form.find(
+      'input[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]',
+    );
     this.$spinner = this.$form.find('span[data-jst-spinner]');
     this.$submit = this.$form.find('button[data-jst-submit]');
     this.$alert = this.$form.find('div[data-jst-alert]');
@@ -61,7 +63,7 @@ export class JQueryForm extends Form {
     }
   }
 
-  protected getComponentValue($input: any): null|string {
+  protected getComponentValue($input: any): null | string {
     if ($input.data('jstComponent') === 'jstree') {
       const jstree: JsTree = this.components[$input.attr('id')];
 
@@ -130,7 +132,9 @@ export class JQueryForm extends Form {
 
   private setInputsValues(data: AnyObjInterface): void {
     for (const name of Object.keys(data)) {
-      const $input: any = this.$form.find(`input[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`);
+      const $input: any = this.$form.find(
+        `input[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`,
+      );
       if ($input.is('select')) {
         const el: any = $input[0];
         if (el.tomselect) {

@@ -11,7 +11,7 @@ import { CallbackListInterface } from '../../services/AxiosService/interfaces/Ca
 import { ValidateError } from '../../services/ValidateService/ValidateError';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
-import {RuleListInterface} from "../../services/ValidateService/interfaces/RuleListInterface";
+import { RuleListInterface } from '../../services/ValidateService/interfaces/RuleListInterface';
 
 /*TODO omadonex:
   1. Из общих кейсов. Web форма внутри модалки после сабмита и получения ошибок валидации отрабатывает некорректно

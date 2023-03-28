@@ -1,7 +1,7 @@
 import { ValidateErrorListInterface } from '../../../services/ValidateService/interfaces/ValidateErrorListInterface';
 import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
 import { ModalContract } from '../../Modal/contracts/ModalContract';
-import {RuleListInterface} from "../../../services/ValidateService/interfaces/RuleListInterface";
+import { RuleListInterface } from '../../../services/ValidateService/interfaces/RuleListInterface';
 
 export interface FormContract {
   validate(): ValidateErrorListInterface | true;
