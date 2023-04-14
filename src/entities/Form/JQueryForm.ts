@@ -147,6 +147,7 @@ export class JQueryForm extends Form {
       } else {
         switch ($input.attr('type')) {
           case 'text':
+          case 'password':
             $input.val(data[name]);
             break;
           case 'checkbox':
@@ -258,6 +259,7 @@ export class JQueryForm extends Form {
       } else {
         switch ($input.attr('type')) {
           case 'text':
+          case 'password':
             data[name] = $input.val();
             break;
           case 'checkbox':
