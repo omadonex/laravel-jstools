@@ -194,6 +194,7 @@ export class JQueryForm extends Form {
       for (const field of Object.keys(data)) {
         formData.set(field, data[field]);
       }
+      formData.set('_formid', this.formId);
     });
     form.submit();
   }
