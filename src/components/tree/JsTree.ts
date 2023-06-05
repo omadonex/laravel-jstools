@@ -52,6 +52,10 @@ export class JsTree implements ComponentContract {
     return nodeData;
   }
 
+  public on(event: string, closure: (params: any) => any) {
+    this.$tree.on('changed.jstree', closure);
+  }
+
   public setData(data: AnyObjInterface[], value?: number | string): void {
     if (value) {
       this.$tree.on('refresh.jstree', () => {
