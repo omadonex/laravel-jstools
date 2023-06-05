@@ -29,7 +29,13 @@ export class ValidateService extends Service implements ValidateServiceContract 
     return isEmpty(errorList) ? true : errorList;
   }
 
-  private check(ruleList: string, data: AnyObjInterface, field: string, rule: string, paramList: any): ValidateError | true {
+  private check(
+    ruleList: string,
+    data: AnyObjInterface,
+    field: string,
+    rule: string,
+    paramList: any,
+  ): ValidateError | true {
     return this.getRuleChecker(rule)(ruleList, data, field, paramList);
   }
 
@@ -60,7 +66,12 @@ export class ValidateService extends Service implements ValidateServiceContract 
     return true;
   }
 
-  private checkConfirmed(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+  private checkConfirmed(
+    ruleList: string,
+    data: AnyObjInterface,
+    field: string,
+    paramList?: any,
+  ): ValidateError | true {
     const value: any = data[field];
     const valueConfirmation: any = data[`${field}_confirmation`];
 
