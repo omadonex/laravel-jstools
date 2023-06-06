@@ -15,6 +15,8 @@ export class JsTree implements ComponentContract {
     this.setListeners();
     if (data) {
       this.setData(data, this.$tree.data('value'));
+    } else {
+      this.selectInitial();
     }
   }
 
@@ -70,7 +72,7 @@ export class JsTree implements ComponentContract {
   }
 
   public select(value: number | string, suppressEvent: boolean = false, preventOpen: boolean = false): void {
-    this.reset();
+    this.reset(true);
     this.tree.select_node(`${this.treeId}_${value}`, suppressEvent, preventOpen);
   }
 
@@ -84,16 +86,20 @@ export class JsTree implements ComponentContract {
     this.tree.close_all();
   }
 
-  public deselectAll(): void {
-    this.tree.deselect_all();
+  public deselectAll(suppressEvent: boolean = false): void {
+    this.tree.deselect_all(suppressEvent);
   }
 
   public openAll(): void {
     this.tree.open_all();
   }
 
-  public reset(): void {
+  public reset(suppressEvent: boolean = false): void {
     this.closeAll();
-    this.deselectAll();
+    this.deselectAll(suppressEvent);
+  }
+
+  public selectInitial(): void {
+    this.select(this.$tree.data('value'), true);
   }
 }
