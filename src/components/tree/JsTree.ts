@@ -6,6 +6,13 @@ export class JsTree implements ComponentContract {
   private $tree: any;
   private tree: any;
 
+  private callbackCollapseAll: any;
+  private collapseAllDefault: boolean = true;
+  private callbackExpandAll: any;
+  private expandAllDefault: boolean = true;
+  private callbackDeselectAll: any;
+  private deselectAllDefault: boolean = true;
+
   constructor(treeId: string, options: AnyObjInterface, data?: AnyObjInterface[]) {
     this.treeId = treeId;
     this.$tree = $(`#${treeId}`);
@@ -20,6 +27,21 @@ export class JsTree implements ComponentContract {
     }
   }
 
+  public setCollapseAllCallback(callback: any, saveDefault: boolean = true) {
+    this.callbackCollapseAll = callback;
+    this.collapseAllDefault = saveDefault;
+  }
+
+  public setExpandAllCallback(callback: any, saveDefault: boolean = true) {
+    this.callbackExpandAll = callback;
+    this.expandAllDefault = saveDefault;
+  }
+
+  public setDeselectAllCallback(callback: any, saveDefault: boolean = true) {
+    this.callbackDeselectAll = callback;
+    this.deselectAllDefault = saveDefault;
+  }
+
   private setListeners(): void {
     this.$tree.on('hover_node.jstree', () => {
       const bar = this.$tree.find('.jstree-wholerow-hovered');
@@ -27,15 +49,33 @@ export class JsTree implements ComponentContract {
     });
 
     $(`#${this.treeId}__collapse`).on('click', () => {
-      this.closeAll();
+      if (this.collapseAllDefault) {
+        this.closeAll();
+      }
+
+      if (this.callbackCollapseAll) {
+        this.callbackCollapseAll();
+      }
     });
 
     $(`#${this.treeId}__expand`).on('click', () => {
-      this.openAll();
+      if (this.expandAllDefault) {
+        this.openAll();
+      }
+
+      if (this.callbackExpandAll) {
+        this.callbackExpandAll();
+      }
     });
 
     $(`#${this.treeId}__deselect`).on('click', () => {
-      this.deselectAll();
+      if (this.deselectAllDefault) {
+        this.deselectAll();
+      }
+      
+      if (this.callbackDeselectAll) {
+        this.callbackDeselectAll();
+      }
     });
   }
 
