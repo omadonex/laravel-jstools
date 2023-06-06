@@ -16,6 +16,8 @@ export class JsTree implements ComponentContract {
     if (data) {
       this.setData(data);
     }
+
+    this.selectInitialValue();
   }
 
   private setListeners(): void {
@@ -53,7 +55,7 @@ export class JsTree implements ComponentContract {
   }
 
   public on(event: string, closure: (params: any) => any) {
-    this.$tree.on('changed.jstree', closure);
+    this.$tree.on(event, closure);
   }
 
   public setData(data: AnyObjInterface[], value?: number | string): void {
@@ -95,5 +97,9 @@ export class JsTree implements ComponentContract {
   public reset(): void {
     this.closeAll();
     this.deselectAll();
+  }
+
+  public selectInitialValue(): void {
+    this.select(this.$tree.data('value'));
   }
 }
