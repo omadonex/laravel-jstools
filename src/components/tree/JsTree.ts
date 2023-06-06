@@ -72,7 +72,7 @@ export class JsTree implements ComponentContract {
       if (this.deselectAllDefault) {
         this.deselectAll();
       }
-      
+
       if (this.callbackDeselectAll) {
         this.callbackDeselectAll();
       }
