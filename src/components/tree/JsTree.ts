@@ -14,10 +14,8 @@ export class JsTree implements ComponentContract {
 
     this.setListeners();
     if (data) {
-      this.setData(data);
+      this.setData(data, this.$tree.data('value'));
     }
-
-    this.selectInitialValue();
   }
 
   private setListeners(): void {
@@ -61,7 +59,7 @@ export class JsTree implements ComponentContract {
   public setData(data: AnyObjInterface[], value?: number | string): void {
     if (value) {
       this.$tree.on('refresh.jstree', () => {
-        this.select(value);
+        this.select(value, true);
         this.$tree.off('refresh.jstree');
       });
     }
@@ -97,9 +95,5 @@ export class JsTree implements ComponentContract {
   public reset(): void {
     this.closeAll();
     this.deselectAll();
-  }
-
-  public selectInitialValue(): void {
-    this.select(this.$tree.data('value'), true);
   }
 }
