@@ -54,8 +54,16 @@ export class JsTree implements ComponentContract {
     return nodeData;
   }
 
-  public on(event: string, closure: (params: any) => any) {
+  public on(event: string, closure: any) {
     this.$tree.on(event, closure);
+  }
+
+  public onChanged(closure: any): void {
+    this.$tree.on('changed.jstree', function (e: any, data: any) {
+      if (!['ready'].includes(data.action)) {
+        closure(e, data);
+      }
+    });
   }
 
   public setData(data: AnyObjInterface[], value?: number | string): void {
