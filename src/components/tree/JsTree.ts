@@ -71,9 +71,9 @@ export class JsTree implements ComponentContract {
     this.tree.refresh();
   }
 
-  public select(value: number | string): void {
+  public select(value: number | string, suppressEvent: boolean = false, preventOpen: boolean = false): void {
     this.reset();
-    this.tree.select_node(`${this.treeId}_${value}`);
+    this.tree.select_node(`${this.treeId}_${value}`, suppressEvent, preventOpen);
   }
 
   public getValue(): null | string {
@@ -100,6 +100,6 @@ export class JsTree implements ComponentContract {
   }
 
   public selectInitialValue(): void {
-    this.select(this.$tree.data('value'));
+    this.select(this.$tree.data('value'), true);
   }
 }
