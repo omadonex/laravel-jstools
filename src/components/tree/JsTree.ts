@@ -59,7 +59,7 @@ export class JsTree implements ComponentContract {
   }
 
   public onChanged(closure: any): void {
-    this.$tree.on('changed.jstree', function (e: any, data: any) {
+    this.$tree.on('changed.jstree', (e: any, data: any) => {
       if (!['ready'].includes(data.action)) {
         closure(e, data);
       }
