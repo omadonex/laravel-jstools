@@ -153,6 +153,9 @@ export class JQueryForm extends Form {
           case 'checkbox':
             $input.prop('checked', data[name] === 'on');
             break;
+          case 'radio':
+            $input.filter(`[value=${data[name]}]`).prop('checked', true);
+            break;
         }
       }
     }
@@ -265,6 +268,9 @@ export class JQueryForm extends Form {
             break;
           case 'checkbox':
             data[name] = $input.prop('checked') ? 'on' : 'off';
+            break;
+          case 'radio':
+            data[name] = $(`input[type="radio"][name="${name}"]:checked`).val();
             break;
         }
       }
