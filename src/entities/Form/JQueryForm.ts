@@ -170,7 +170,7 @@ export class JQueryForm extends Form {
   }
 
   public setMethod(method: string): void {
-    //TODO omadonex: установить значение инпута
+    // TODO omadonex: установить значение инпута
     this.$form.attr('method', method);
   }
 
