@@ -170,6 +170,7 @@ export class JQueryForm extends Form {
   }
 
   public setMethod(method: string): void {
+    //TODO omadonex: установить значение инпута
     this.$form.attr('method', method);
   }
 
@@ -178,6 +179,11 @@ export class JQueryForm extends Form {
   }
 
   public getMethod(): string {
+    const $method = this.$form.find('input[name=_method]');
+    if ($method.length) {
+      return $method.val();
+    }
+
     return this.$form.attr('method');
   }
 
@@ -186,7 +192,7 @@ export class JQueryForm extends Form {
   }
 
   public getToken(): string {
-    return this.$form.find('input[name=_token]')[0].val();
+    return this.$form.find('input[name=_token]').val();
   }
 
   protected callFormSubmit(): void {
