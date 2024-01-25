@@ -1,9 +1,10 @@
+import { Service } from 'laravel-jstools-di';
+
 import { isEmpty, isNumeric } from '../../scripts/helpers';
 import { ValidateServiceContract } from './contracts/ValidateServiceContract';
 import { ValidateError } from './ValidateError';
 import { RuleCheckerInterface } from './interfaces/RuleCheckerInterface';
 import { ValidateErrorListInterface } from './interfaces/ValidateErrorListInterface';
-import { Service } from '../Service';
 import { AnyObjInterface } from '../../interfaces/AnyObjInterface';
 import { RuleListInterface } from './interfaces/RuleListInterface';
 

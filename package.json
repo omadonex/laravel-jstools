@@ -44,5 +44,8 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "dependencies": {
+    "laravel-jstools-di": "^1.0.3"
+  }
 }

@@ -2,10 +2,8 @@ export const Test = (str: string) => `Test ${str}`;
 
 // ---Misc---
 import { JSToolsAbstractMap } from './app/JSToolsAbstractMap';
-import { AppLocator } from './app/AppLocator';
-import { ServiceProvider } from './di/ServiceProvider';
-import { Service } from './services/Service';
-export { JSToolsAbstractMap, AppLocator, ServiceProvider, Service };
+import { App } from './app/App';
+export { JSToolsAbstractMap, App };
 
 // ---Contracts
 import { FormContract } from './entities/Form/contracts/FormContract';

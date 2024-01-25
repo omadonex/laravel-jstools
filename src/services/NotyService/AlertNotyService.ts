@@ -1,4 +1,5 @@
-import { Service } from '../Service';
+import { Service } from 'laravel-jstools-di';
+
 import { NotyServiceContract } from './contracts/NotyServiceContract';
 import { NotyDataInterface } from './interfaces/NotyDataInterface';
 

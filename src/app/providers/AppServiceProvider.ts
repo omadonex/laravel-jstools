@@ -1,5 +1,6 @@
+import { ServiceProvider } from 'laravel-jstools-di';
+
 import { JSToolsAbstractMap } from '../JSToolsAbstractMap';
-import { ServiceProvider } from '../../di/ServiceProvider';
 import { TranslateService } from '../../services/TranslateService/TranslateService';
 import { ConsoleNotyService } from '../../services/NotyService/ConsoleNotyService';
 import { AxiosService } from '../../services/AxiosService/AxiosService';

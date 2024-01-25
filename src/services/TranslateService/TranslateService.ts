@@ -1,7 +1,8 @@
+import { Service } from 'laravel-jstools-di';
+
 import { getProp } from '../../scripts/helpers';
 import { TranslateServiceContract } from './contracts/TranslateServiceContract';
 import { TranslateServiceInitDataInterface } from './interfaces/TranslateServiceInitDataInterface';
-import { Service } from '../Service';
 
 export class TranslateService extends Service implements TranslateServiceContract {
   private langDefault: string;

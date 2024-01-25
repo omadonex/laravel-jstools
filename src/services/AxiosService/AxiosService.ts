@@ -1,8 +1,9 @@
-import { AxiosServiceContract } from './contracts/AxiosServiceContract';
 import axios from 'axios';
+import { Service } from 'laravel-jstools-di';
+
+import { AxiosServiceContract } from './contracts/AxiosServiceContract';
 import { NotyServiceContract } from '../NotyService/contracts/NotyServiceContract';
 import { CallbackListInterface } from './interfaces/CallbackListInterface';
-import { Service } from '../Service';
 import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
 import { FormContract } from '../../entities/Form/contracts/FormContract';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';

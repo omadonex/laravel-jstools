@@ -1,8 +1,9 @@
-import { ServiceContainer } from '../di/ServiceContainer';
+import { AppLocator } from "laravel-jstools-di";
+
 import { AppServiceProvider } from './providers/AppServiceProvider';
-import { ServiceProviderContract } from '../di/contracts/ServiceProviderContract';
-import { FormContract } from '../entities/Form/contracts/FormContract';
 import { JSToolsAbstractMap } from './JSToolsAbstractMap';
+
+import { FormContract } from '../entities/Form/contracts/FormContract';
 import { ModalContract } from '../entities/Modal/contracts/ModalContract';
 import { ModalDataInterface } from '../entities/Modal/interfaces/ModalDataInterface';
 import { ModalUsageEnum } from '../entities/Modal/ModalUsageEnum';
@@ -12,30 +13,14 @@ import { NotyServiceContract } from '../services/NotyService/contracts/NotyServi
 import { FormDataInterface } from '../entities/Form/interfaces/FormDataInterface';
 import { AnyObjInterface } from '../interfaces/AnyObjInterface';
 
-export class AppLocator {
-  private globalData: any;
-  private serviceContainer: ServiceContainer;
-  private providerList: ServiceProviderContract[] = [];
-
+export class App extends AppLocator {
   constructor(globalData: any) {
-    this.globalData = globalData;
-    this.serviceContainer = new ServiceContainer();
+    super(globalData);
     this.registerProvider(new AppServiceProvider());
   }
 
-  public registerProvider(provider: ServiceProviderContract): void {
-    provider.setAppData(this.globalData);
-    provider.register();
-    this.providerList.push(provider);
-    this.generateMaps();
-  }
-
-  public make(name: string): any {
-    return this.serviceContainer.make(name);
-  }
-
-  public makeEntity(name: string, entityType: EntityTypeEnum, params: any): any {
-    return this.serviceContainer.makeEntity(name, entityType, params);
+  public makeEntity(name: string, entityType: EntityTypeEnum, params: any = {}): any {
+    return this.make(name, Object.assign(params, { entityType }));
   }
 
   public form(
@@ -72,17 +57,5 @@ export class AppLocator {
 
   public noty(data: NotyDataInterface): void {
     (this.make(JSToolsAbstractMap.NotyServiceContract) as NotyServiceContract).show(data);
-  }
-
-  private generateMaps(): void {
-    let classMap = {};
-    let aliasMap = {};
-
-    this.providerList.forEach((provider, i, arr) => {
-      classMap = Object.assign(classMap, provider.getClassMap());
-      aliasMap = Object.assign(aliasMap, provider.getAliasMap());
-    });
-
-    this.serviceContainer.setMaps(classMap, aliasMap);
   }
 }

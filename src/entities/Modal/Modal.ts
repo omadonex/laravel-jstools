@@ -1,3 +1,5 @@
+import { Service } from 'laravel-jstools-di';
+
 import { ModalContract } from './contracts/ModalContract';
 import { ModalDataInterface } from './interfaces/ModalDataInterface';
 import { ModalUsageEnum } from './ModalUsageEnum';
@@ -5,11 +7,10 @@ import { FormContract } from '../Form/contracts/FormContract';
 import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
 import { AxiosServiceContract } from '../../services/AxiosService/contracts/AxiosServiceContract';
 import { CallbackListInterface } from '../../services/AxiosService/interfaces/CallbackListInterface';
-import { Entity } from '../Entity';
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { RequestDataInterface } from '../../interfaces/RequestDataInterface';
 
-export abstract class Modal extends Entity implements ModalContract {
+export abstract class Modal extends Service implements ModalContract {
   protected serviceDependsList: string[] = [
     JSToolsAbstractMap.AxiosServiceContract,
     JSToolsAbstractMap.NotyServiceContract,

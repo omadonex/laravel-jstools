@@ -1,11 +1,11 @@
+import { Service } from 'laravel-jstools-di';
+
 import { FormContract } from './contracts/FormContract';
 import { FormValidateServiceContract } from '../../services/FormValidateService/contracts/FormValidateServiceContract';
-import { StringObjInterface } from '../../interfaces/StringObjInterface';
 import { ValidateErrorListInterface } from '../../services/ValidateService/interfaces/ValidateErrorListInterface';
 import { AnyObjInterface } from '../../interfaces/AnyObjInterface';
 import { ModalContract } from '../Modal/contracts/ModalContract';
 import { AxiosServiceContract } from '../../services/AxiosService/contracts/AxiosServiceContract';
-import { Entity } from '../Entity';
 import { JSToolsAbstractMap } from '../../app/JSToolsAbstractMap';
 import { CallbackListInterface } from '../../services/AxiosService/interfaces/CallbackListInterface';
 import { ValidateError } from '../../services/ValidateService/ValidateError';
@@ -18,7 +18,7 @@ import { RuleListInterface } from '../../services/ValidateService/interfaces/Rul
      Необходимо переоткрыть форму с алертом
 */
 
-export abstract class Form extends Entity implements FormContract {
+export abstract class Form extends Service implements FormContract {
   protected serviceDependsList: string[] = [
     JSToolsAbstractMap.TranslateServiceContract,
     JSToolsAbstractMap.AxiosServiceContract,
