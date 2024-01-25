@@ -1,4 +1,4 @@
-import { AppLocator } from "laravel-jstools-di";
+import { AppLocator } from 'laravel-jstools-di';
 
 import { AppServiceProvider } from './providers/AppServiceProvider';
 import { JSToolsAbstractMap } from './JSToolsAbstractMap';
