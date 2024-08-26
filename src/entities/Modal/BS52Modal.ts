@@ -31,18 +31,18 @@ export class BS52Modal extends Modal implements ModalContract {
     if (this.modalEl) {
       this.modal = new tools.bootstrap.Modal(`#${this.modalId}`);
       this.titleEl = this.modalEl.querySelector(`#${this.modalId}__title`);
-      this.bodyCaptionEl = this.modalEl.querySelector(`#${this.modalId}__body_caption`);
+      this.bodyCaptionEl = this.modalEl.querySelector(`#${this.modalId}__bodyCaption`);
       this.bodyEl = this.modalEl.querySelector(`#${this.modalId}__body`);
-      this.submitEl = this.modalEl.querySelector(`#${this.modalId}__btn_submit`);
-      this.submitTextEl = this.modalEl.querySelector(`#${this.modalId}__btn_submit_text`);
+      this.submitEl = this.modalEl.querySelector(`#${this.modalId}__btnSubmit`);
+      this.submitTextEl = this.modalEl.querySelector(`#${this.modalId}__btnSubmitText`);
       if (this.submitEl) {
         this.submitEl.onclick = () => {
           this.submit();
         };
       }
-      this.submitSpinnerEl = this.modalEl.querySelector(`#${this.modalId}__btn_submit_spinner`);
-      this.cancelEl = this.modalEl.querySelector(`#${this.modalId}__btn_cancel`);
-      this.cancelTextEl = this.modalEl.querySelector(`#${this.modalId}__btn_cancel_text`);
+      this.submitSpinnerEl = this.modalEl.querySelector(`#${this.modalId}__btnSubmitSpinner`);
+      this.cancelEl = this.modalEl.querySelector(`#${this.modalId}__btnCancel`);
+      this.cancelTextEl = this.modalEl.querySelector(`#${this.modalId}__btnCancelText`);
       this.overlayEl = this.modalEl.querySelector(`#${this.modalId}__overlay`);
       this.alertEl = this.modalEl.querySelector(`#${this.modalId}__alert`);
 
