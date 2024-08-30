@@ -9,7 +9,7 @@ import { JQueryFormValidateService } from '../../services/FormValidateService/JQ
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
 import { JsTree } from '../../components/tree/JsTree';
-import { QuillEditor } from '../../components/editor/Quill';
+import { QuillEditor } from '../../components/editor/QuillEditor';
 
 export class JQueryForm extends Form {
   private $form: any;
