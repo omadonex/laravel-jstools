@@ -8,7 +8,7 @@ export class QuillEditor implements ComponentContract {
 
   constructor(quillId: string, options: AnyObjInterface, data?: AnyObjInterface[]) {
     this.quillId = quillId;
-    this.quill = new Quill(quillId, options);
+    this.quill = new Quill(`#${quillId}`, options);
   }
 
   public getValue(): null | string {
