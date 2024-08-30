@@ -13,7 +13,7 @@ export class QuillEditor implements ComponentContract {
 
   public getValue(): null | string {
     const delta = this.quill.getContents();
-    
+
     return JSON.stringify(delta);
   }
 
