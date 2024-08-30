@@ -43,4 +43,6 @@ export { FormDataInterface, ModalDataInterface, NotyDataInterface, RequestDataIn
 
 // ---Components---
 import { JsTree } from './components/tree/JsTree';
-export { JsTree };
+import { Quill } from "./components/editor/Quill";
+
+export { JsTree, Quill };

@@ -9,6 +9,7 @@ import { JQueryFormValidateService } from '../../services/FormValidateService/JQ
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
 import { JsTree } from '../../components/tree/JsTree';
+import { Quill } from "../../components/editor/Quill";
 
 export class JQueryForm extends Form {
   private $form: any;
@@ -48,6 +49,9 @@ export class JQueryForm extends Form {
       if ($field.data('jstComponent') === 'jstree') {
         this.components[$field.attr('id')] = new JsTree($field.attr('id'), this.componentsOptions.jstree);
       }
+      if ($field.data('jstComponent') === 'quill') {
+        this.components[$field.attr('id')] = new Quill($field.attr('id'), this.componentsOptions.quill);
+      }
     });
   }
 
@@ -61,13 +65,17 @@ export class JQueryForm extends Form {
 
       jstree.select(inputData[fieldName]);
     }
+
+    if ($input.data('jstComponent') === 'quill') {
+      const quill: Quill = this.components[$input.attr('id')];
+      console.log(inputData);
+      quill.setValue('dd');
+    }
   }
 
   protected getComponentValue($input: any): null | string {
-    if ($input.data('jstComponent') === 'jstree') {
-      const jstree: JsTree = this.components[$input.attr('id')];
-
-      return jstree.getValue();
+    if ($input.data('jstComponent')) {
+      return this.components[$input.attr('id')].getValue();
     }
 
     return null;
