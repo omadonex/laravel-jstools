@@ -12,14 +12,9 @@ export class QuillEditor implements ComponentContract {
   }
 
   public getValue(): null | string {
-    // const selected = this.tree.get_selected(true)[0];
-    // var delta = editor.getContents();
-    // var text = editor.getText();
-    // var justHtml = editor.root.innerHTML;
-    // preciousContent.innerHTML = JSON.stringify(delta);
-    // justTextContent.innerHTML = text;
-    // justHtmlContent.innerHTML = justHtml;
-    return null;
+    const delta = this.quill.getContents();
+    
+    return JSON.stringify(delta);
   }
 
   public setValue(json: string): void {
