@@ -1,6 +1,6 @@
 {
   "name": "laravel-jstools",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "JS tools for building front-side of Laravel applications",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
