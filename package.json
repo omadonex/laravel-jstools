@@ -48,5 +48,6 @@
   "dependencies": {
     "laravel-jstools-di": "^1.0.3",
     "quill": "^2.0.2"
-  }
+  },
+  "type": "module"
 }
