@@ -38,9 +38,30 @@ export class JQueryForm extends Form {
 
     if (this.isSubmitOnEnter()) {
       this.enableSubmitOnEnter();
+    } else {
+      this.disableSubmitOnEnter();
     }
 
     this.saveDefaultValues();
+  }
+
+  protected disableSubmitOnEnter(): void {
+    this.$form.on('keydown', ':input:not(textarea)', function (e: any): void {
+      if (e.code === 'Enter') {
+        e.preventDefault();
+      }
+    });
+  }
+
+  public enableSubmitOnEnter(): void {
+    this.$form.on('keydown', (e: any) => {
+      if (e.code === 'Enter') {
+        if (this.isAjax()) {
+          e.preventDefault();
+        }
+        this.submit();
+      }
+    });
   }
 
   protected initComponents(): void {
@@ -251,17 +272,6 @@ export class JQueryForm extends Form {
   public setSubmitButton(button: any): void {
     button.on('click', () => {
       this.submit();
-    });
-  }
-
-  public enableSubmitOnEnter(): void {
-    this.$form.on('keydown', (e: any) => {
-      if (e.code === 'Enter') {
-        if (this.isAjax()) {
-          e.preventDefault();
-        }
-        this.submit();
-      }
     });
   }
 

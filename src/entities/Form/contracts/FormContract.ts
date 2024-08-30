@@ -9,7 +9,6 @@ export interface FormContract {
   clear(): void;
   setRuleList(ruleList: RuleListInterface): void;
   setSubmitButton(button: any): void;
-  enableSubmitOnEnter(): void;
   serialize(): AnyObjInterface;
   attachToModal(modal: ModalContract): void;
   setInitData(data: AnyObjInterface): void;

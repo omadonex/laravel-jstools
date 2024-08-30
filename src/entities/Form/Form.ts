@@ -71,6 +71,8 @@ export abstract class Form extends Service implements FormContract {
     this.defaultMethod = this.getMethod();
   }
 
+  protected abstract disableSubmitOnEnter(): void;
+  protected abstract enableSubmitOnEnter(): void;
   protected abstract showErrors(errorList: ValidateErrorListInterface): void;
   protected abstract clearErrors(): void;
   protected abstract showAlerts(alertList: string[], contextType: ContextTypeEnum): void;
@@ -88,7 +90,6 @@ export abstract class Form extends Service implements FormContract {
   public abstract serialize(): AnyObjInterface;
 
   public abstract setSubmitButton(button: any): void;
-  public abstract enableSubmitOnEnter(): void;
   public abstract setInitData(data: AnyObjInterface): void;
   public abstract setAction(action: string): void;
   public abstract setMethod(method: string): void;
