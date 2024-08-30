@@ -53,6 +53,7 @@ export class JQueryForm extends Form {
     });
   }
 
+  // TODO omadonex: добавить возможность обычным textarea нажимать enter но не отправлять форму
   public enableSubmitOnEnter(): void {
     this.$form.on('keydown', (e: any): void => {
       if (e.code === 'Enter') {

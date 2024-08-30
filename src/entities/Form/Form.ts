@@ -62,7 +62,11 @@ export abstract class Form extends Service implements FormContract {
   }
 
   protected isSubmitOnEnter(): boolean {
-    return this.formData.submitOnEnter || true;
+    if (this.formData.submitOnEnter !== undefined) {
+      return this.formData.submitOnEnter;
+    }
+
+    return true;
   }
 
   protected saveDefaultValues(): void {
