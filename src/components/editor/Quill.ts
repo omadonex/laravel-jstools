@@ -12,7 +12,7 @@ export class Quill implements ComponentContract {
     }
 
     public getValue(): null | string {
-        //const selected = this.tree.get_selected(true)[0];
+        // const selected = this.tree.get_selected(true)[0];
         // var delta = editor.getContents();
         // var text = editor.getText();
         // var justHtml = editor.root.innerHTML;
