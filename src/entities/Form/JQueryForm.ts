@@ -46,7 +46,7 @@ export class JQueryForm extends Form {
   }
 
   protected disableSubmitOnEnter(): void {
-    this.$form.on('keydown', ':input:not(textarea)', (e: any): void => {
+    this.$form.on('keydown', (e: any): void => {
       if (e.code === 'Enter') {
         e.preventDefault();
       }
@@ -56,9 +56,7 @@ export class JQueryForm extends Form {
   public enableSubmitOnEnter(): void {
     this.$form.on('keydown', (e: any): void => {
       if (e.code === 'Enter') {
-        if (this.isAjax()) {
-          e.preventDefault();
-        }
+        e.preventDefault();
         this.submit();
       }
     });
