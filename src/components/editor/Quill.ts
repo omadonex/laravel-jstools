@@ -1,14 +1,14 @@
 import { AnyObjInterface } from '../../interfaces/AnyObjInterface';
 import { ComponentContract } from '../contracts/ComponentContract';
-import QuillNpm from 'quill';
+import Quill from 'quill';
 
-export class Quill implements ComponentContract {
+export class QuillEditor implements ComponentContract {
   private quillId: string;
   private quill: any;
 
   constructor(quillId: string, options: AnyObjInterface, data?: AnyObjInterface[]) {
     this.quillId = quillId;
-    this.quill = new QuillNpm(quillId, options);
+    this.quill = new Quill(quillId, options);
   }
 
   public getValue(): null | string {

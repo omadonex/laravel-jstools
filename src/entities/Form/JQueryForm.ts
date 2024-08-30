@@ -9,7 +9,7 @@ import { JQueryFormValidateService } from '../../services/FormValidateService/JQ
 import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
 import { JsTree } from '../../components/tree/JsTree';
-import { Quill } from '../../components/editor/Quill';
+import { QuillEditor } from '../../components/editor/Quill';
 
 export class JQueryForm extends Form {
   private $form: any;
@@ -50,7 +50,7 @@ export class JQueryForm extends Form {
         this.components[$field.attr('id')] = new JsTree($field.attr('id'), this.componentsOptions.jstree);
       }
       if ($field.data('jstComponent') === 'quill') {
-        this.components[$field.attr('id')] = new Quill($field.attr('id'), this.componentsOptions.quill);
+        this.components[$field.attr('id')] = new QuillEditor($field.attr('id'), this.componentsOptions.quill);
       }
     });
   }
@@ -67,7 +67,7 @@ export class JQueryForm extends Form {
     }
 
     if ($input.data('jstComponent') === 'quill') {
-      const quill: Quill = this.components[$input.attr('id')];
+      const quill: QuillEditor = this.components[$input.attr('id')];
       console.log(inputData);
       quill.setValue('dd');
     }
