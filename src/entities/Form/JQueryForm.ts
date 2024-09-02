@@ -254,15 +254,15 @@ export class JQueryForm extends Form {
 
   protected showSpinner(): void {
     this.$spinner.removeClass('d-none');
-    this.extraSpinners.forEach((el: any): void => {
-      el.removeClass('d-none');
+    this.extraSpinners.each((index: number, el: any): void => {
+      $(el).removeClass('d-none');
     });
   }
 
   protected hideSpinner(): void {
     this.$spinner.addClass('d-none');
-    this.extraSpinners.forEach((el: any): void => {
-      el.addClass('d-none');
+    this.extraSpinners.each((index: number, el: any): void => {
+      $(el).addClass('d-none');
     });
   }
 
