@@ -35,6 +35,7 @@ export abstract class Form extends Service implements FormContract {
   protected defaultValues: AnyObjInterface = {};
   protected defaultAction: string = '';
   protected defaultMethod: string = '';
+  protected submitCallback: any = null;
 
   constructor(
     formId: string,
@@ -100,6 +101,10 @@ export abstract class Form extends Service implements FormContract {
   public abstract getMethod(): string;
   public abstract getAction(): string;
   public abstract getToken(): string;
+
+  public setSubmitCallback(callback: any): void {
+    this.submitCallback = callback;
+  }
 
   public clear(): void {
     this.clearErrors();
@@ -221,6 +226,12 @@ export abstract class Form extends Service implements FormContract {
   }
 
   public callSubmitCallback(): void {
+    if (this.submitCallback) {
+      this.submitCallback();
+
+      return;
+    }
+
     if (typeof this.formData.submitCallback !== 'undefined') {
       this.formData.submitCallback();
     }
