@@ -12,9 +12,10 @@ export class QuillEditor implements ComponentContract {
   }
 
   public getValue(): null | string {
-    const delta = this.quill.getContents();
-
-    return JSON.stringify(delta);
+    return JSON.stringify({
+      json: JSON.stringify(this.quill.getContents()),
+      text: this.quill.getText(),
+    });
   }
 
   public setValue(json: string): void {
