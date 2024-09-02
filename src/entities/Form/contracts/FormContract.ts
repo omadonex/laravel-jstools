@@ -23,4 +23,5 @@ export interface FormContract {
   setSubmitCallback(callback: any): void;
   setPreSubmitCallback(callback: any): void;
   setAfterSubmitCallback(callback: any): void;
+  setExtraSpinners(spinnerList: Array<any>): void;
 }
