@@ -38,7 +38,7 @@ export abstract class Form extends Service implements FormContract {
   protected submitCallback: any = null;
   protected preSubmitCallback: any = null;
   protected afterSubmitCallback: any = null;
-  protected extraSpinners: any = [];
+  protected extraSpinners: any = null;
 
   constructor(
     formId: string,

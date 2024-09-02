@@ -254,16 +254,20 @@ export class JQueryForm extends Form {
 
   protected showSpinner(): void {
     this.$spinner.removeClass('d-none');
-    this.extraSpinners.each((index: number, el: any): void => {
-      $(el).removeClass('d-none');
-    });
+    if (this.extraSpinners) {
+      this.extraSpinners.each((index: number, el: any): void => {
+        $(el).removeClass('d-none');
+      });
+    }
   }
 
   protected hideSpinner(): void {
     this.$spinner.addClass('d-none');
-    this.extraSpinners.each((index: number, el: any): void => {
-      $(el).addClass('d-none');
-    });
+    if (this.extraSpinners) {
+      this.extraSpinners.each((index: number, el: any): void => {
+        $(el).addClass('d-none');
+      });
+    }
   }
 
   protected disableFieldsInput(): void {
