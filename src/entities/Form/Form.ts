@@ -112,7 +112,7 @@ export abstract class Form extends Service implements FormContract {
     this.preSubmitCallback = callback;
   }
 
-  public setAfterSubmitCallback(callback:any): void {
+  public setAfterSubmitCallback(callback: any): void {
     this.afterSubmitCallback = callback;
   }
 
