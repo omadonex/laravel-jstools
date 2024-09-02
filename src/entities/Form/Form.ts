@@ -38,7 +38,7 @@ export abstract class Form extends Service implements FormContract {
   protected submitCallback: any = null;
   protected preSubmitCallback: any = null;
   protected afterSubmitCallback: any = null;
-  protected extraSpinners: any[] = [];
+  protected extraSpinners: any = [];
 
   constructor(
     formId: string,
@@ -117,7 +117,7 @@ export abstract class Form extends Service implements FormContract {
     this.afterSubmitCallback = callback;
   }
 
-  public setExtraSpinners(spinnerList: any[]): void {
+  public setExtraSpinners(spinnerList: any): void {
     this.extraSpinners = spinnerList;
   }
 
