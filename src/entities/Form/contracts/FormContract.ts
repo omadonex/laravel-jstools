@@ -20,4 +20,7 @@ export interface FormContract {
   getId(): string;
   getRuleList(): RuleListInterface;
   getComponent(type: string): any;
+  setSubmitCallback(callback: any): void;
+  setPreSubmitCallback(callback: any): void;
+  setAfterSubmitCallback(callback: any): void;
 }

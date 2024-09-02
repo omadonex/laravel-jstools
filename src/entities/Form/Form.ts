@@ -36,6 +36,8 @@ export abstract class Form extends Service implements FormContract {
   protected defaultAction: string = '';
   protected defaultMethod: string = '';
   protected submitCallback: any = null;
+  protected preSubmitCallback: any = null;
+  protected afterSubmitCallback: any = null;
 
   constructor(
     formId: string,
@@ -106,6 +108,14 @@ export abstract class Form extends Service implements FormContract {
     this.submitCallback = callback;
   }
 
+  public setPreSubmitCallback(callback: any): void {
+    this.preSubmitCallback = callback;
+  }
+
+  public setAfterSubmitCallback(callback:any): void {
+    this.afterSubmitCallback = callback;
+  }
+
   public clear(): void {
     this.clearErrors();
     this.clearInputs();
@@ -123,6 +133,9 @@ export abstract class Form extends Service implements FormContract {
       this.showSpinner();
       this.disableSubmitBtn();
       this.disableFieldsInput();
+      if (this.preSubmitCallback) {
+        this.preSubmitCallback();
+      }
     } else {
       this.modal.showSubmitSpinner();
       this.modal.disableButtons();
@@ -135,6 +148,9 @@ export abstract class Form extends Service implements FormContract {
       this.hideSpinner();
       this.enableSubmitBtn();
       this.enableFieldsInput();
+      if (this.afterSubmitCallback) {
+        this.afterSubmitCallback();
+      }
     } else {
       this.modal.hideSubmitSpinner();
       this.modal.enableButtons();
