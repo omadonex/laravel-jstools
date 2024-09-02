@@ -223,6 +223,14 @@ export class JQueryForm extends Form {
     return this.$form.find('input[name=_token]').val();
   }
 
+  public hide(): void {
+    this.$form.addClass('d-none');
+  }
+
+  public show(): void {
+    this.$form.removeClass('d-none');
+  }
+
   protected callFormSubmit(): void {
     const form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
     form.addEventListener('formdata', (e) => {

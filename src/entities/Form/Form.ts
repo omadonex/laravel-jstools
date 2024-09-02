@@ -104,6 +104,8 @@ export abstract class Form extends Service implements FormContract {
   public abstract getMethod(): string;
   public abstract getAction(): string;
   public abstract getToken(): string;
+  public abstract hide(): void;
+  public abstract show(): void;
 
   public setSubmitCallback(callback: any): void {
     this.submitCallback = callback;

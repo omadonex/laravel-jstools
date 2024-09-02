@@ -7,6 +7,8 @@ export interface FormContract {
   validate(): ValidateErrorListInterface | true;
   submit(): void;
   clear(): void;
+  hide(): void;
+  show(): void;
   setRuleList(ruleList: RuleListInterface): void;
   setSubmitButton(button: any): void;
   serialize(): AnyObjInterface;
