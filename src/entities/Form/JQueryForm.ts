@@ -22,7 +22,7 @@ export class JQueryForm extends Form {
     super(formId, formData, showNoty, componentsOptions, new JQueryFormValidateService());
     this.$form = $(`#${this.formId}`);
     this.$fieldList = this.$form.find(
-      'input[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]',
+      'input[data-jst-field],textarea[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]',
     );
     this.$spinner = this.$form.find('span[data-jst-spinner]');
     this.$submit = this.$form.find('button[data-jst-submit]');
@@ -162,7 +162,7 @@ export class JQueryForm extends Form {
   protected setInputsValues(data: AnyObjInterface): void {
     for (const name of Object.keys(data)) {
       const $input: any = this.$form.find(
-        `input[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`,
+        `input[data-jst-field="${name}"],textarea[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`,
       );
       if ($input.is('select')) {
         const el: any = $input[0];
