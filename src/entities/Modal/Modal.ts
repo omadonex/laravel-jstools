@@ -55,6 +55,10 @@ export abstract class Modal extends Service implements ModalContract {
     }
   }
 
+  public getModalData(): ModalDataInterface {
+    return this.modalData;
+  }
+
   public showOverlay(): void {
     this.modalOverlayShow();
   }

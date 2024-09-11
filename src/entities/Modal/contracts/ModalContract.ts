@@ -1,6 +1,8 @@
 import { FormContract } from '../../Form/contracts/FormContract';
+import {ModalDataInterface} from "../interfaces/ModalDataInterface";
 
 export interface ModalContract {
+  getModalData(): ModalDataInterface;
   show(): void;
   hide(): void;
   showOverlay(): void;
