@@ -1,5 +1,5 @@
 import { FormContract } from '../../Form/contracts/FormContract';
-import {ModalDataInterface} from "../interfaces/ModalDataInterface";
+import { ModalDataInterface } from '../interfaces/ModalDataInterface';
 
 export interface ModalContract {
   getModalData(): ModalDataInterface;
