@@ -14,6 +14,7 @@ export class BS52Modal extends Modal implements ModalContract {
   private submitEl: HTMLElement | null = null;
   private submitTextEl: HTMLElement | null = null;
   private submitSpinnerEl: HTMLElement | null = null;
+  private loadingSpinnerEl: HTMLElement | null = null;
   private cancelEl: HTMLElement | null = null;
   private cancelTextEl: HTMLElement | null = null;
   private overlayEl: HTMLElement | null = null;
@@ -41,6 +42,7 @@ export class BS52Modal extends Modal implements ModalContract {
         };
       }
       this.submitSpinnerEl = this.modalEl.querySelector(`#${this.modalId}__btnSubmitSpinner`);
+      this.loadingSpinnerEl = this.modalEl.querySelector(`#${this.modalId}__loadingSpinner`);
       this.cancelEl = this.modalEl.querySelector(`#${this.modalId}__btnCancel`);
       this.cancelTextEl = this.modalEl.querySelector(`#${this.modalId}__btnCancelText`);
       this.overlayEl = this.modalEl.querySelector(`#${this.modalId}__overlay`);
@@ -124,6 +126,10 @@ export class BS52Modal extends Modal implements ModalContract {
     this.showEl(this.submitSpinnerEl);
   }
 
+  protected modalLoadingSpinnerShow(): void {
+    this.showEl(this.loadingSpinnerEl);
+  }
+
   protected modalExtraSpinnerShow(): void {
     if (this.extraSpinners) {
       this.extraSpinners.forEach((el: any): void => {
@@ -134,6 +140,10 @@ export class BS52Modal extends Modal implements ModalContract {
 
   protected modalSubmitSpinnerHide(): void {
     this.hideEl(this.submitSpinnerEl);
+  }
+
+  protected modalLoadingSpinnerHide(): void {
+    this.hideEl(this.loadingSpinnerEl);
   }
 
   protected modalExtraSpinnerHide(): void {

@@ -71,6 +71,14 @@ export abstract class Modal extends Service implements ModalContract {
     this.modalSubmitSpinnerHide();
   }
 
+  public showLoadingSpinner(): void {
+    this.modalLoadingSpinnerShow();
+  }
+
+  public hideLoadingSpinner(): void {
+    this.modalLoadingSpinnerHide();
+  }
+
   public showExtraSpinners(): void {
     this.modalExtraSpinnerShow();
   }
@@ -238,6 +246,8 @@ export abstract class Modal extends Service implements ModalContract {
   protected abstract modalSubmitHide(): void;
   protected abstract modalSubmitSpinnerShow(): void;
   protected abstract modalSubmitSpinnerHide(): void;
+  protected abstract modalLoadingSpinnerShow(): void;
+  protected abstract modalLoadingSpinnerHide(): void;
   protected abstract modalExtraSpinnerShow(): void;
   protected abstract modalExtraSpinnerHide(): void;
   protected abstract modalButtonsEnable(): void;

@@ -7,6 +7,8 @@ export interface ModalContract {
   hideOverlay(): void;
   showSubmitSpinner(): void;
   hideSubmitSpinner(): void;
+  showLoadingSpinner(): void;
+  hideLoadingSpinner(): void;
   showExtraSpinners(): void;
   hideExtraSpinners(): void;
   enableButtons(): void;
