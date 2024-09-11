@@ -87,6 +87,7 @@ export class JQueryForm extends Form {
     }
 
     if ($input.data('jstComponent') === 'quill') {
+      //TODO omadonex: continue work
       const quill: QuillEditor = this.components[$input.attr('id')];
       console.log(inputData);
       quill.setValue('dd');
@@ -170,6 +171,8 @@ export class JQueryForm extends Form {
         } else {
           $input.val(data[name]).change();
         }
+      } else if ($input.is('textarea')) {
+        $input.val(data[name]);
       } else if ($input.is('div')) {
         this.setComponentValue($input, data, name);
       } else {
@@ -289,7 +292,7 @@ export class JQueryForm extends Form {
     this.$fieldList.each((index: number, input: any) => {
       const $input: any = $(input);
       const name: string = $input.data('jstField') as string;
-      if ($input.is('select')) {
+      if ($input.is('select') || $input.is('textarea')) {
         data[name] = $input.val();
       } else if ($input.is('div')) {
         data[name] = this.getComponentValue($input);
