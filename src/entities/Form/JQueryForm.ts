@@ -87,7 +87,7 @@ export class JQueryForm extends Form {
     }
 
     if ($input.data('jstComponent') === 'quill') {
-      //TODO omadonex: continue work
+      // TODO omadonex: continue work
       const quill: QuillEditor = this.components[$input.attr('id')];
       console.log(inputData);
       quill.setValue('dd');
