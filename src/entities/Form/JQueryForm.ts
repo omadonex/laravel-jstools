@@ -300,6 +300,7 @@ export class JQueryForm extends Form {
         switch ($input.attr('type')) {
           case 'text':
           case 'password':
+          case 'hidden':
             data[name] = $input.val();
             break;
           case 'checkbox':
