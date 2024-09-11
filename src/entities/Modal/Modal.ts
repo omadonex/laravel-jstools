@@ -20,6 +20,7 @@ export abstract class Modal extends Service implements ModalContract {
   protected modalUsage: ModalUsageEnum;
   protected showNoty: boolean;
   protected form: FormContract | null;
+  protected extraSpinners: any = null;
 
   constructor(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean) {
     super();
@@ -37,6 +38,7 @@ export abstract class Modal extends Service implements ModalContract {
   private reset(): void {
     this.modalOverlayHide();
     this.modalSubmitSpinnerHide();
+    this.modalExtraSpinnerHide();
     this.modalClearAlerts();
     this.modalButtonsEnable();
 
@@ -69,6 +71,14 @@ export abstract class Modal extends Service implements ModalContract {
     this.modalSubmitSpinnerHide();
   }
 
+  public showExtraSpinners(): void {
+    this.modalExtraSpinnerShow();
+  }
+
+  public hideExtraSpinners(): void {
+    this.modalExtraSpinnerHide();
+  }
+
   public enableButtons(): void {
     this.modalButtonsEnable();
   }
@@ -86,12 +96,14 @@ export abstract class Modal extends Service implements ModalContract {
         this.send(this.modalData.preloadData, false, {
           start: () => {
             this.modalSubmitSpinnerShow();
+            this.modalExtraSpinnerShow();
             this.modalButtonsDisable();
             this.modalOverlayShow();
             this.modalClearAlerts();
           },
           finish: () => {
             this.modalSubmitSpinnerHide();
+            this.modalExtraSpinnerHide();
             this.modalButtonsEnable();
             this.modalOverlayHide();
           },
@@ -103,6 +115,10 @@ export abstract class Modal extends Service implements ModalContract {
     } else if (typeof this.modalData.initDataCallback !== 'undefined') {
       this.form?.setInitData(this.modalData.initDataCallback());
     }
+  }
+
+  public setExtraSpinners(spinnerList: any): void {
+    this.extraSpinners = spinnerList;
   }
 
   private send(data: RequestDataInterface, showNoty: boolean, callbackList: CallbackListInterface): void {
@@ -146,12 +162,14 @@ export abstract class Modal extends Service implements ModalContract {
           this.send(this.modalData.submitData, this.showNoty, {
             start: () => {
               this.modalSubmitSpinnerShow();
+              this.modalExtraSpinnerShow();
               this.modalButtonsDisable();
               this.modalOverlayShow();
               this.modalClearAlerts();
             },
             finish: () => {
               this.modalSubmitSpinnerHide();
+              this.modalExtraSpinnerHide();
               this.modalButtonsEnable();
               this.modalOverlayHide();
             },
@@ -220,6 +238,8 @@ export abstract class Modal extends Service implements ModalContract {
   protected abstract modalSubmitHide(): void;
   protected abstract modalSubmitSpinnerShow(): void;
   protected abstract modalSubmitSpinnerHide(): void;
+  protected abstract modalExtraSpinnerShow(): void;
+  protected abstract modalExtraSpinnerHide(): void;
   protected abstract modalButtonsEnable(): void;
   protected abstract modalButtonsDisable(): void;
   protected abstract modalSetTitle(text: string): void;

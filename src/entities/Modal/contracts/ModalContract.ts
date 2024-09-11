@@ -7,8 +7,11 @@ export interface ModalContract {
   hideOverlay(): void;
   showSubmitSpinner(): void;
   hideSubmitSpinner(): void;
+  showExtraSpinners(): void;
+  hideExtraSpinners(): void;
   enableButtons(): void;
   disableButtons(): void;
   setForm(form: FormContract | null): void;
   callSubmitCallback(): void;
+  setExtraSpinners(spinnerList: any): void;
 }

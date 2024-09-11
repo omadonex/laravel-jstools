@@ -124,8 +124,24 @@ export class BS52Modal extends Modal implements ModalContract {
     this.showEl(this.submitSpinnerEl);
   }
 
+  protected modalExtraSpinnerShow(): void {
+    if (this.extraSpinners) {
+      this.extraSpinners.forEach((el: any): void => {
+        this.showEl(el);
+      });
+    }
+  }
+
   protected modalSubmitSpinnerHide(): void {
     this.hideEl(this.submitSpinnerEl);
+  }
+
+  protected modalExtraSpinnerHide(): void {
+    if (this.extraSpinners) {
+      this.extraSpinners.forEach((el: any): void => {
+        this.hideEl(el);
+      });
+    }
   }
 
   protected modalButtonsEnable(): void {
