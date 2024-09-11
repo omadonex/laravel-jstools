@@ -158,7 +158,7 @@ export class JQueryForm extends Form {
     }
   }
 
-  private setInputsValues(data: AnyObjInterface): void {
+  protected setInputsValues(data: AnyObjInterface): void {
     for (const name of Object.keys(data)) {
       const $input: any = this.$form.find(
         `input[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`,
@@ -187,14 +187,6 @@ export class JQueryForm extends Form {
         }
       }
     }
-  }
-
-  protected clearInputs(): void {
-    this.setInputsValues(this.defaultValues);
-  }
-
-  public setInitData(data: AnyObjInterface): void {
-    this.setInputsValues(data);
   }
 
   public setMethod(method: string): void {

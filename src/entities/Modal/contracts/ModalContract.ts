@@ -16,6 +16,7 @@ export interface ModalContract {
   enableButtons(): void;
   disableButtons(): void;
   setForm(form: FormContract | null): void;
+  getForm(): FormContract | null;
   callSubmitCallback(): void;
   setExtraSpinners(spinnerList: any): void;
 }

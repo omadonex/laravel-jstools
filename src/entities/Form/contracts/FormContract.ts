@@ -13,6 +13,7 @@ export interface FormContract {
   setSubmitButton(button: any): void;
   serialize(): AnyObjInterface;
   attachToModal(modal: ModalContract): void;
+  getInitData(): AnyObjInterface;
   setInitData(data: AnyObjInterface): void;
   setMethod(method: string): void;
   setAction(action: string): void;

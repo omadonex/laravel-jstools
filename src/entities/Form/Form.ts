@@ -39,6 +39,7 @@ export abstract class Form extends Service implements FormContract {
   protected preSubmitCallback: any = null;
   protected afterSubmitCallback: any = null;
   protected extraSpinners: any = null;
+  protected initData: AnyObjInterface;
 
   constructor(
     formId: string,
@@ -55,6 +56,7 @@ export abstract class Form extends Service implements FormContract {
     this.components = {};
     this.isSending = false;
     this.validateService = validateService;
+    this.initData = {};
   }
 
   protected isAjax(): boolean {
@@ -79,13 +81,17 @@ export abstract class Form extends Service implements FormContract {
     this.defaultMethod = this.getMethod();
   }
 
+  protected clearInputs(): void {
+    this.setInputsValues(this.defaultValues);
+  }
+
+  protected abstract setInputsValues(data: AnyObjInterface): void;
   protected abstract disableSubmitOnEnter(): void;
   protected abstract enableSubmitOnEnter(): void;
   protected abstract showErrors(errorList: ValidateErrorListInterface): void;
   protected abstract clearErrors(): void;
   protected abstract showAlerts(alertList: string[], contextType: ContextTypeEnum): void;
   protected abstract clearAlerts(): void;
-  protected abstract clearInputs(): void;
   protected abstract callFormSubmit(): void;
   protected abstract showSubmitBtn(): void;
   protected abstract hideSubmitBtn(): void;
@@ -98,7 +104,6 @@ export abstract class Form extends Service implements FormContract {
   public abstract serialize(): AnyObjInterface;
 
   public abstract setSubmitButton(button: any): void;
-  public abstract setInitData(data: AnyObjInterface): void;
   public abstract setAction(action: string): void;
   public abstract setMethod(method: string): void;
   public abstract getMethod(): string;
@@ -106,6 +111,15 @@ export abstract class Form extends Service implements FormContract {
   public abstract getToken(): string;
   public abstract hide(): void;
   public abstract show(): void;
+
+  public getInitData(): AnyObjInterface {
+    return this.initData;
+  }
+
+  public setInitData(data: AnyObjInterface): void {
+    this.initData = data;
+    this.setInputsValues(data);
+  }
 
   public setSubmitCallback(callback: any): void {
     this.submitCallback = callback;
