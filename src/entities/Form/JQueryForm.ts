@@ -182,7 +182,7 @@ export class JQueryForm extends Form {
         }
       } else if ($input.is('textarea')) {
         $input.val(data[name]);
-      } else if ($input.data('jstComponent')) {
+      } else if ($input.is('div')) {
         this.setComponentValue($input, data, name);
       } else {
         switch ($input.attr('type')) {
@@ -303,7 +303,7 @@ export class JQueryForm extends Form {
       const name: string = $input.data('jstField') as string;
       if ($input.is('select') || $input.is('textarea')) {
         data[name] = $input.val();
-      } else if ($input.data('jstComponent')) {
+      } else if ($input.is('div')) {
         data[name] = this.getComponentValue($input);
       } else {
         switch ($input.attr('type')) {
