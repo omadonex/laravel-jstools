@@ -17,7 +17,7 @@ export class FlatPickr implements ComponentContract {
     if (this.options.mode === undefined) {
       return this.flatpickr.selectedDates[0] || null;
     }
-    
+
     return this.flatpickr.selectedDates;
   }
 
