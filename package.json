@@ -46,6 +46,7 @@
     "lib/**/*"
   ],
   "dependencies": {
+    "flatpickr": "^4.6.13",
     "laravel-jstools-di": "^1.0.3",
     "quill": "^2.0.2"
   }

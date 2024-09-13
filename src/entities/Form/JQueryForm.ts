@@ -10,6 +10,7 @@ import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
 import { JsTree } from '../../components/tree/JsTree';
 import { QuillEditor } from '../../components/editor/QuillEditor';
+import {FlatPickr} from "../../components/datepicker/FlatPickr";
 
 export class JQueryForm extends Form {
   private $form: any;
@@ -72,6 +73,9 @@ export class JQueryForm extends Form {
       if ($field.data('jstComponent') === 'quill') {
         this.components[$field.attr('id')] = new QuillEditor($field.attr('id'), this.componentsOptions.quill);
       }
+      if ($field.data('jstComponent') === 'flatpickr') {
+        this.components[$field.attr('id')] = new FlatPickr($field.attr('id'), this.componentsOptions.flatpickr);
+      }
     });
   }
 
@@ -91,6 +95,11 @@ export class JQueryForm extends Form {
       const quill: QuillEditor = this.components[$input.attr('id')];
       console.log(inputData);
       quill.setValue('dd');
+    }
+
+    if ($input.data('jstComponent') === 'flatpickr') {
+      const flatpickr: FlatPickr = this.components[$input.attr('id')];
+      flatpickr.setValue(inputData[fieldName]);
     }
   }
 
@@ -173,7 +182,7 @@ export class JQueryForm extends Form {
         }
       } else if ($input.is('textarea')) {
         $input.val(data[name]);
-      } else if ($input.is('div')) {
+      } else if ($input.data('jstComponent')) {
         this.setComponentValue($input, data, name);
       } else {
         switch ($input.attr('type')) {
@@ -294,7 +303,7 @@ export class JQueryForm extends Form {
       const name: string = $input.data('jstField') as string;
       if ($input.is('select') || $input.is('textarea')) {
         data[name] = $input.val();
-      } else if ($input.is('div')) {
+      } else if ($input.data('jstComponent')) {
         data[name] = this.getComponentValue($input);
       } else {
         switch ($input.attr('type')) {
