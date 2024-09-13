@@ -58,6 +58,8 @@ export class ValidateService extends Service implements ValidateServiceContract 
         return this.checkNullable;
       case 'phone':
         return this.checkPhone;
+      case 'numeric':
+        return this.checkNumeric;
     }
 
     return this.fakeCheck;
@@ -128,5 +130,11 @@ export class ValidateService extends Service implements ValidateServiceContract 
     }
 
     return (value && /^[0-9]{10}$/.test(value)) || new ValidateError(field, 'phone');
+  }
+
+  private checkNumeric(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+    const value: any = data[field];
+
+    return (!!value && isNumeric(value)) || new ValidateError(field, 'numeric');
   }
 }
