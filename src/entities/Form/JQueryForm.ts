@@ -10,7 +10,7 @@ import { ContextTypeEnum } from '../../types/ContextTypeEnum';
 import { FormDataInterface } from './interfaces/FormDataInterface';
 import { JsTree } from '../../components/tree/JsTree';
 import { QuillEditor } from '../../components/editor/QuillEditor';
-import {FlatPickr} from "../../components/datepicker/FlatPickr";
+import { FlatPickr } from '../../components/datepicker/FlatPickr';
 
 export class JQueryForm extends Form {
   private $form: any;
