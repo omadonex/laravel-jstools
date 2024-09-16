@@ -16,7 +16,9 @@ export class JQueryFormValidateService extends ValidateService implements FormVa
     const ruleList: RuleListInterface = form.getRuleList();
     const ruleListForm: RuleListInterface = {};
     $form
-      .find('input[data-jst-field],textarea[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]')
+      .find(
+        'input[data-jst-field],textarea[data-jst-field],select[data-jst-field],div[data-jst-field][data-jst-component]',
+      )
       .each((index, element) => {
         const $element: any = $(element);
         const field: string = $element.data('jstField');
