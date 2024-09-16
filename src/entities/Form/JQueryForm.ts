@@ -125,10 +125,14 @@ export class JQueryForm extends Form {
           $divError.text(error.toText(translateService));
           $input.addClass('is-invalid');
 
-          // Dashly Tom-Select
-          const $next = $input.next();
-          if ($next && $next.hasClass('ts-wrapper') && $next.hasClass('form-select')) {
-            $next.addClass('is-invalid');
+          if ($input.data('jstComponent') === 'flatpickr') {
+            this.$form.find(`#${$input.attr('id')}Input`).addClass('is-invalid');
+          } else {
+            // Dashly Tom-Select
+            const $next = $input.next();
+            if ($next && $next.hasClass('ts-wrapper') && $next.hasClass('form-select')) {
+              $next.addClass('is-invalid');
+            }
           }
         } else {
           $input.addClass('is-valid');
@@ -138,7 +142,13 @@ export class JQueryForm extends Form {
   }
 
   protected clearErrors(): void {
-    this.$fieldList.removeClass('is-valid is-invalid');
+    this.$fieldList.each((index: number, element: any) => {
+      const $element = $(element);
+      $element.removeClass('is-valid is-invalid');
+      if ($element.data('jstComponent') === 'flatpickr') {
+        this.$form.find(`#${$element.attr('id')}Input`).removeClass('is-valid is-invalid');
+      }
+    });
   }
 
   protected showAlerts(alertList: string[], contextType: ContextTypeEnum): void {

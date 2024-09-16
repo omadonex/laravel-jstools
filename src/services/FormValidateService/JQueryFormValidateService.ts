@@ -28,7 +28,9 @@ export class JQueryFormValidateService extends ValidateService implements FormVa
           data[field] = $element.val();
         }
 
-        if ($element.data('jstValidate')) {
+        if ($element.data('jstComponent') === 'flatpickr') {
+          ruleListForm[field] = $form.find(`#${$element.attr('id')}Input`).data('jstValidate');
+        } else if ($element.data('jstValidate')) {
           ruleListForm[field] = $element.data('jstValidate');
         }
       });
