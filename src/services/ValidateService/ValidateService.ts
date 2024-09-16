@@ -46,20 +46,22 @@ export class ValidateService extends Service implements ValidateServiceContract 
         return this.checkConfirmed;
       case 'email':
         return this.checkEmail;
+      case 'integer':
+        return this.checkInteger;
       case 'max':
         return this.checkMax;
       case 'min':
         return this.checkMin;
-      case 'required':
-        return this.checkRequired;
       case 'notIn':
         return this.checkNotIn;
       case 'nullable':
         return this.checkNullable;
-      case 'phone':
-        return this.checkPhone;
       case 'numeric':
         return this.checkNumeric;
+      case 'phone':
+        return this.checkPhone;
+      case 'required':
+        return this.checkRequired;
     }
 
     return this.fakeCheck;
@@ -91,6 +93,12 @@ export class ValidateService extends Service implements ValidateServiceContract 
     return (value && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) || new ValidateError(field, 'email');
   }
 
+  private checkInteger(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+    const value: any = data[field];
+
+    return (!!value && Number.isInteger(value)) || new ValidateError(field, 'integer');
+  }
+
   private checkMax(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
     const value: any = data[field];
     const type = isNumeric(value) ? 'numeric' : 'string'; // TODO omadonex: file, array
@@ -105,12 +113,6 @@ export class ValidateService extends Service implements ValidateServiceContract 
     return (value && value.length >= paramList) || new ValidateError(field, `min.${type}`, { min: paramList });
   }
 
-  private checkRequired(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
-    const value: any = data[field];
-
-    return !!value || new ValidateError(field, 'required');
-  }
-
   private checkNotIn(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
     const value: any = data[field];
     const valueForCheck: any = data[paramList];
@@ -120,6 +122,12 @@ export class ValidateService extends Service implements ValidateServiceContract 
 
   private checkNullable(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
     return true;
+  }
+
+  private checkNumeric(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+    const value: any = data[field];
+
+    return (!!value && isNumeric(value)) || new ValidateError(field, 'numeric');
   }
 
   private checkPhone(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
@@ -132,9 +140,9 @@ export class ValidateService extends Service implements ValidateServiceContract 
     return (value && /^[0-9]{10}$/.test(value)) || new ValidateError(field, 'phone');
   }
 
-  private checkNumeric(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
+  private checkRequired(ruleList: string, data: AnyObjInterface, field: string, paramList?: any): ValidateError | true {
     const value: any = data[field];
 
-    return (!!value && isNumeric(value)) || new ValidateError(field, 'numeric');
+    return !!value || new ValidateError(field, 'required');
   }
 }
