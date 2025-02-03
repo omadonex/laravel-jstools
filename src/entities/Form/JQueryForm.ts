@@ -247,14 +247,21 @@ export class JQueryForm extends Form {
 
   protected callFormSubmit(): void {
     const form: HTMLFormElement = document.getElementById(this.formId) as HTMLFormElement;
-    form.addEventListener('formdata', (e) => {
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      new FormData(form);
+    });
+
+    form.addEventListener("formdata", (e) => {
       const formData = e.formData;
       const data = this.serialize();
-      for (const field of Object.keys(data)) {
+      for (const field in data) {
         formData.set(field, data[field]);
       }
       formData.set('_formid', this.formId);
     });
+
     form.submit();
   }
 

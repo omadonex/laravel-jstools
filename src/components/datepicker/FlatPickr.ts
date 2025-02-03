@@ -14,11 +14,13 @@ export class FlatPickr implements ComponentContract {
   }
 
   public getValue(): null | string {
-    if (this.options.mode === undefined) {
-      return this.flatpickr.selectedDates[0] || null;
+    const value = this.flatpickr.selectedDates[0] || null;
+
+    if (value) {
+      return this.flatpickr.formatDate(value, this.flatpickr.config.dateFormat);
     }
 
-    return this.flatpickr.selectedDates;
+    return null;
   }
 
   public setValue(date: any): void {
