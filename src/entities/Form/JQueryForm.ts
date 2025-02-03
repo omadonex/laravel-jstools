@@ -257,7 +257,9 @@ export class JQueryForm extends Form {
       const formData = e.formData;
       const data = this.serialize();
       for (const field in data) {
-        formData.set(field, data[field]);
+        if (data.hasOwnProperty(field)) {
+          formData.set(field, data[field]);
+        }
       }
       formData.set('_formid', this.formId);
     });
