@@ -250,7 +250,7 @@ export class JQueryForm extends Form {
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      new FormData(form);
+      const formData = new FormData(form);
     });
 
     form.addEventListener("formdata", (e) => {
