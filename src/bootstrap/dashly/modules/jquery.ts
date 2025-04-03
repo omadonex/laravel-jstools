@@ -61,7 +61,7 @@ $.fn.omxNumberSet = function (value: any, omxValue: any): JQuery {
 };
 
 $.fn.omxNumberFormat = function (value: number, decimals?: number): string {
-    var parts = (decimals ? value.toFixed(decimals).replace('.', ',') : value.toString()).split(",");
+    const parts = (decimals ? value.toFixed(decimals).replace('.', ',') : value.toString()).split(",");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
     return parts.join(",");
