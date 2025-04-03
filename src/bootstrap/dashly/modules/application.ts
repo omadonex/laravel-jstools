@@ -7,6 +7,7 @@ import { ModalDataInterface } from '../../../entities/Modal/interfaces/ModalData
 import { ModalUsageEnum } from '../../../entities/Modal/ModalUsageEnum';
 import { NotyDataInterface } from '../../../services/NotyService/interfaces/NotyDataInterface';
 import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
+import { AppServiceProvider } from "../../../app/providers/AppServiceProvider";
 
 declare global {
   interface Window {
@@ -48,6 +49,8 @@ declare global {
 window.App = new App({
   lang: window.langData || {},
 });
+
+window.App.registerProvider(new AppServiceProvider());
 
 window.noty = (notyData: NotyDataInterface) => {
   window.App.noty(notyData);
