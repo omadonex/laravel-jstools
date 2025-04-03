@@ -3,6 +3,7 @@
   "rules": {
     "array-type": false,
     "class-name": false,
+    "forin": false,
     "no-console": false,
     "no-string-literal": false,
     "only-arrow-functions": false,
