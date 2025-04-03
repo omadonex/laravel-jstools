@@ -15,7 +15,7 @@ declare global {
         notyData: any,
 
         noty: (notyData: NotyDataInterface) => void,
-        table: (tableId: string, columns: AnyObjInterface[], scroll?: boolean, options?: AnyObjInterface, callbacks?: AnyObjInterface) => any,
+        table: (tableId: string, columns: Array<AnyObjInterface>, scroll?: boolean, options?: AnyObjInterface, callbacks?: AnyObjInterface) => any,
         tableFilterData: (data: any, tableId: string) => any,
         tableHistory: (tableId: string, options?: AnyObjInterface) => any,
         form: (formId: string, formData?: FormDataInterface, componentsOptions?: AnyObjInterface) => FormContract | null,

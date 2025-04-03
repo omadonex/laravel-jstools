@@ -1,6 +1,9 @@
 {
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "no-console": false
+    "array-type": false,
+    "no-console": false,
+    "only-arrow-functions": false,
+    "object-literal-shorthand": false
   }
 }
