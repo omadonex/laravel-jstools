@@ -6,10 +6,10 @@ import OmxResourceUserHistory from './user/history';
 import OmxResourceUserShow from './user/show';
 
 export const PageList = [
-    OmxResourceRoleIndex,
-    OmxResourceRoleHistory,
-    OmxResourceRoleShow,
-    OmxResourceUserIndex,
-    OmxResourceUserHistory,
-    OmxResourceUserShow
+  OmxResourceRoleIndex,
+  OmxResourceRoleHistory,
+  OmxResourceRoleShow,
+  OmxResourceUserIndex,
+  OmxResourceUserHistory,
+  OmxResourceUserShow,
 ];
