@@ -7,7 +7,7 @@ import { ModalDataInterface } from '../../../entities/Modal/interfaces/ModalData
 import { ModalUsageEnum } from '../../../entities/Modal/ModalUsageEnum';
 import { NotyDataInterface } from '../../../services/NotyService/interfaces/NotyDataInterface';
 import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
-import { AppServiceProvider } from "../../../app/providers/AppServiceProvider";
+import { AppServiceProvider } from '../../../app/providers/AppServiceProvider';
 
 declare global {
   interface Window {
