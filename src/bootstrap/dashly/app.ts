@@ -1,7 +1,7 @@
 import './modules/jquery';
 import './modules/bootstrap';
 import './modules/common';
-import './modules/components';
+// import './modules/components';
 import './modules/application';
 import { PageList } from '../pages/_pages';
 
