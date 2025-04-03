@@ -1,7 +1,7 @@
 import { Page } from '../../../services/PageService/Page';
 import { CallbackListInterface } from '../../../services/AxiosService/interfaces/CallbackListInterface';
 
-export default class Root_Acl_User_Show extends Page {
+export default class Omx_Resource_User_Show extends Page {
   init() {
     window.initHistoryTab(this.pageId, this.getDefaultTableModelHistoryId('User'), {
       searching: false,

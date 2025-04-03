@@ -1,8 +1,15 @@
-import RoleIndex from './role/index';
-import RoleHistory from './role/history';
-import RoleShow from './role/show';
-import UserIndex from './user/index';
-import UserHistory from './user/history';
-import UserShow from './user/show';
+import OmxResourceRoleIndex from './role/index';
+import OmxResourceRoleHistory from './role/history';
+import OmxResourceRoleShow from './role/show';
+import OmxResourceUserIndex from './user/index';
+import OmxResourceUserHistory from './user/history';
+import OmxResourceUserShow from './user/show';
 
-export const PageList = [RoleIndex, RoleHistory, RoleShow, UserIndex, UserHistory, UserShow];
+export const PageList = [
+    OmxResourceRoleIndex,
+    OmxResourceRoleHistory,
+    OmxResourceRoleShow,
+    OmxResourceUserIndex,
+    OmxResourceUserHistory,
+    OmxResourceUserShow
+];
