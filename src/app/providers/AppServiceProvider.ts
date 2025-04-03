@@ -9,7 +9,7 @@ import { EntityTypeEnum } from '../../entities/EntityTypeEnum';
 import { JQueryForm } from '../../entities/Form/JQueryForm';
 import { ModalContract } from '../../entities/Modal/contracts/ModalContract';
 import { BS52Modal } from '../../entities/Modal/BS52Modal';
-import { PageService } from "../../services/PageService/PageService";
+import { PageService } from '../../services/PageService/PageService';
 
 export class AppServiceProvider extends ServiceProvider {
   public register(): void {

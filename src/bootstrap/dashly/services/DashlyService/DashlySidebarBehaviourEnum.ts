@@ -1,4 +1,4 @@
 export enum DashlySidebarBehaviourEnum {
-    fixed = 'fixed',
-    condensed = 'condensed',
+  fixed = 'fixed',
+  condensed = 'condensed',
 }

@@ -1,3 +1,3 @@
 export const AbstractMap = {
-    DashlyServiceContract: 'DashlyServiceContract',
-}
+  DashlyServiceContract: 'DashlyServiceContract',
+};

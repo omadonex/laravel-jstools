@@ -1,4 +1,4 @@
 export interface DashlyServiceContract {
-    enableSidebarBehaviourChanger(): void;
-    enableThemeSwitcher(): void;
+  enableSidebarBehaviourChanger(): void;
+  enableThemeSwitcher(): void;
 }

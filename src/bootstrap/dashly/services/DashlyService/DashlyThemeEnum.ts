@@ -1,5 +1,5 @@
 export enum DashlyThemeEnum {
-    auto = 'auto',
-    dark = 'dark',
-    light = 'light',
+  auto = 'auto',
+  dark = 'dark',
+  light = 'light',
 }
