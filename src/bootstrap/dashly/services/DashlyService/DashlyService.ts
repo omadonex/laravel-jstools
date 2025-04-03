@@ -39,7 +39,7 @@ export class DashlyService extends Service implements DashlyServiceContract {
     }
 
     public enableThemeSwitcher(): void {
-        let themeSwitcher = document.getElementById('themeSwitcher');
+        const themeSwitcher = document.getElementById('themeSwitcher');
 
         this.setTheme(this.getPreferredTheme());
 
@@ -90,7 +90,7 @@ export class DashlyService extends Service implements DashlyServiceContract {
     };
 
     public enableSidebarBehaviourChanger(): void {
-        let sidebarBehaviourChanger = document.getElementById('sidebarBehaviourChanger');
+        const sidebarBehaviourChanger = document.getElementById('sidebarBehaviourChanger');
 
         this.setSidebarBehaviour(this.getPreferredSidebarBehaviour());
 

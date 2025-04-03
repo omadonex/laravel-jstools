@@ -32,7 +32,7 @@ export class Page {
             columnsList.push({data: 'actions_pre', name: 'actions_pre', orderable: false, className: 'spase-between'});
         }
 
-        for (let column in columnsData) {
+        for (const column in columnsData) {
             columnsList.push({
                 data: column,
                 name: column,
