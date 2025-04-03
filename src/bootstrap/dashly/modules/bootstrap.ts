@@ -2,7 +2,7 @@ declare global {
     interface Window {
         bootstrap: any,
 
-        //From Dashly Bootstrap
+        // From Dashly Bootstrap
         Alert: any,
         Button: any,
         Carousel: any,

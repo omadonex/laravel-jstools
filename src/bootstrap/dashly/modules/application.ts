@@ -257,7 +257,7 @@ window.initButtonExport = (tableId: string) => {
 window.initButtonImport = (pageId: string) => {
     const formId = `${pageId}__formImport`;
     const form = window.form(formId);
-    //form?.setSubmitButton($(`#${formId}__btnUpload`));
+    // form?.setSubmitButton($(`#${formId}__btnUpload`));
 }
 
 window.initButtonImportTemplate = (pageId: string) => {
