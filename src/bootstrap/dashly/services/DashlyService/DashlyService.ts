@@ -31,7 +31,9 @@ export class DashlyService extends Service implements DashlyServiceContract {
             element.classList.remove('active');
         });
 
-        activeBtn && activeBtn.classList.add('active');
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
     };
 
     private reloadPage(): void {
@@ -86,7 +88,9 @@ export class DashlyService extends Service implements DashlyServiceContract {
             element.classList.remove('active');
         });
 
-        activeBtn && activeBtn.classList.add('active');
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
     };
 
     public enableSidebarBehaviourChanger(): void {
