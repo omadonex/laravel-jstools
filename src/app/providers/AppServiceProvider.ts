@@ -9,12 +9,15 @@ import { EntityTypeEnum } from '../../entities/EntityTypeEnum';
 import { JQueryForm } from '../../entities/Form/JQueryForm';
 import { ModalContract } from '../../entities/Modal/contracts/ModalContract';
 import { BS52Modal } from '../../entities/Modal/BS52Modal';
+import { PageService } from "../../services/PageService/PageService";
 
 export class AppServiceProvider extends ServiceProvider {
   public register(): void {
     this.singleton(JSToolsAbstractMap.AxiosServiceContract, (): any => {
       return new AxiosService();
     });
+
+    this.alias(JSToolsAbstractMap.AxiosServiceContract, 'a');
 
     this.singleton(JSToolsAbstractMap.TranslateServiceContract, (): any => {
       return new TranslateService({
@@ -31,6 +34,11 @@ export class AppServiceProvider extends ServiceProvider {
     });
 
     this.alias(JSToolsAbstractMap.NotyServiceContract, 'n');
+
+    this.singleton(JSToolsAbstractMap.PageServiceContract, (): any => {
+      return new PageService();
+    });
+    this.alias(JSToolsAbstractMap.PageServiceContract, 'p');
 
     this.bind(JSToolsAbstractMap.FormContract, (params: any): FormContract => {
       switch (params.entityType) {

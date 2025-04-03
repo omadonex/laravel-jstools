@@ -3,6 +3,7 @@ export const JSToolsAbstractMap = {
   AxiosServiceContract: 'AxiosServiceContract',
   FormValidateServiceContract: 'TranslateServiceContract',
   NotyServiceContract: 'NotyServiceContract',
+  PageServiceContract: 'PageServiceContract',
   TranslateServiceContract: 'TranslateServiceContract',
   ValidateServiceContract: 'ValidateServiceContract',
 
