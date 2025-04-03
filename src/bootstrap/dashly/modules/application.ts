@@ -61,7 +61,7 @@ window.table = (
   callbacks: AnyObjInterface = {},
 ) => {
   const fullTableId = `#${tableId}`;
-  const $table = $(fullTableId);
+  const $table = window.$(fullTableId);
   const pageId = tableId.split('__Table')[0];
   const scrollOpt = scroll ? { dom: '<lf<"wrapper-scroller"t>ip>', bAutoWidth: false } : {};
   const table = $table.DataTable(
@@ -89,8 +89,8 @@ window.table = (
             table.draw();
           });
 
-          $table.on('click', '.js-row-edit', function () {
-            const $this = $(this);
+          $table.on('click', '.js-row-edit', function (this: any) {
+            const $this = window.$(this);
             const formId = `${tableId}__formEdit`;
             const modalId = `${tableId}__modalEdit`;
 
@@ -117,8 +117,8 @@ window.table = (
             }
           });
 
-          $table.on('click', '.js-row-delete', function () {
-            const $this = $(this);
+          $table.on('click', '.js-row-delete', function (this: any) {
+            const $this = window.$(this);
             const rowCaption = $this.data('rowCaption');
             const url = ($(`${fullTableId}_urlRowDelete`).val() as string).replace('*', $this.data('rowId'));
             window.modalConfirmDeleteTableRow(rowCaption, url, table, fullTableId.substring(1));
