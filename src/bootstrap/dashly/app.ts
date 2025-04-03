@@ -1,8 +1,8 @@
-import './bootstrap/dashly/modules/jquery';
-import './bootstrap/dashly/modules/bootstrap';
-import './bootstrap/dashly/modules/common';
-import './bootstrap/dashly/modules/components';
-import './bootstrap/dashly/modules/application';
+import './modules/jquery';
+import './modules/bootstrap';
+import './modules/common';
+import './modules/components';
+import './modules/application';
 import { PageList } from '../pages/_pages';
 
 import BootstrapDashlyServiceProvider from './providers/BootstrapDashlyServiceProvider';
