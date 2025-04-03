@@ -6,7 +6,7 @@ import {DashlySidebarBehaviourEnum} from "./DashlySidebarBehaviourEnum";
 export class DashlyService extends Service implements DashlyServiceContract {
 
     private setTheme(theme: DashlyThemeEnum): void {
-        let isDark = window.matchMedia(`(prefers-color-scheme: ${DashlyThemeEnum.dark})`).matches;
+        const isDark = window.matchMedia(`(prefers-color-scheme: ${DashlyThemeEnum.dark})`).matches;
         if (theme === DashlyThemeEnum.auto && isDark) {
             document.documentElement.dataset.theme = isDark ? DashlyThemeEnum.dark : DashlyThemeEnum.light;
         } else {
@@ -43,10 +43,10 @@ export class DashlyService extends Service implements DashlyServiceContract {
 
         this.setTheme(this.getPreferredTheme());
 
-        if (typeof themeSwitcher != 'undefined') {
+        if (typeof themeSwitcher !== 'undefined') {
             window.matchMedia(`(prefers-color-scheme: ${DashlyThemeEnum.dark})`).addEventListener('change', e => {
                 if (localStorage.getItem('theme') != null) {
-                    if (localStorage.getItem('theme') == DashlyThemeEnum.auto) {
+                    if (localStorage.getItem('theme') === DashlyThemeEnum.auto) {
                         this.reloadPage();
                     }
                 }
@@ -94,7 +94,7 @@ export class DashlyService extends Service implements DashlyServiceContract {
 
         this.setSidebarBehaviour(this.getPreferredSidebarBehaviour());
 
-        if (typeof sidebarBehaviourChanger != 'undefined') {
+        if (typeof sidebarBehaviourChanger !== 'undefined') {
             window.addEventListener('load', () => {
                 this.showActiveSidebarBehaviour(this.getPreferredSidebarBehaviour());
 
