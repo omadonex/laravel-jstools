@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "tsc && npm cpvendorjs",
+    "build": "tsc && npm run cpvendorjs",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -14,7 +14,7 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
-    "cpvendorjs": "cp ./src/bootstrap/dashly/vendor/ ./lib/bootstrap/dashly/"
+    "cpvendorjs": "cp -r ./src/bootstrap/dashly/vendor/ ./lib/bootstrap/dashly/"
   },
   "repository": {
     "type": "git",
