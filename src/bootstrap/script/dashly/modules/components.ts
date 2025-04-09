@@ -72,3 +72,5 @@ window.$.extend(true, dt.defaults, {
   processing: true,
   serverSide: true,
 });
+
+window.components = [];
