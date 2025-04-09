@@ -1,8 +1,8 @@
 import { Service } from 'laravel-jstools-di';
 
-import { ContextTypeEnum } from '../../../../types/ContextTypeEnum';
-import { NotyDataInterface } from '../../../../services/NotyService/interfaces/NotyDataInterface';
-import { NotyServiceContract } from '../../../../services/NotyService/contracts/NotyServiceContract';
+import { ContextTypeEnum } from '../../../../../types/ContextTypeEnum';
+import { NotyDataInterface } from '../../../../../services/NotyService/interfaces/NotyDataInterface';
+import { NotyServiceContract } from '../../../../../services/NotyService/contracts/NotyServiceContract';
 
 export class ToastNotyService extends Service implements NotyServiceContract {
   private containerId: string;

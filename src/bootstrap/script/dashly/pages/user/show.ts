@@ -1,5 +1,5 @@
-import { Page } from '../../../services/PageService/Page';
-import { CallbackListInterface } from '../../../services/AxiosService/interfaces/CallbackListInterface';
+import { Page } from '../../../../../services/PageService/Page';
+import { CallbackListInterface } from '../../../../../services/AxiosService/interfaces/CallbackListInterface';
 
 export default class Omx_Resource_User_Show extends Page {
   init() {

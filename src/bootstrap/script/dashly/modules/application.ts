@@ -1,13 +1,13 @@
-import { App } from '../../../app/App';
-import { EntityTypeEnum } from '../../../entities/EntityTypeEnum';
-import { FormContract } from '../../../entities/Form/contracts/FormContract';
-import { FormDataInterface } from '../../../entities/Form/interfaces/FormDataInterface';
-import { ModalContract } from '../../../entities/Modal/contracts/ModalContract';
-import { ModalDataInterface } from '../../../entities/Modal/interfaces/ModalDataInterface';
-import { ModalUsageEnum } from '../../../entities/Modal/ModalUsageEnum';
-import { NotyDataInterface } from '../../../services/NotyService/interfaces/NotyDataInterface';
-import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
-import { AppServiceProvider } from '../../../app/providers/AppServiceProvider';
+import { App } from '../../../../app/App';
+import { EntityTypeEnum } from '../../../../entities/EntityTypeEnum';
+import { FormContract } from '../../../../entities/Form/contracts/FormContract';
+import { FormDataInterface } from '../../../../entities/Form/interfaces/FormDataInterface';
+import { ModalContract } from '../../../../entities/Modal/contracts/ModalContract';
+import { ModalDataInterface } from '../../../../entities/Modal/interfaces/ModalDataInterface';
+import { ModalUsageEnum } from '../../../../entities/Modal/ModalUsageEnum';
+import { NotyDataInterface } from '../../../../services/NotyService/interfaces/NotyDataInterface';
+import { AnyObjInterface } from '../../../../interfaces/AnyObjInterface';
+import { AppServiceProvider } from '../../../../app/providers/AppServiceProvider';
 
 declare global {
   interface Window {

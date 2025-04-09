@@ -14,7 +14,8 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
-    "cpvendor": "cp -r ./src/bootstrap/dashly/vendor/ ./lib/bootstrap/dashly/"
+    "cpsass": "cp -r ./src/bootstrap/sass/ ./lib/bootstrap/",
+    "cpscript": "cp -r ./src/bootstrap/script/dashly/vendor/ ./lib/bootstrap/script/dashly/"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
   ],
   "dependencies": {
     "flatpickr": "^4.6.13",
+    "jstree": "^3.3.15",
     "laravel-jstools-di": "^1.0.3",
     "quill": "^2.0.2"
   }

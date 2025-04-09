@@ -1,4 +1,4 @@
-import { Page } from '../../../services/PageService/Page';
+import { Page } from '../../../../../services/PageService/Page';
 
 export default class Auth_Login extends Page {
   init() {

@@ -1,6 +1,6 @@
 import { ServiceProvider } from 'laravel-jstools-di';
 
-import { JSToolsAbstractMap } from '../../../app/JSToolsAbstractMap';
+import { JSToolsAbstractMap } from '../../../../app/JSToolsAbstractMap';
 import { AbstractMap } from '../AbstractMap';
 import { DashlyService } from '../services/DashlyService/DashlyService';
 import { ToastNotyService } from '../services/ToastNotyService/ToastNotyService';

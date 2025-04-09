@@ -1,4 +1,4 @@
-import { Page } from '../../../services/PageService/Page';
+import { Page } from '../../../../../services/PageService/Page';
 
 export default class Omx_Resource_User_Index extends Page {
   init() {

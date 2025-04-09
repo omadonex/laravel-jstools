@@ -6,7 +6,7 @@ import '../vendor/js/theme.bundle';
 import '../vendor/js/quill.bundle';
 import 'jstree';
 import { Russian as FlatPickrRussian } from 'flatpickr/dist/l10n/ru.js';
-import { AnyObjInterface } from '../../../interfaces/AnyObjInterface';
+import { AnyObjInterface } from '../../../../interfaces/AnyObjInterface';
 
 declare global {
   interface Window {
