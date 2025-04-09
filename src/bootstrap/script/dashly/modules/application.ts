@@ -144,6 +144,20 @@ window.table = (
   return table;
 };
 
+window.tableHistory = (tableId: string, options: AnyObjInterface = {}) => {
+  return window.table(tableId, [
+    {data: 'id', name: 'id'},
+    {data: 'user_id', name: 'user_id'},
+    {data: 'model_id', name: 'model_id'},
+    {data: 'event', name: 'event'},
+    {data: 'occur_at', name: 'occur_at'},
+    {data: 'data', name: 'data'},
+  ], true, Object.assign({
+    order: [[0, 'desc']],
+    bFilter: false,
+  }, options));
+};
+
 window.tableFilterData = function (data, tableId) {
   const checkboxNames: any = [];
   $(`.${tableId}.filter.filter-input[type="checkbox"], #${tableId}.filter.filter-input[type="checkbox"]`).each(
