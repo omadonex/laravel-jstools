@@ -1,9 +1,12 @@
 import 'datatables.net';
 import '../vendor/js/chart.js.bundle';
+import '../vendor/js/flatpickr.bundle';
+import '../vendor/js/gumshoe.bundle';
 import '../vendor/js/jsvectormap.bundle';
 import '../vendor/js/list.bundle';
-import '../vendor/js/theme.bundle';
 import '../vendor/js/quill.bundle';
+import '../vendor/js/theme.bundle';
+import '../vendor/js/tom-select.bundle';
 import 'jstree';
 import { Russian as FlatPickrRussian } from 'flatpickr/dist/l10n/ru.js';
 import { AnyObjInterface } from '../../../../interfaces/AnyObjInterface';
