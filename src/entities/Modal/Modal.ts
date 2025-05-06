@@ -21,6 +21,7 @@ export abstract class Modal extends Service implements ModalContract {
   protected showNoty: boolean;
   protected form: FormContract | null;
   protected extraSpinners: any = null;
+  protected preloadCallback: any = null;
 
   constructor(modalId: string, modalUsage: ModalUsageEnum, modalData: ModalDataInterface, showNoty: boolean) {
     super();
@@ -103,6 +104,10 @@ export abstract class Modal extends Service implements ModalContract {
     this.modalButtonsDisable();
   }
 
+  public setPreloadCallback(callback: any): void {
+    this.preloadCallback = callback;
+  }
+
   public show(): void {
     this.prepareElements();
     this.reset();
@@ -125,6 +130,9 @@ export abstract class Modal extends Service implements ModalContract {
           },
           success: (data: any) => {
             this.form?.setInitData(data);
+            if (this.preloadCallback) {
+              this.preloadCallback(data);
+            }
           },
         });
       }
