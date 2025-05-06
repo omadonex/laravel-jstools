@@ -19,4 +19,5 @@ export interface ModalContract {
   getForm(): FormContract | null;
   callSubmitCallback(): void;
   setExtraSpinners(spinnerList: any): void;
+  setPreloadCallback(callback: any): void;
 }
