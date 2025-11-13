@@ -183,6 +183,15 @@ export class JQueryForm extends Form {
       const $input: any = this.$form.find(
         `input[data-jst-field="${name}"],textarea[data-jst-field="${name}"],select[data-jst-field="${name}"],div[data-jst-field="${name}"][data-jst-component]`,
       );
+      const $inputBox: any = $input.closest(`div[data-jst-field-box="${name}"]`);
+      const hiddenFields: any = data['jstHiddenFields'] || [];
+
+      if (hiddenFields.includes(name)) {
+        $inputBox.hide();
+      } else {
+        $inputBox.show();
+      }
+
       if ($input.is('select')) {
         const el: any = $input[0];
         if (el.tomselect) {
