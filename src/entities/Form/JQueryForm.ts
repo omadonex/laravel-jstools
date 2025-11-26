@@ -186,6 +186,7 @@ export class JQueryForm extends Form {
       const $inputBox: any = $input.closest(`div[data-jst-field-box="${name}"]`);
       const hiddenFields: any = data['jstHiddenFields'] || [];
       const readonlyFields: any = data['jstReadonlyFields'] || [];
+      const disabledFields: any = data['jstDisabledFields'] || [];
 
       if (hiddenFields.includes(name)) {
         $inputBox.hide();
@@ -194,6 +195,7 @@ export class JQueryForm extends Form {
       }
 
       $input.prop('readonly', readonlyFields.includes(name));
+      $input.prop('disabled', disabledFields.includes(name));
 
       if ($input.is('select')) {
         const el: any = $input[0];
